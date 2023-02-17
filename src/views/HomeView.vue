@@ -1,19 +1,8 @@
 <template>
-	<div
-		style="
-			position: absolute;
-			display: flex;
-			align-items: center;
-			height: 100%;
-			width: 100%;
-			justify-content: center;
-			z-index: 2;
-		"
-	>
-		<h1>은하야 사랑해</h1>
-	</div>
-	<div class="back"></div>
-	<div class="heart"></div>
+	<b-button>Button</b-button>
+	<b-button variant="danger">Button</b-button>
+	<b-button variant="success">Button</b-button>
+	<b-button variant="outline-primary">Button</b-button>
 </template>
 
 <script>
