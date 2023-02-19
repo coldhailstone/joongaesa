@@ -10,7 +10,7 @@ export const menuList = [
 	},
 ];
 
-const routes = [
+export default [
 	{
 		path: '/',
 		name: 'home',
@@ -27,5 +27,3 @@ const routes = [
 		component: Join,
 	},
 ];
-
-export default routes;

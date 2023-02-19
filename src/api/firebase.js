@@ -7,6 +7,11 @@ import {
 	GoogleAuthProvider,
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
+	sendEmailVerification,
+	signOut,
+	deleteUser,
+	setPersistence,
+	browserSessionPersistence,
 } from 'firebase/auth';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -31,12 +36,30 @@ getAnalytics(app);
 // Auth
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+export const setPersistenceSession = () => {
+	return setPersistence(auth, browserSessionPersistence);
+};
+export const signInWithGoogle = () => {
+	return signInWithPopup(auth, provider);
+};
 export const createUserWithEmail = (email, password) => {
 	return createUserWithEmailAndPassword(auth, email, password);
 };
 export const signInWithEmail = (email, password) => {
 	return signInWithEmailAndPassword(auth, email, password);
 };
-export const signInWithGoogle = () => {
-	return signInWithPopup(auth, provider);
+export const sendEmailVerify = () => {
+	return sendEmailVerification(getUser());
+};
+export const signOutUser = () => {
+	return signOut(auth);
+};
+export const removeUser = () => {
+	return deleteUser(getUser());
+};
+export const getUser = () => {
+	return auth.currentUser;
+};
+export const getSessionKey = () => {
+	return `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`;
 };
