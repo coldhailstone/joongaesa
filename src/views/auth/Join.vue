@@ -43,6 +43,8 @@
 				<b-button class="w-100" type="submit" variant="primary">
 					가입하기
 				</b-button>
+
+				<spinner v-show="isLoading" />
 			</b-form>
 		</b-card>
 	</div>
@@ -50,11 +52,16 @@
 
 <script>
 import { createUserWithEmail, sendEmailVerify } from '@/api/firebase';
+import Spinner from '@/components/common/Spinner.vue';
 
 export default {
 	name: 'Join',
+	components: {
+		Spinner,
+	},
 	data() {
 		return {
+			isLoading: false,
 			email: '',
 			password: '',
 			confirmPassword: '',
@@ -69,6 +76,7 @@ export default {
 		async join() {
 			if (!this.validation()) return;
 
+			this.isLoading = true;
 			try {
 				await createUserWithEmail(this.email, this.password);
 				await sendEmailVerify();
@@ -83,6 +91,8 @@ export default {
 					type: 'error',
 					text: error.message,
 				});
+			} finally {
+				this.isLoading = false;
 			}
 		},
 		validation() {

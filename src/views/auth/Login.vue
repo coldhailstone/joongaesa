@@ -39,6 +39,8 @@
 				>
 					회원가입
 				</b-button>
+
+				<spinner v-show="isLoading" />
 			</b-form>
 
 			<div>
@@ -67,11 +69,16 @@ import {
 	getUser,
 	setPersistenceSession,
 } from '@/api/firebase';
+import Spinner from '@/components/common/Spinner.vue';
 
 export default {
 	name: 'WithEmail',
+	components: {
+		Spinner,
+	},
 	data() {
 		return {
+			isLoading: false,
 			email: '',
 			password: '',
 		};
@@ -79,6 +86,7 @@ export default {
 	methods: {
 		...mapMutations('user', ['SET_USER']),
 		async login(type) {
+			this.isLoading = true;
 			try {
 				await setPersistenceSession();
 				if (type === 'email') {
@@ -106,6 +114,8 @@ export default {
 					type: 'error',
 					text: error.message,
 				});
+			} finally {
+				this.isLoading = false;
 			}
 		},
 	},
