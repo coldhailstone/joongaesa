@@ -1,7 +1,10 @@
 <template>
 	<b-navbar class="p-4" toggleable="lg" type="dark" variant="light">
 		<b-navbar-brand href="#">
-			<router-link to="/" class="text-decoration-none">
+			<router-link
+				to="/"
+				class="text-decoration-none fw-bold fs-3 text-dark"
+			>
 				중개사닷컴
 			</router-link>
 		</b-navbar-brand>
@@ -26,6 +29,7 @@
 							v-if="user.photoURL"
 							:src="user.photoURL"
 							class="me-2"
+							referrerpolicy="no-referrer"
 							style="
 								width: 32px;
 								height: 32px;

@@ -1,8 +1,32 @@
 <template>
-	<b-button>Button</b-button>
-	<b-button variant="danger">Button</b-button>
-	<b-button variant="success">Button</b-button>
-	<b-button variant="outline-primary">Button</b-button>
+	<div class="d-flex flex-column gap-5">
+		<div
+			class="position-relative"
+			style="min-height: 280px; max-height: 680px"
+		>
+			<img
+				src="@/assets/home_banner.jpg"
+				class="w-100 h-100"
+				style="object-fit: cover"
+			/>
+			<h1
+				class="position-absolute p-3 ms-3 fw-bold"
+				style="top: 8rem; color: #0a174e"
+			>
+				고객 관리<br />
+				매물 관리는<br />
+				중개사닷컴
+			</h1>
+		</div>
+		<div class="container p-3" style="color: rgb(54, 58, 60)">
+			<h2 class="mb-4 fw-bold">종이는 그만!</h2>
+			<p>
+				이제 책상위 지저분한 서류들 깨끗하게 정리하세요.<br />
+				모바일 또는 웹으로 편하게 사용할 수 있는 중개인을 위한
+				어플리케이션 중개사닷컴입니다.
+			</p>
+		</div>
+	</div>
 </template>
 
 <script>
