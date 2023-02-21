@@ -35,7 +35,7 @@
 				<b-button
 					class="w-100"
 					variant="dark"
-					@click="$router.push({ name: 'join' })"
+					@click="$router.push('join')"
 				>
 					회원가입
 				</b-button>
@@ -102,7 +102,7 @@ export default {
 						type: 'success',
 						text: '로그인에 성공했습니다.',
 					});
-					this.$router.push({ name: 'home' });
+					this.$router.push('/');
 				} else {
 					this.$notify({
 						type: 'error',

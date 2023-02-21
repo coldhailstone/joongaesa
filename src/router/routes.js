@@ -1,29 +1,37 @@
 import Home from '@/views/Home.vue';
 import Login from '@/views/auth/Login.vue';
 import Join from '@/views/auth/Join.vue';
+import EstateList from '@/views/estate/EstateList.vue';
+import CustomerList from '@/views/customer/CustomerList.vue';
 
 export const menuList = [
 	{
 		path: '/',
-		name: 'home',
+		name: '홈',
 		component: Home,
+	},
+	{
+		path: '/estate',
+		name: '매물 관리',
+		component: EstateList,
+	},
+	{
+		path: '/customer',
+		name: '고객 관리',
+		component: CustomerList,
 	},
 ];
 
 export default [
-	{
-		path: '/',
-		name: 'home',
-		component: Home,
-	},
+	...menuList,
 	{
 		path: '/login',
-		name: 'login',
+		name: '로그인',
 		component: Login,
 	},
 	{
 		path: '/join',
-		name: 'join',
+		name: '회원가입',
 		component: Join,
 	},
 ];

@@ -85,7 +85,7 @@ export default {
 					type: 'success',
 					text: '이메일을 전송했습니다.',
 				});
-				this.$router.push({ name: 'login' });
+				this.$router.push('login');
 			} catch (error) {
 				this.$notify({
 					type: 'error',

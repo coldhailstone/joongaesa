@@ -12,7 +12,7 @@
 		<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
 		<b-collapse id="nav-collapse" class="justify-content-between" is-nav>
-			<b-navbar-nav>
+			<b-navbar-nav class="gap-3">
 				<b-nav-item
 					v-for="menu of menuList"
 					:key="menu.name"
@@ -79,7 +79,7 @@ export default {
 				type: 'success',
 				text: '로그아웃에 성공했습니다.',
 			});
-			this.$router.push({ name: 'home' });
+			this.$router.push('/');
 		},
 		async deleteUser() {
 			await removeUser();
@@ -89,7 +89,7 @@ export default {
 				type: 'success',
 				text: '회원탈퇴가 완료되었습니다.',
 			});
-			this.$router.push({ name: 'home' });
+			this.$router.push('/');
 		},
 	},
 };

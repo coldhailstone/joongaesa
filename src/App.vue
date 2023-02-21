@@ -23,15 +23,15 @@ export default {
 	},
 	data() {
 		return {
-			pageNamesHideLayout: ['login', 'join'],
+			pathToHideLayout: ['/login', '/join'],
 		};
 	},
 	computed: {
-		currentPageName() {
-			return this.$route.name;
+		currentPath() {
+			return this.$route.path;
 		},
 		showLayout() {
-			return !this.pageNamesHideLayout.includes(this.currentPageName);
+			return !this.pathToHideLayout.includes(this.currentPath);
 		},
 	},
 	created() {
