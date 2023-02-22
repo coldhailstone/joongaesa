@@ -1,10 +1,7 @@
 <template>
 	<b-navbar class="p-4" toggleable="lg" type="dark" variant="light">
 		<b-navbar-brand href="#">
-			<router-link
-				to="/"
-				class="text-decoration-none fw-bold fs-3 text-dark"
-			>
+			<router-link to="/" class="text-decoration-none fw-bold fs-3 text-dark">
 				중개사닷컴
 			</router-link>
 		</b-navbar-brand>
@@ -13,11 +10,7 @@
 
 		<b-collapse id="nav-collapse" class="justify-content-between" is-nav>
 			<b-navbar-nav class="gap-3">
-				<b-nav-item
-					v-for="menu of menuList"
-					:key="menu.name"
-					:to="menu.path"
-				>
+				<b-nav-item v-for="menu of menuList" :key="menu.name" :to="menu.path">
 					<span v-if="menu.path !== '/'">{{ menu.name }}</span>
 				</b-nav-item>
 			</b-navbar-nav>
@@ -33,17 +26,11 @@
 						/>
 						<span>{{ user.displayName ?? user.email }}</span>
 					</template>
-					<b-dropdown-item @click="signOut">
-						로그아웃
-					</b-dropdown-item>
-					<b-dropdown-item @click="deleteUser">
-						회원탈퇴
-					</b-dropdown-item>
+					<b-dropdown-item @click="signOut"> 로그아웃 </b-dropdown-item>
+					<b-dropdown-item @click="deleteUser"> 회원탈퇴 </b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-button-group v-else>
-					<b-button variant="primary" @click="$router.push('login')">
-						로그인
-					</b-button>
+					<b-button variant="primary" @click="$router.push('login')"> 로그인 </b-button>
 				</b-button-group>
 			</b-navbar-nav>
 		</b-collapse>

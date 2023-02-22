@@ -26,8 +26,7 @@
 					</b-carousel>
 					<div>
 						<h4 class="fw-bold">
-							신논현역 5분 역대급 2룸 가성비 이 금액대 이런방
-							못구합니다 조용한동네
+							신논현역 5분 역대급 2룸 가성비 이 금액대 이런방 못구합니다 조용한동네
 						</h4>
 						<span>등록일: 2023-02-22</span>
 					</div>
@@ -36,18 +35,14 @@
 						<b-form>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										계약 형태
-									</label>
+									<label for="inline-form-custom-select-pref"> 계약 형태 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										가격 정보
-									</label>
+									<label for="inline-form-custom-select-pref"> 가격 정보 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -101,38 +96,14 @@
 						<b-form>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										건물 유형
-									</label>
+									<label for="inline-form-custom-select-pref"> 건물 유형 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										건물 이름
-									</label>
-									<b-form-input
-										id="inline-form-custom-select-pref"
-										type="email"
-									></b-form-input>
-								</div>
-							</b-form-row>
-							<b-form-row class="mb-3">
-								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										해당 층
-									</label>
-									<b-form-input
-										id="inline-form-custom-select-pref"
-										type="email"
-									></b-form-input>
-								</div>
-								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										전체 층
-									</label>
+									<label for="inline-form-custom-select-pref"> 건물 이름 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -141,18 +112,14 @@
 							</b-form-row>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										방 개수
-									</label>
+									<label for="inline-form-custom-select-pref"> 해당 층 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										욕실 개수
-									</label>
+									<label for="inline-form-custom-select-pref"> 전체 층 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -161,18 +128,30 @@
 							</b-form-row>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										공급 면적
-									</label>
+									<label for="inline-form-custom-select-pref"> 방 개수 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										전용 면적
-									</label>
+									<label for="inline-form-custom-select-pref"> 욕실 개수 </label>
+									<b-form-input
+										id="inline-form-custom-select-pref"
+										type="email"
+									></b-form-input>
+								</div>
+							</b-form-row>
+							<b-form-row class="mb-3">
+								<div class="w-50">
+									<label for="inline-form-custom-select-pref"> 공급 면적 </label>
+									<b-form-input
+										id="inline-form-custom-select-pref"
+										type="email"
+									></b-form-input>
+								</div>
+								<div class="w-50">
+									<label for="inline-form-custom-select-pref"> 전용 면적 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -190,9 +169,7 @@
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										현관 유형
-									</label>
+									<label for="inline-form-custom-select-pref"> 현관 유형 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -201,18 +178,14 @@
 							</b-form-row>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										주실 방향
-									</label>
+									<label for="inline-form-custom-select-pref"> 주실 방향 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										총 세대 수
-									</label>
+									<label for="inline-form-custom-select-pref"> 총 세대 수 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -250,9 +223,7 @@
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										사용승인일
-									</label>
+									<label for="inline-form-custom-select-pref"> 사용승인일 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -266,38 +237,14 @@
 						<b-form>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										난방 방식
-									</label>
+									<label for="inline-form-custom-select-pref"> 난방 방식 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
 									></b-form-input>
 								</div>
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										냉방 시설
-									</label>
-									<b-form-input
-										id="inline-form-custom-select-pref"
-										type="email"
-									></b-form-input>
-								</div>
-							</b-form-row>
-							<b-form-row class="mb-3">
-								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										생활 시설
-									</label>
-									<b-form-input
-										id="inline-form-custom-select-pref"
-										type="email"
-									></b-form-input>
-								</div>
-								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										보안 시설
-									</label>
+									<label for="inline-form-custom-select-pref"> 냉방 시설 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -306,9 +253,23 @@
 							</b-form-row>
 							<b-form-row class="mb-3">
 								<div class="w-50">
-									<label for="inline-form-custom-select-pref">
-										기타 시설
-									</label>
+									<label for="inline-form-custom-select-pref"> 생활 시설 </label>
+									<b-form-input
+										id="inline-form-custom-select-pref"
+										type="email"
+									></b-form-input>
+								</div>
+								<div class="w-50">
+									<label for="inline-form-custom-select-pref"> 보안 시설 </label>
+									<b-form-input
+										id="inline-form-custom-select-pref"
+										type="email"
+									></b-form-input>
+								</div>
+							</b-form-row>
+							<b-form-row class="mb-3">
+								<div class="w-50">
+									<label for="inline-form-custom-select-pref"> 기타 시설 </label>
 									<b-form-input
 										id="inline-form-custom-select-pref"
 										type="email"
@@ -333,11 +294,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button
-						type="button"
-						class="btn btn-secondary"
-						data-bs-dismiss="modal"
-					>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 						닫기
 					</button>
 					<button type="button" class="btn btn-primary">저장</button>

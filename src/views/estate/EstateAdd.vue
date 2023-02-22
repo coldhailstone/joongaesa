@@ -14,9 +14,7 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 사진 </label>
-							<attachment-file
-								@changeFile="item.photos = $event"
-							/>
+							<attachment-file @changeFile="item.photos = $event" />
 						</div>
 					</b-form-row>
 				</b-form>
@@ -126,9 +124,7 @@
 						</div>
 						<div class="w-50">
 							<label> 가능 주차 대수 </label>
-							<b-form-input
-								v-model="item.availableParkingCount"
-							/>
+							<b-form-input v-model="item.availableParkingCount" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">

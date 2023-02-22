@@ -1,13 +1,7 @@
 <template>
 	<div>
 		<div class="file-box" @drop.prevent="dropFile">
-			<input
-				type="file"
-				ref="file"
-				accept=".jpg, .png"
-				multiple
-				@change="changeFile"
-			/>
+			<input type="file" ref="file" accept=".jpg, .png" multiple @change="changeFile" />
 			<div>
 				<p>첨부할 파일을 마우스로 끌어오거나, 직접 선택해주세요</p>
 				<h6>파일 선택</h6>

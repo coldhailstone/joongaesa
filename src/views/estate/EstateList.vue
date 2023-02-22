@@ -2,11 +2,7 @@
 	<div>
 		<div class="container mt-3 d-flex flex-column gap-4">
 			<div>
-				<b-button
-					class="float-end"
-					variant="primary"
-					@click="$router.push('estate/new')"
-				>
+				<b-button class="float-end" variant="primary" @click="$router.push('estate/new')">
 					매물 등록
 				</b-button>
 			</div>

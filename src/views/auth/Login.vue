@@ -29,14 +29,8 @@
 						/>
 					</b-input-group>
 
-					<b-button class="w-100" type="submit" variant="primary">
-						로그인
-					</b-button>
-					<b-button
-						class="w-100"
-						variant="dark"
-						@click="$router.push('join')"
-					>
+					<b-button class="w-100" type="submit" variant="primary"> 로그인 </b-button>
+					<b-button class="w-100" variant="dark" @click="$router.push('join')">
 						회원가입
 					</b-button>
 				</b-form>
@@ -62,12 +56,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import {
-	signInWithEmail,
-	signInWithGoogle,
-	getUser,
-	setPersistenceSession,
-} from '@/api/firebase';
+import { signInWithEmail, signInWithGoogle, getUser, setPersistenceSession } from '@/api/firebase';
 
 export default {
 	name: 'WithEmail',

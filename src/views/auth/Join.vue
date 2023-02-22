@@ -40,9 +40,7 @@
 						/>
 					</b-input-group>
 
-					<b-button class="w-100" type="submit" variant="primary">
-						가입하기
-					</b-button>
+					<b-button class="w-100" type="submit" variant="primary"> 가입하기 </b-button>
 				</b-form>
 			</b-card>
 		</b-overlay>

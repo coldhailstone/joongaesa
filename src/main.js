@@ -12,11 +12,7 @@ import 'sanitize.css';
 import '@/styles/common.scss';
 import '@/api/firebase';
 
-const app = createApp(App)
-	.use(store)
-	.use(router)
-	.use(Notifications)
-	.use(BootstrapVue3);
+const app = createApp(App).use(store).use(router).use(Notifications).use(BootstrapVue3);
 
 app.config.globalProperties.$_ = _;
 
