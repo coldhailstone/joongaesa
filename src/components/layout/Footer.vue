@@ -8,9 +8,9 @@
 					href="/"
 					class="me-2 mb-md-0 text-muted text-decoration-none lh-1"
 				>
-					<img src="@/assets/logo.svg" style="width: 30px" />
+					<img class="logo" src="@/assets/logo.svg" />
 				</a>
-				<span class="text-muted">© 2021 Company, Inc</span>
+				<span class="text-muted">© 2023 Company, Inc</span>
 			</div>
 		</footer>
 	</div>
@@ -21,3 +21,9 @@ export default {
 	name: 'Footer',
 };
 </script>
+
+<style lang="scss" scoped>
+.logo {
+	width: 30px;
+}
+</style>

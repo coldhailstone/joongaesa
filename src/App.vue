@@ -1,7 +1,7 @@
 <template>
 	<div class="d-flex flex-column justify-content-between h-100">
 		<nav-bar v-show="showLayout" />
-		<router-view class="h-100" />
+		<router-view class="h-100 overflow-auto" />
 		<footers v-show="showLayout" />
 	</div>
 

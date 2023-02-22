@@ -28,13 +28,8 @@
 						<img
 							v-if="user.photoURL"
 							:src="user.photoURL"
-							class="me-2"
+							class="icon me-2"
 							referrerpolicy="no-referrer"
-							style="
-								width: 32px;
-								height: 32px;
-								border-radius: 32px;
-							"
 						/>
 						<span>{{ user.displayName ?? user.email }}</span>
 					</template>
@@ -94,3 +89,11 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.icon {
+	width: 32px;
+	height: 32px;
+	border-radius: 32px;
+}
+</style>
