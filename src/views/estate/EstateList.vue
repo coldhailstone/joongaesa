@@ -23,7 +23,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
-import EstateCard from './EstateCard.vue';
+import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/modal/ModalEstate.vue';
 
 export default {
