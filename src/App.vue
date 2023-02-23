@@ -12,7 +12,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
-import { getSessionKey } from '@/api/firebase';
+import { getSessionUser } from '@/api/firebase';
 import NavBar from '@/components/layout/NavBar.vue';
 import Footers from '@/components/layout/Footer.vue';
 import Notification from '@/components/common/Notification.vue';
@@ -38,7 +38,7 @@ export default {
 		},
 	},
 	created() {
-		const sessionUser = sessionStorage.getItem(getSessionKey());
+		const sessionUser = getSessionUser();
 		if (sessionUser) {
 			this.SET_USER(JSON.parse(sessionUser));
 		}

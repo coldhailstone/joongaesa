@@ -63,3 +63,9 @@ export const getUser = () => {
 export const getSessionKey = () => {
 	return `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`;
 };
+export const getSessionUser = () => {
+	return sessionStorage.getItem(getSessionKey());
+};
+export const isLogin = () => {
+	return !!getSessionUser();
+};
