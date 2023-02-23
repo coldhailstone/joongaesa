@@ -1,60 +1,58 @@
 <template>
 	<div class="d-flex align-items-center justify-content-center h-75">
-		<b-overlay :show="isLoading" rounded="sm">
-			<b-card header="회원가입" align="center">
-				<b-form
-					class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
-					@submit="join"
+		<b-card header="회원가입" align="center">
+			<b-form
+				class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
+				@submit="join"
+			>
+				<b-input-group
+					prepend-html="<i class='fa-solid fa-envelope'></i>"
+					class="mb-2 mr-sm-2 mb-sm-0"
 				>
-					<b-input-group
-						prepend-html="<i class='fa-solid fa-envelope'></i>"
-						class="mb-2 mr-sm-2 mb-sm-0"
-					>
-						<b-form-input
-							v-model="email"
-							type="email"
-							placeholder="아이디(이메일)"
-							required
-						/>
-					</b-input-group>
-					<b-input-group
-						prepend-html="<i class='fa-solid fa-lock'></i>"
-						class="mb-2 mr-sm-2 mb-sm-0"
-					>
-						<b-form-input
-							v-model="password"
-							type="password"
-							placeholder="비밀번호"
-							required
-						/>
-					</b-input-group>
-					<b-input-group
-						prepend-html="<i class='fa-solid fa-lock'></i>"
-						class="mb-2 mr-sm-2 mb-sm-0"
-					>
-						<b-form-input
-							v-model="confirmPassword"
-							type="password"
-							placeholder="비밀번호 확인"
-							required
-						/>
-					</b-input-group>
+					<b-form-input
+						v-model="email"
+						type="email"
+						placeholder="아이디(이메일)"
+						required
+					/>
+				</b-input-group>
+				<b-input-group
+					prepend-html="<i class='fa-solid fa-lock'></i>"
+					class="mb-2 mr-sm-2 mb-sm-0"
+				>
+					<b-form-input
+						v-model="password"
+						type="password"
+						placeholder="비밀번호"
+						required
+					/>
+				</b-input-group>
+				<b-input-group
+					prepend-html="<i class='fa-solid fa-lock'></i>"
+					class="mb-2 mr-sm-2 mb-sm-0"
+				>
+					<b-form-input
+						v-model="confirmPassword"
+						type="password"
+						placeholder="비밀번호 확인"
+						required
+					/>
+				</b-input-group>
 
-					<b-button class="w-100" type="submit" variant="primary"> 가입하기 </b-button>
-				</b-form>
-			</b-card>
-		</b-overlay>
+				<b-button class="w-100" type="submit" variant="primary"> 가입하기 </b-button>
+			</b-form>
+		</b-card>
 	</div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { createUserWithEmail, sendEmailVerify } from '@/api/firebase';
 
 export default {
 	name: 'Join',
 	data() {
 		return {
-			isLoading: false,
 			email: '',
 			password: '',
 			confirmPassword: '',
@@ -66,10 +64,11 @@ export default {
 		},
 	},
 	methods: {
+		...mapMutations('loading', ['SET_LOADING']),
 		async join() {
 			if (!this.validation()) return;
 
-			this.isLoading = true;
+			this.SET_LOADING(true);
 			try {
 				await createUserWithEmail(this.email, this.password);
 				await sendEmailVerify();
@@ -85,7 +84,7 @@ export default {
 					text: error.message,
 				});
 			} finally {
-				this.isLoading = false;
+				this.SET_LOADING(false);
 			}
 		},
 		validation() {

@@ -1,15 +1,17 @@
 <template>
-	<div class="d-flex flex-column justify-content-between h-100">
-		<nav-bar v-show="showLayout" />
-		<router-view class="h-100 overflow-auto" />
-		<footers v-show="showLayout" />
-	</div>
+	<b-overlay class="h-100" :show="isLoading" rounded="sm">
+		<div class="d-flex flex-column justify-content-between h-100">
+			<nav-bar v-show="showLayout" />
+			<router-view class="h-100 overflow-auto" />
+			<footers v-show="showLayout" />
+		</div>
 
-	<notification />
+		<notification />
+	</b-overlay>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import { getSessionKey } from '@/api/firebase';
 import NavBar from '@/components/layout/NavBar.vue';
 import Footers from '@/components/layout/Footer.vue';
@@ -27,6 +29,7 @@ export default {
 		};
 	},
 	computed: {
+		...mapState('loading', ['isLoading']),
 		currentPath() {
 			return this.$route.path;
 		},

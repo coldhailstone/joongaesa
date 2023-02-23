@@ -1,56 +1,54 @@
 <template>
 	<div class="d-flex align-items-center justify-content-center h-75">
-		<b-overlay :show="isLoading" rounded="sm">
-			<b-card header="중개사닷컴" align="center">
-				<b-form
-					class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
-					@submit="login('email')"
+		<b-card header="중개사닷컴" align="center">
+			<b-form
+				class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
+				@submit="login('email')"
+			>
+				<b-input-group
+					prepend-html="<i class='fa-regular fa-envelope'></i>"
+					class="mb-2 mr-sm-2 mb-sm-0"
 				>
-					<b-input-group
-						prepend-html="<i class='fa-regular fa-envelope'></i>"
-						class="mb-2 mr-sm-2 mb-sm-0"
-					>
-						<b-form-input
-							v-model="email"
-							type="email"
-							placeholder="아이디(이메일)"
-							required
-						/>
-					</b-input-group>
-					<b-input-group
-						prepend-html="<i class='fa-solid fa-lock'></i>"
-						class="mb-2 mr-sm-2 mb-sm-0"
-					>
-						<b-form-input
-							v-model="password"
-							type="password"
-							placeholder="비밀번호"
-							required
-						/>
-					</b-input-group>
+					<b-form-input
+						v-model="email"
+						type="email"
+						placeholder="아이디(이메일)"
+						required
+					/>
+				</b-input-group>
+				<b-input-group
+					prepend-html="<i class='fa-solid fa-lock'></i>"
+					class="mb-2 mr-sm-2 mb-sm-0"
+				>
+					<b-form-input
+						v-model="password"
+						type="password"
+						placeholder="비밀번호"
+						required
+					/>
+				</b-input-group>
 
-					<b-button class="w-100" type="submit" variant="primary"> 로그인 </b-button>
-					<b-button class="w-100" variant="dark" @click="$router.push('join')">
-						회원가입
-					</b-button>
-				</b-form>
+				<b-button class="w-100" type="submit" variant="primary"> 로그인 </b-button>
+				<b-button class="w-100" variant="dark" @click="$router.push('join')">
+					회원가입
+				</b-button>
+			</b-form>
 
-				<div>
-					<hr class="my-12" />
-					<div class="d-flex justify-content-center">
-						<div class="google-btn" @click="login('google')">
-							<div class="google-icon-wrapper">
-								<img
-									class="google-icon"
-									src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-								/>
-							</div>
-							<p class="btn-text"><b>Sign in with google</b></p>
+			<div>
+				<hr class="my-12" />
+				<div class="d-flex justify-content-center">
+					<div class="google-btn" @click="login('google')">
+						<div class="google-icon-wrapper">
+							<img
+								class="google-icon"
+								src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+							/>
 						</div>
+						<p class="btn-text"><b>Sign in with google</b></p>
 					</div>
 				</div>
-			</b-card>
-		</b-overlay>
+			</div>
+		</b-card>
 	</div>
 </template>
 
@@ -62,15 +60,15 @@ export default {
 	name: 'WithEmail',
 	data() {
 		return {
-			isLoading: false,
 			email: '',
 			password: '',
 		};
 	},
 	methods: {
+		...mapMutations('loading', ['SET_LOADING']),
 		...mapMutations('user', ['SET_USER']),
 		async login(type) {
-			this.isLoading = true;
+			this.SET_LOADING(true);
 			try {
 				await setPersistenceSession();
 				if (type === 'email') {
@@ -99,7 +97,7 @@ export default {
 					text: error.message,
 				});
 			} finally {
-				this.isLoading = false;
+				this.SET_LOADING(false);
 			}
 		},
 	},
