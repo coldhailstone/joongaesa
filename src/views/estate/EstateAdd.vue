@@ -98,11 +98,11 @@
 					<b-form-row class="mb-3">
 						<div class="w-50">
 							<label> 공급 면적 </label>
-							<b-form-input v-model="item.supplyArea" />
+							<b-form-input v-model="item.supplyAreaSize" />
 						</div>
 						<div class="w-50">
 							<label> 전용 면적 </label>
-							<b-form-input v-model="item.exclusiveArea" />
+							<b-form-input v-model="item.exclusiveAreaSize" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -241,6 +241,7 @@ export default {
 		return {
 			item: {
 				title: '',
+				address: {},
 				photos: [],
 				contractType: '',
 				price: '',
@@ -254,8 +255,8 @@ export default {
 				wholeFloor: '',
 				roomCount: '',
 				BathroomCount: '',
-				supplyArea: '',
-				exclusiveArea: '',
+				supplyAreaSize: '',
+				exclusiveAreaSize: '',
 				roomForm: '',
 				porchType: '',
 				sunlightDirection: '',

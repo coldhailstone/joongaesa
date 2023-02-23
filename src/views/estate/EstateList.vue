@@ -7,7 +7,12 @@
 				</b-button>
 			</div>
 			<div class="d-flex flex-wrap gap-5">
-				<estate-card @clickCard="showDetailModal" />
+				<estate-card
+					v-for="estate of estateList"
+					:key="estate.id"
+					:item="estate"
+					@clickCard="showDetailModal"
+				/>
 			</div>
 		</div>
 
@@ -16,7 +21,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
 import EstateCard from './EstateCard.vue';
 import ModalEstate from '@/components/modal/ModalEstate.vue';
@@ -32,6 +37,9 @@ export default {
 			modalEstate: null,
 			modalId: '',
 		};
+	},
+	computed: {
+		...mapState('estate/list', ['estateList']),
 	},
 	mounted() {
 		this.modalEstate = new Modal(document.querySelector('#modal-estate'));

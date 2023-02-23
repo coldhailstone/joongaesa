@@ -4,14 +4,14 @@
 		img-src="https://picsum.photos/600/300/?image=25"
 		img-top
 		class="card m-4"
-		@click="$emit('clickCard', 'id')"
+		@click="$emit('clickCard', item.id)"
 	>
 		<b-card-text>
 			<div class="d-flex flex-column mb-2">
-				<span>11평 3층</span>
-				<span>강남구 논현동</span>
+				<span>{{ `${item.exclusiveAreaSize}평 ${item.correspondingFloor}층` }}</span>
+				<span>{{ item.address }}</span>
 			</div>
-			<span class="title">🧡💛💚가성비 원룸💙💜🤎</span>
+			<span class="title">{{ item.title }}</span>
 		</b-card-text>
 	</b-card>
 </template>
@@ -19,6 +19,12 @@
 <script>
 export default {
 	name: 'EstateCard',
+	props: {
+		item: {
+			type: Object,
+			default: () => ({}),
+		},
+	},
 };
 </script>
 
