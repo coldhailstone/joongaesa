@@ -24,6 +24,7 @@
 						v-model="password"
 						type="password"
 						placeholder="비밀번호"
+						autoComplete="off"
 						required
 					/>
 				</b-input-group>
@@ -35,6 +36,7 @@
 						v-model="confirmPassword"
 						type="password"
 						placeholder="비밀번호 확인"
+						autoComplete="off"
 						required
 					/>
 				</b-input-group>

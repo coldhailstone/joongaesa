@@ -245,11 +245,11 @@
 <script>
 import { ESTATE } from '@/utils/constants';
 import AttachmentFile from '@/components/estate/AttachmentFile.vue';
-import FormAddress from '@/components/form/FormAddress.vue';
-import FormInput from '@/components/form/FormInput.vue';
-import FormTextarea from '@/components/form/FormTextarea.vue';
-import FormCheckbox from '@/components/form/FormCheckbox.vue';
-import FormRadio from '@/components/form/FormRadio.vue';
+import FormAddress from '@/components/estate/form/FormAddress.vue';
+import FormInput from '@/components/estate/form/FormInput.vue';
+import FormTextarea from '@/components/estate/form/FormTextarea.vue';
+import FormCheckbox from '@/components/estate/form/FormCheckbox.vue';
+import FormRadio from '@/components/estate/form/FormRadio.vue';
 import { mapActions } from 'vuex';
 
 export default {

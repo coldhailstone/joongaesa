@@ -27,9 +27,9 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-	min-height: 280px;
-	max-height: 680px;
 	img {
+		min-height: 280px;
+		max-height: 680px;
 		object-fit: cover;
 	}
 	h1 {

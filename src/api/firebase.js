@@ -16,7 +16,7 @@ const FIREBASE_CONFIG = {
 
 // Initialize Firebase
 if (location.hostname === 'localhost') {
-	self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.VUE_APP_FIREBASE_APPCHECK_DEBUG_TOKEN_CI;
+	self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.VUE_APP_FIREBASE_DEBUG_TOKEN_CI;
 }
 const app = initializeApp(FIREBASE_CONFIG);
 initializeAppCheck(app, {

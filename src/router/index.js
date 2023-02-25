@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { isEmpty } from 'lodash';
 import routes from './routes';
 import store from '@/store';
 
@@ -10,10 +11,13 @@ const router = createRouter({
 router.beforeEach((to, _, next) => {
 	const needLoginMenuList = ['매물 관리', '고객 관리'];
 	if (needLoginMenuList.includes(to.name)) {
-		store.state.user.user ? next() : next('login');
+		!isEmpty(store.state.user.user) ? next() : next('login');
 	} else {
 		next();
 	}
+});
+router.afterEach(() => {
+	window.scrollTo(0, 0);
 });
 
 export default router;

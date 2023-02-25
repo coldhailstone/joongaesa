@@ -1,5 +1,5 @@
 <template>
-	<b-navbar class="p-4" toggleable="lg" type="dark" variant="light">
+	<b-navbar class="navbar p-4" toggleable="lg" type="dark" variant="light">
 		<b-navbar-brand href="#">
 			<router-link to="/" class="text-decoration-none fw-bold fs-3 text-dark">
 				중개사닷컴
@@ -76,6 +76,13 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .dropdown-menu {
 	margin-top: 0 !important;
+}
+.navbar {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: 999;
+	border-bottom: 1px solid #eee;
 }
 .icon {
 	width: 32px;

@@ -7,7 +7,6 @@ import BootstrapVue3 from 'bootstrap-vue-3';
 import Notifications from '@kyvg/vue3-notification';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
-import 'sanitize.css';
 
 import '@/styles/common.scss';
 import '@/api/firebase';
