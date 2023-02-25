@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/modal/ModalEstate.vue';
@@ -43,9 +43,11 @@ export default {
 	},
 	mounted() {
 		this.modalEstate = new Modal(document.querySelector('#modal-estate'));
+		this.FETCH_ESTATE();
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
+		...mapActions('estate/list', ['FETCH_ESTATE']),
 		showDetailModal(id) {
 			this.modalId = id;
 			this.modalEstate.show();

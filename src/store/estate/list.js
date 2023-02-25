@@ -1,9 +1,9 @@
-import { db } from '@/api/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { add, get } from '@/api/firebase';
 
 export default {
 	namespaced: true,
 	state: {
+		path: 'estate',
 		estateList: [],
 	},
 	mutations: {
@@ -12,15 +12,12 @@ export default {
 		},
 	},
 	actions: {
-		async CREATE_ESTATE(_, body) {
+		async FETCH_ESTATE({ state }) {
+			await get(state.path);
+		},
+		async CREATE_ESTATE({ state }, body) {
 			console.log(body);
-			const ref = collection(db, 'estate');
-			try {
-				const res = await addDoc(ref, body);
-				console.log(res); // res는 undefined입니다.
-			} catch (error) {
-				console.log(error);
-			}
+			await add(state.path, body);
 		},
 		CREATE_PHOTO() {},
 	},

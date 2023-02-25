@@ -12,7 +12,7 @@ import {
 	setPersistence,
 	browserSessionPersistence,
 } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from '@firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from '@firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -72,6 +72,21 @@ export const isLogin = () => {
 
 // store
 export const db = getFirestore(app);
-export const setDocument = async (path, document, body) => {
-	return await setDoc(doc(db, path, document), body);
+export const add = async (path, body) => {
+	let result = null;
+	try {
+		result = await addDoc(collection(db, path), body);
+	} catch (error) {
+		console.log(error);
+	}
+	return result;
+};
+export const get = async (path) => {
+	let result = null;
+	try {
+		result = await getDocs(collection(db, path));
+	} catch (error) {
+		console.log(error);
+	}
+	return result;
 };
