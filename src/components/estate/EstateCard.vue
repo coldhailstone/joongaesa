@@ -1,6 +1,6 @@
 <template>
 	<b-card
-		title="월세 1000/100"
+		:title="title"
 		img-src="https://picsum.photos/600/300/?image=25"
 		img-top
 		class="card m-4"
@@ -8,8 +8,10 @@
 	>
 		<b-card-text>
 			<div class="d-flex flex-column mb-2">
-				<span>{{ `${item.exclusiveAreaSize}평 ${item.correspondingFloor}층` }}</span>
-				<span>{{ item.address }}</span>
+				<span v-if="item.pyung && item.correspondingFloor">
+					{{ `${item.pyung}평 ${item.correspondingFloor}층` }}
+				</span>
+				<span v-if="item.address">{{ item.address }}</span>
 			</div>
 			<span class="title">{{ item.title }}</span>
 		</b-card-text>
@@ -23,6 +25,13 @@ export default {
 		item: {
 			type: Object,
 			default: () => ({}),
+		},
+	},
+	computed: {
+		title() {
+			return `${this.item.contractType} ${this.item.deposit} ${
+				this.item.monthly > 0 ? `/ ${this.item.monthly}` : ''
+			}`;
 		},
 	},
 };

@@ -1,3 +1,4 @@
+import { where } from '@firebase/firestore';
 import { add, getList } from '@/api/firebase';
 
 export default {
@@ -12,8 +13,14 @@ export default {
 		},
 	},
 	actions: {
-		async FETCH_ESTATE({ state, commit }) {
-			commit('SET_ESTATE_LIST', await getList(state.path));
+		async FETCH_ESTATE({ state, commit }, queryList) {
+			commit(
+				'SET_ESTATE_LIST',
+				await getList(
+					state.path,
+					queryList.map((query) => where(query.key, '==', query.value))
+				)
+			);
 		},
 		async CREATE_ESTATE({ state }, body) {
 			return await add(state.path, body);

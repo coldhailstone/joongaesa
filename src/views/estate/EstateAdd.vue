@@ -4,6 +4,7 @@
 			<h1 class="mb-4 fw-bold">{{ $route.name }}</h1>
 			<div>
 				<h4 class="mb-3 fw-bold">기본 정보</h4>
+				<hr />
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
@@ -18,7 +19,7 @@
 								:postcode="item.postcode"
 								:address="item.address"
 								:addressDetail="item.addressDetail"
-								@change="changeAddress"
+								@changeAddress="changeAddress"
 							/>
 						</div>
 					</b-form-row>
@@ -32,6 +33,7 @@
 			</div>
 			<div>
 				<h4 class="mb-3 fw-bold">거래 정보</h4>
+				<hr />
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
@@ -57,7 +59,7 @@
 							<label> 건물 형태 </label>
 							<form-radio
 								v-model="item.buildingType"
-								:options="options.buildingType"
+								:options="setOptions(ESTATE.BUILDING_TYPE)"
 								name="buildingType"
 							/>
 						</div>
@@ -67,7 +69,7 @@
 							<label> 건물 종류 </label>
 							<form-radio
 								v-model="item.buildingForm"
-								:options="options.buildingForm"
+								:options="setOptions(ESTATE.BUILDING_FORM)"
 								name="buildingForm"
 							/>
 						</div>
@@ -77,7 +79,7 @@
 							<label> 거래유형 </label>
 							<form-radio
 								v-model="item.contractType"
-								:options="options.contractType"
+								:options="setOptions(ESTATE.CONTRACT_TYPE)"
 								name="contractType"
 							/>
 						</div>
@@ -117,7 +119,7 @@
 							<span class="me-3 pt-2">구조</span>
 							<form-radio
 								v-model="item.roomStructure"
-								:options="options.roomStructure"
+								:options="setOptions(ESTATE.ROOM_STRUCTURE)"
 								name="roomStructure"
 							/>
 						</div>
@@ -140,32 +142,36 @@
 							<label> 주실 방향 </label>
 							<form-radio
 								v-model="item.roomDirection"
-								:options="options.roomDirection"
+								:options="setOptions(ESTATE.ROOM_DIRECTION)"
 								name="roomDirection"
 							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
-						<div class="w-25">
+						<div class="w-100">
 							<label> 화장실 수 </label>
-							<form-input
-								v-model="item.bathroomCount"
-								type="number"
-								placeholder="화장실 수"
-							/>
+							<div class="d-flex gap-3 mt-2">
+								<form-input
+									v-model="item.bathroomCount"
+									type="number"
+									placeholder="화장실 수"
+								/>
+								<template></template>
+							</div>
 						</div>
 					</b-form-row>
 				</b-form>
 			</div>
 			<div>
 				<h4 class="mb-3 fw-bold">기타 정보</h4>
+				<hr />
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 엘리베이터 </label>
 							<form-radio
 								v-model="item.elevator"
-								:options="options.elevator"
+								:options="setOptions(ESTATE.ELEVATOR)"
 								name="elevator"
 							/>
 						</div>
@@ -173,7 +179,11 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 반려동물 </label>
-							<form-radio v-model="item.pet" :options="options.pet" name="pet" />
+							<form-radio
+								v-model="item.pet"
+								:options="setOptions(ESTATE.PET)"
+								name="pet"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -183,7 +193,7 @@
 								<div class="d-flex flex-wrap gap-3 mt-2">
 									<form-radio
 										v-model="item.parking"
-										:options="options.parking"
+										:options="setOptions(ESTATE.PARKING)"
 										name="parking"
 									/>
 								</div>
@@ -193,13 +203,14 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 관리비 </label>
-							<div class="w-25">
+							<div class="d-flex gap-3 mt-2">
 								<form-input
 									v-model="item.cost"
 									type="number"
 									placeholder="관리비"
 									suffix="만원"
 								/>
+								<template></template>
 							</div>
 						</div>
 					</b-form-row>
@@ -208,14 +219,17 @@
 							<label> 관리비 포함 항목 </label>
 							<form-checkbox
 								v-model="item.managementCost"
-								:options="options.managementCost"
+								:options="setOptions(ESTATE.MANAGEMENT_COST)"
 							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 옵션 </label>
-							<form-checkbox v-model="item.option" :options="options.option" />
+							<form-checkbox
+								v-model="item.option"
+								:options="setOptions(ESTATE.OPTION)"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -243,6 +257,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import { ESTATE } from '@/utils/constants';
 import AttachmentFile from '@/components/estate/AttachmentFile.vue';
 import FormAddress from '@/components/estate/form/FormAddress.vue';
@@ -250,7 +265,6 @@ import FormInput from '@/components/estate/form/FormInput.vue';
 import FormTextarea from '@/components/estate/form/FormTextarea.vue';
 import FormCheckbox from '@/components/estate/form/FormCheckbox.vue';
 import FormRadio from '@/components/estate/form/FormRadio.vue';
-import { mapActions } from 'vuex';
 
 export default {
 	name: 'EstateAdd',
@@ -274,21 +288,11 @@ export default {
 	},
 	data() {
 		return {
-			options: {
-				buildingType: [],
-				buildingForm: [],
-				contractType: [],
-				roomStructure: [],
-				roomDirection: [],
-				pet: [],
-				elevator: [],
-				parking: [],
-				managementCost: [],
-				option: [],
-			},
+			ESTATE,
 			item: {
 				id: '',
 				userId: '',
+				createDatetime: new Date(),
 				title: '',
 				postcode: '',
 				address: '',
@@ -300,7 +304,13 @@ export default {
 				buildingForm: '',
 				contractType: '',
 				useApprovalDate: '',
+				dong: '',
+				ho: '',
+				wholeFloor: '',
+				correspondingFloor: '',
 				roomStructure: [],
+				pyung: '',
+				m2: '',
 				roomDirection: [],
 				bathroomCount: 0,
 				elevator: '',
@@ -314,17 +324,11 @@ export default {
 			},
 		};
 	},
-	created() {
-		this.options.buildingType = this.setOptions(ESTATE.BUILDING_TYPE);
-		this.options.buildingForm = this.setOptions(ESTATE.BUILDING_FORM);
-		this.options.contractType = this.setOptions(ESTATE.CONTRACT_TYPE);
-		this.options.roomStructure = this.setOptions(ESTATE.ROOM_STRUCTURE);
-		this.options.roomDirection = this.setOptions(ESTATE.ROOM_DIRECTION);
-		this.options.pet = this.setOptions(ESTATE.PET);
-		this.options.elevator = this.setOptions(ESTATE.ELEVATOR);
-		this.options.parking = this.setOptions(ESTATE.PARKING);
-		this.options.managementCost = this.setOptions(ESTATE.MANAGEMENT_COST);
-		this.options.option = this.setOptions(ESTATE.OPTION);
+	computed: {
+		...mapState('user', ['user']),
+	},
+	mounted() {
+		this.item.userId = this.user.uid;
 	},
 	methods: {
 		...mapActions('estate/list', ['CREATE_ESTATE']),
@@ -340,22 +344,46 @@ export default {
 			this.item.addressDetail = addressDetail;
 		},
 		async save() {
-			if (!this.item.title) {
-				return this.$notify({
-					type: 'error',
-					text: '제목은 필수값입니다.',
-				});
-			}
+			if (!this.validation()) return;
 
 			try {
-				const response = await this.CREATE_ESTATE(this.item);
-				console.log(response);
+				await this.CREATE_ESTATE(this.item);
+				this.$router.push('/estate');
+
+				this.$notify({
+					type: 'success',
+					text: '매물이 등록되었습니다.',
+				});
 			} catch (error) {
 				this.$notify({
 					type: 'error',
 					text: error.message,
 				});
 			}
+		},
+		validation() {
+			if (!this.item.title) {
+				this.$notify({
+					type: 'error',
+					text: '제목은 필수값입니다.',
+				});
+				return false;
+			}
+			if (!this.item.contractType) {
+				this.$notify({
+					type: 'error',
+					text: '거래유형은 필수값입니다.',
+				});
+				return false;
+			}
+			if (!this.item.deposit || !this.item.monthly) {
+				this.$notify({
+					type: 'error',
+					text: '보증금/월세는 필수값입니다.',
+				});
+				return false;
+			}
+			return true;
 		},
 	},
 };
@@ -364,6 +392,7 @@ export default {
 <style lang="scss" scoped>
 label {
 	color: rgb(54, 58, 60);
-	font-weight: 500;
+	font-weight: 700;
+	margin-top: 8px;
 }
 </style>

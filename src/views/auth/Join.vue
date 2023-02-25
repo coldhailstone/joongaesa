@@ -59,11 +59,6 @@ export default {
 			confirmPassword: '',
 		};
 	},
-	computed: {
-		validationConfirmPassword() {
-			return this.confirmPassword === this.password;
-		},
-	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
 		...mapActions('user', ['CREATE_USER_WITH_EMAIL', 'SEND_EMAIL_VERIFICATION']),
@@ -79,7 +74,7 @@ export default {
 					type: 'success',
 					text: '이메일을 전송했습니다.',
 				});
-				this.$router.push('login');
+				this.$router.push('/login');
 			} catch (error) {
 				this.$notify({
 					type: 'error',
@@ -90,15 +85,14 @@ export default {
 			}
 		},
 		validation() {
-			let validate = true;
-			if (!this.validationConfirmPassword) {
+			if (this.password !== this.confirmPassword) {
 				this.$notify({
 					type: 'error',
 					text: '비밀번호가 일치하지 않습니다.',
 				});
-				validate = false;
+				return false;
 			}
-			return validate;
+			return true;
 		},
 	},
 };

@@ -6,6 +6,28 @@
 					매물 등록
 				</b-button>
 			</div>
+			<div class="d-flex align-items-center gap-1">
+				<b-form-input
+					v-model="keyword"
+					class="w-50"
+					type="search"
+					placeholder="제목을 검색하세요"
+					@keypress.enter="fetchList"
+				/>
+				<div class="search-icon-wrapper" @click="fetchList">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</div>
+				<div class="d-flex gap-2 ms-3">
+					<b-button
+						v-for="text of ESTATE.CONTRACT_TYPE"
+						:key="text"
+						:variant="contractType === text ? 'warning' : 'secondary'"
+						@click="changeContractType(text)"
+					>
+						{{ text }}
+					</b-button>
+				</div>
+			</div>
 			<div class="d-flex flex-wrap gap-5">
 				<estate-card
 					v-for="estate of estateList"
@@ -23,6 +45,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
+import { ESTATE } from '@/utils/constants';
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/modal/ModalEstate.vue';
 
@@ -34,6 +57,9 @@ export default {
 	},
 	data() {
 		return {
+			ESTATE,
+			keyword: '',
+			contractType: '',
 			modalEstate: null,
 			modalId: '',
 		};
@@ -50,14 +76,31 @@ export default {
 		...mapActions('estate/list', ['FETCH_ESTATE']),
 		async fetchList() {
 			try {
-				await this.FETCH_ESTATE();
-				console.log(this.estateList);
+				const queryList = [];
+				if (this.keyword) {
+					queryList.push({
+						key: 'title',
+						value: this.keyword,
+					});
+				}
+				if (this.contractType) {
+					queryList.push({
+						key: 'contractType',
+						value: this.contractType,
+					});
+				}
+				await this.FETCH_ESTATE(queryList);
 			} catch (error) {
 				this.$notify({
 					type: 'error',
 					text: error.message,
 				});
 			}
+		},
+		changeContractType(type) {
+			if (type === this.contractType) this.contractType = '';
+			else this.contractType = type;
+			this.fetchList();
 		},
 		showDetailModal(id) {
 			this.modalId = id;
@@ -66,3 +109,16 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.search-icon-wrapper {
+	width: 38px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	background: rgba(54, 58, 60, 0.1);
+	border: 1px solid #eee;
+	border-radius: 10px;
+	cursor: pointer;
+}
+</style>

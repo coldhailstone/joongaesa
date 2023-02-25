@@ -9,7 +9,7 @@
 			<b-form-input
 				v-model="item.addressDetail"
 				placeholder="상세주소"
-				@input="$emit('change', getAddress())"
+				@input="$emit('changeAddress', getAddress())"
 			/>
 		</div>
 	</div>
@@ -54,7 +54,7 @@ export default {
 			this.item.postcode = result.zonecode;
 			this.item.address = result.roadAddress;
 			this.item.addressDetail = '';
-			this.$emit('change', this.getAddress());
+			this.$emit('changeAddress', this.getAddress());
 		},
 		getAddress() {
 			return {

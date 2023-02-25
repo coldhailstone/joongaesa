@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc } from '@firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query } from '@firebase/firestore';
 
 const FIREBASE_CONFIG = {
 	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -37,8 +37,12 @@ export const db = getFirestore(app);
 export const add = async (path, body) => {
 	return await addDoc(collection(db, path), body);
 };
-export const getList = async (path) => {
-	const snapshots = await getDocs(collection(db, path));
+export const getList = async (path, queryList) => {
+	const q =
+		queryList && queryList.length
+			? query(collection(db, path), ...queryList)
+			: collection(db, path);
+	const snapshots = await getDocs(q);
 	return snapshots.docs.map((doc) => doc.data());
 };
 export const getDetail = async (path, id) => {

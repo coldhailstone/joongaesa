@@ -1,7 +1,7 @@
 export const ESTATE = {
 	BUILDING_TYPE: ['빌라/주택', '오피스텔', '아파트', '상가/사무실'],
 	BUILDING_FORM: ['원룸', '빌라', '연립', '단독', '다가구', '전원주택', '상가주택', '기타'],
-	CONTRACT_TYPE: ['전세', '월세', '매매', '단기임대'],
+	CONTRACT_TYPE: ['월세', '전세', '매매', '단기임대'],
 	ROOM_STRUCTURE: ['오픈형', '분리형'],
 	ROOM_DIRECTION: ['동', '서', '남', '북', '남동', '남서', '북서', '북동'],
 	MANAGEMENT_COST: ['전기세', '가스', '수도', '인터넷', 'TV'],
