@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="footer-wrapper">
 		<footer
 			class="d-flex flex-wrap justify-content-between align-items-center p-3 my-2 border-top"
 		>
@@ -20,7 +20,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo {
-	width: 30px;
+.footer-wrapper {
+	position: absolute;
+	width: 100%;
+	height: 70px;
+	bottom: 0px;
+	.logo {
+		width: 30px;
+	}
 }
 </style>

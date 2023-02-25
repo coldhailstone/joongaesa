@@ -38,9 +38,8 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import { menuList } from '@/router/routes';
-import { signOutUser, removeUser } from '@/api/firebase';
 
 export default {
 	data() {
@@ -53,10 +52,9 @@ export default {
 	},
 	methods: {
 		...mapMutations('user', ['SET_USER']),
+		...mapActions('user', ['SIGN_OUT', 'DELETE_USER']),
 		async signOut() {
-			await signOutUser();
-			this.SET_USER({});
-
+			await this.SIGN_OUT();
 			this.$notify({
 				type: 'success',
 				text: '로그아웃에 성공했습니다.',
@@ -64,9 +62,7 @@ export default {
 			this.$router.push('/');
 		},
 		async deleteUser() {
-			await removeUser();
-			this.SET_USER({});
-
+			await this.DELETE_USER();
 			this.$notify({
 				type: 'success',
 				text: '회원탈퇴가 완료되었습니다.',
@@ -78,6 +74,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .dropdown-menu {
+	margin-top: 0 !important;
+}
 .icon {
 	width: 32px;
 	height: 32px;

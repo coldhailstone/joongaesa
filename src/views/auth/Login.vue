@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex align-items-center justify-content-center h-75">
+	<div class="login-wrapper d-flex align-items-center justify-content-center">
 		<b-card header="중개사닷컴" align="center">
 			<b-form
 				class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import { signInWithEmail, signInWithGoogle, getUser, setPersistenceSession } from '@/api/firebase';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
 	name: 'WithEmail',
@@ -64,22 +63,30 @@ export default {
 			password: '',
 		};
 	},
+	computed: {
+		...mapState('user', ['user']),
+	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
 		...mapMutations('user', ['SET_USER']),
+		...mapActions('user', [
+			'FETCH_USER',
+			'SET_PERSISTENCT',
+			'SIGN_IN_WITH_POPUP',
+			'SIGN_IN_WITH_EMAIL',
+		]),
 		async login(type) {
 			this.SET_LOADING(true);
 			try {
-				await setPersistenceSession();
+				await this.SET_PERSISTENCT();
 				if (type === 'email') {
-					await signInWithEmail(this.email, this.password);
+					await this.SIGN_IN_WITH_EMAIL({ email: this.email, password: this.password });
 				} else if (type === 'google') {
-					await signInWithGoogle();
+					await this.SIGN_IN_WITH_POPUP();
 				}
 
-				const user = getUser();
-				if (user.emailVerified) {
-					this.SET_USER(user);
+				await this.FETCH_USER();
+				if (this.user.emailVerified) {
 					this.$notify({
 						type: 'success',
 						text: '로그인에 성공했습니다.',
@@ -105,9 +112,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form {
-	min-width: 290px;
-	max-width: 460px;
+.login-wrapper {
+	height: 100dvh !important;
+	.form {
+		min-width: 290px;
+		max-width: 460px;
+	}
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);

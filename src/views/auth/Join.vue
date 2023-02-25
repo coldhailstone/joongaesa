@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex align-items-center justify-content-center h-75">
+	<div class="join-wrapper d-flex align-items-center justify-content-center">
 		<b-card header="회원가입" align="center">
 			<b-form
 				class="form d-flex flex-column align-items-center justify-content-center gap-3 h-75"
@@ -46,8 +46,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
-import { createUserWithEmail, sendEmailVerify } from '@/api/firebase';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
 	name: 'Join',
@@ -65,13 +64,14 @@ export default {
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
+		...mapActions('user', ['CREATE_USER_WITH_EMAIL', 'SEND_EMAIL_VERIFICATION']),
 		async join() {
 			if (!this.validation()) return;
 
 			this.SET_LOADING(true);
 			try {
-				await createUserWithEmail(this.email, this.password);
-				await sendEmailVerify();
+				await this.CREATE_USER_WITH_EMAIL({ email: this.email, password: this.password });
+				await this.SEND_EMAIL_VERIFICATION();
 
 				this.$notify({
 					type: 'success',
@@ -103,8 +103,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form {
-	min-width: 290px;
-	max-width: 460px;
+.join-wrapper {
+	height: 100dvh !important;
+	.form {
+		min-width: 290px;
+		max-width: 460px;
+	}
 }
 </style>

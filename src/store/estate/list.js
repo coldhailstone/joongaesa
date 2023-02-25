@@ -1,4 +1,4 @@
-import { add, get } from '@/api/firebase';
+import { add, getList } from '@/api/firebase';
 
 export default {
 	namespaced: true,
@@ -12,8 +12,8 @@ export default {
 		},
 	},
 	actions: {
-		async FETCH_ESTATE({ state }) {
-			return await get(state.path);
+		async FETCH_ESTATE({ state, commit }) {
+			commit('SET_ESTATE_LIST', await getList(state.path));
 		},
 		async CREATE_ESTATE({ state }, body) {
 			return await add(state.path, body);

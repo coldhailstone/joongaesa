@@ -1,73 +1,35 @@
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics } from 'firebase/analytics';
-import {
-	getAuth,
-	signInWithPopup,
-	GoogleAuthProvider,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	sendEmailVerification,
-	signOut,
-	deleteUser,
-	setPersistence,
-	browserSessionPersistence,
-} from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs } from '@firebase/firestore';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc } from '@firebase/firestore';
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-	apiKey: 'AIzaSyA5oSZUdjxR-vF9gHD7-gh8TfuSsyRrVA4',
-	authDomain: 'joongaesa.firebaseapp.com',
-	projectId: 'joongaesa',
-	storageBucket: 'joongaesa.appspot.com',
-	messagingSenderId: '796796122060',
-	appId: '1:796796122060:web:6b71f76a5e395314bc2369',
-	measurementId: 'G-WKZ852HBEH',
+const FIREBASE_CONFIG = {
+	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+	authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.VUE_APP_FIREBASE_APP_ID,
+	measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+if (location.hostname === 'localhost') {
+	self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.VUE_APP_FIREBASE_APPCHECK_DEBUG_TOKEN_CI;
+}
+const app = initializeApp(FIREBASE_CONFIG);
+initializeAppCheck(app, {
+	provider: new ReCaptchaV3Provider(process.env.VUE_APP_FIREBASE_RECAPTCHA_KEY),
+	isTokenAutoRefreshEnabled: true,
+});
 getAnalytics(app);
 
-// Auth
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
-export const setPersistenceSession = () => {
-	return setPersistence(auth, browserSessionPersistence);
-};
-export const signInWithGoogle = () => {
-	return signInWithPopup(auth, provider);
-};
-export const createUserWithEmail = (email, password) => {
-	return createUserWithEmailAndPassword(auth, email, password);
-};
-export const signInWithEmail = (email, password) => {
-	return signInWithEmailAndPassword(auth, email, password);
-};
-export const sendEmailVerify = () => {
-	return sendEmailVerification(getUser());
-};
-export const signOutUser = () => {
-	return signOut(auth);
-};
-export const removeUser = () => {
-	return deleteUser(getUser());
-};
-export const getUser = () => {
-	return auth.currentUser;
-};
+// auth
+export const auth = getAuth();
+export const provider = new GoogleAuthProvider();
 export const getSessionKey = () => {
-	return `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`;
-};
-export const getSessionUser = () => {
-	return sessionStorage.getItem(getSessionKey());
-};
-export const isLogin = () => {
-	return !!getSessionUser();
+	return `firebase:authUser:${FIREBASE_CONFIG.apiKey}:[DEFAULT]`;
 };
 
 // store
@@ -75,6 +37,11 @@ export const db = getFirestore(app);
 export const add = async (path, body) => {
 	return await addDoc(collection(db, path), body);
 };
-export const get = async (path) => {
-	return await getDocs(collection(db, path));
+export const getList = async (path) => {
+	const snapshots = await getDocs(collection(db, path));
+	return snapshots.docs.map((doc) => doc.data());
+};
+export const getDetail = async (path, id) => {
+	const ref = await getDoc(doc(db, path, id));
+	return ref.data();
 };

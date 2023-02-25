@@ -50,8 +50,8 @@ export default {
 		...mapActions('estate/list', ['FETCH_ESTATE']),
 		async fetchList() {
 			try {
-				const response = await this.FETCH_ESTATE();
-				console.log(response);
+				await this.FETCH_ESTATE();
+				console.log(this.estateList);
 			} catch (error) {
 				this.$notify({
 					type: 'error',
