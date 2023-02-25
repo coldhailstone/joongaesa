@@ -3,6 +3,7 @@ import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query } from '@firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const FIREBASE_CONFIG = {
 	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -50,4 +51,12 @@ export const getList = async (path, queryList) => {
 export const getDetail = async (path, id) => {
 	const ref = await getDoc(doc(db, path, id));
 	return ref.data();
+};
+
+// storage
+const storage = getStorage(app);
+export const uploadFile = async (file) => {
+	const storageRef = ref(storage, `images/${auth.currentUser.uid}/${Date.now()}_${file.name}`);
+	const response = await uploadBytes(storageRef, file);
+	return getDownloadURL(response.ref);
 };

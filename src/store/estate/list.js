@@ -1,5 +1,5 @@
 import { where } from '@firebase/firestore';
-import { add, getList } from '@/api/firebase';
+import { getList, add, uploadFile } from '@/api/firebase';
 
 export default {
 	namespaced: true,
@@ -23,6 +23,10 @@ export default {
 			);
 		},
 		async CREATE_ESTATE({ state }, body) {
+			if (body.photo && body.photo.length) {
+				const photo = await Promise.all(body.photo.map((file) => uploadFile(file)));
+				body.photo = photo;
+			}
 			return await add(state.path, body);
 		},
 		CREATE_PHOTO() {},

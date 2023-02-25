@@ -26,7 +26,7 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 사진 </label>
-							<attachment-file @changeFile="item.photos = $event" />
+							<attachment-file @changeFile="item.photo = $event" />
 						</div>
 					</b-form-row>
 				</b-form>
@@ -56,6 +56,16 @@
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
+							<label> 거래유형 </label>
+							<form-radio
+								v-model="item.contractType"
+								:options="setOptions(ESTATE.CONTRACT_TYPE)"
+								name="contractType"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
 							<label> 건물 형태 </label>
 							<form-radio
 								v-model="item.buildingType"
@@ -71,16 +81,6 @@
 								v-model="item.buildingForm"
 								:options="setOptions(ESTATE.BUILDING_FORM)"
 								name="buildingForm"
-							/>
-						</div>
-					</b-form-row>
-					<b-form-row class="mb-3">
-						<div class="w-100">
-							<label> 거래유형 </label>
-							<form-radio
-								v-model="item.contractType"
-								:options="setOptions(ESTATE.CONTRACT_TYPE)"
-								name="contractType"
 							/>
 						</div>
 					</b-form-row>
@@ -296,12 +296,12 @@ export default {
 				postcode: '',
 				address: '',
 				addressDetail: '',
-				photos: [],
+				photo: [],
 				deposit: 0,
 				monthly: 0,
+				contractType: '',
 				buildingType: '',
 				buildingForm: '',
-				contractType: '',
 				useApprovalDate: '',
 				dong: '',
 				ho: '',

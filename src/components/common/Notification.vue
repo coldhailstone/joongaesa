@@ -18,9 +18,6 @@ export default {
 .notifications {
 	margin-bottom: 80px;
 	.notification {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 		width: 100%;
 		padding: 8px;
 		background: rgba(0, 0, 0, 0.8);

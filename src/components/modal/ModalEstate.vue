@@ -20,8 +20,10 @@
 						img-height="480"
 					>
 						<b-carousel-slide
-							img-src="https://picsum.photos/1024/480/?image=58"
-							active
+							v-for="(src, index) of estate.photo"
+							:key="src"
+							:img-src="src"
+							:active="index === 0"
 						></b-carousel-slide>
 					</b-carousel>
 					<div>
@@ -334,8 +336,15 @@ export default {
 	methods: {
 		...mapActions('estate/detail', ['FETCH_ESTATE']),
 		async fetchDetail() {
-			await this.FETCH_ESTATE(this.id);
-			console.log(this.estate);
+			try {
+				await this.FETCH_ESTATE(this.id);
+				console.log(this.estate);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
 		},
 	},
 };
