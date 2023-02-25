@@ -54,20 +54,34 @@ export default {
 		...mapMutations('user', ['SET_USER']),
 		...mapActions('user', ['SIGN_OUT', 'DELETE_USER']),
 		async signOut() {
-			await this.SIGN_OUT();
-			this.$notify({
-				type: 'success',
-				text: '로그아웃에 성공했습니다.',
-			});
-			this.$router.push('/');
+			try {
+				await this.SIGN_OUT();
+				this.$notify({
+					type: 'success',
+					text: '로그아웃에 성공했습니다.',
+				});
+				this.$router.push('/');
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
 		},
 		async deleteUser() {
-			await this.DELETE_USER();
-			this.$notify({
-				type: 'success',
-				text: '회원탈퇴가 완료되었습니다.',
-			});
-			this.$router.push('/');
+			try {
+				await this.DELETE_USER();
+				this.$notify({
+					type: 'success',
+					text: '회원탈퇴가 완료되었습니다.',
+				});
+				this.$router.push('/');
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
 		},
 	},
 };
