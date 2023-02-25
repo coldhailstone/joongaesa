@@ -43,7 +43,9 @@ export const getList = async (path, queryList) => {
 			? query(collection(db, path), ...queryList)
 			: collection(db, path);
 	const snapshots = await getDocs(q);
-	return snapshots.docs.map((doc) => doc.data());
+	return snapshots.docs.map((doc) => {
+		return { ...doc.data(), id: doc.id };
+	});
 };
 export const getDetail = async (path, id) => {
 	const ref = await getDoc(doc(db, path, id));

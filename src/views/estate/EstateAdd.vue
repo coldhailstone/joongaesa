@@ -290,7 +290,6 @@ export default {
 		return {
 			ESTATE,
 			item: {
-				id: '',
 				userId: '',
 				createDatetime: new Date(),
 				title: '',

@@ -33,7 +33,7 @@
 					v-for="estate of estateList"
 					:key="estate.id"
 					:item="estate"
-					@clickCard="showDetailModal"
+					@clickCard="showDetailModal(estate.id)"
 				/>
 			</div>
 		</div>
@@ -73,7 +73,7 @@ export default {
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
-		...mapActions('estate/list', ['FETCH_ESTATE']),
+		...mapActions('estate/list', ['FETCH_ESTATE_LIST']),
 		async fetchList() {
 			try {
 				const queryList = [];
@@ -89,7 +89,7 @@ export default {
 						value: this.contractType,
 					});
 				}
-				await this.FETCH_ESTATE(queryList);
+				await this.FETCH_ESTATE_LIST(queryList);
 			} catch (error) {
 				this.$notify({
 					type: 'error',

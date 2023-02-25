@@ -294,10 +294,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-						닫기
-					</button>
-					<button type="button" class="btn btn-primary">저장</button>
+					<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
+					<b-button type="button" variant="danger">삭제</b-button>
+					<b-button type="button" variant="primary">저장</b-button>
 				</div>
 			</div>
 		</div>
@@ -305,6 +304,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
 	name: 'ModalEstate',
 	props: {
@@ -320,12 +320,23 @@ export default {
 			},
 		};
 	},
+	computed: {
+		...mapState('estate/detail', ['estate']),
+	},
 	mounted() {
 		const modal = document.querySelector('#modal-estate');
 		modal.addEventListener('show.bs.modal', () => {
-			console.log('show');
+			this.$nextTick(() => {
+				this.fetchDetail();
+			});
 		});
 	},
-	methods: {},
+	methods: {
+		...mapActions('estate/detail', ['FETCH_ESTATE']),
+		async fetchDetail() {
+			await this.FETCH_ESTATE(this.id);
+			console.log(this.estate);
+		},
+	},
 };
 </script>

@@ -13,7 +13,7 @@ export default {
 		},
 	},
 	actions: {
-		async FETCH_ESTATE({ state, commit }, queryList) {
+		async FETCH_ESTATE_LIST({ state, commit }, queryList) {
 			commit(
 				'SET_ESTATE_LIST',
 				await getList(

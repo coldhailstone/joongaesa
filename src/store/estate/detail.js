@@ -1,6 +1,9 @@
+import { getDetail } from '@/api/firebase';
+
 export default {
 	namespaced: true,
 	state: {
+		path: 'estate',
 		estate: {},
 	},
 	mutations: {
@@ -8,5 +11,9 @@ export default {
 			state.estate = payload;
 		},
 	},
-	actions: {},
+	actions: {
+		async FETCH_ESTATE({ state, commit }, id) {
+			commit('SET_ESTATE', await getDetail(state.path, id));
+		},
+	},
 };
