@@ -37,14 +37,14 @@
 			<div>
 				<hr class="my-12" />
 				<div class="d-flex justify-content-center">
-					<div class="google-btn" @click="login('google')">
+					<div class="google-btn d-flex justify-content-between" @click="login('google')">
 						<div class="google-icon-wrapper">
 							<img
 								class="google-icon"
 								src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
 							/>
 						</div>
-						<p class="btn-text"><b>Sign in with google</b></p>
+						<p class="btn-text fw-bold w-100">구글 로그인</p>
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,6 @@ export default {
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:500);
-$white: #fff;
 $google-blue: #4285f4;
 $button-active-blue: #1669f2;
 .google-btn {
@@ -122,13 +121,12 @@ $button-active-blue: #1669f2;
 	box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
 	cursor: pointer;
 	.google-icon-wrapper {
-		position: absolute;
 		margin-top: 1px;
 		margin-left: 1px;
 		width: 40px;
 		height: 40px;
 		border-radius: 2px;
-		background-color: $white;
+		background-color: #fff;
 	}
 	.google-icon {
 		margin-top: 12px;
@@ -138,7 +136,7 @@ $button-active-blue: #1669f2;
 	.btn-text {
 		float: right;
 		margin: 11px 11px 0 0;
-		color: $white;
+		color: #fff;
 		font-size: 14px;
 		letter-spacing: 0.2px;
 		font-family: 'Roboto';

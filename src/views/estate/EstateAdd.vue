@@ -14,19 +14,12 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 주소 </label>
-							<div class="mb-2">
-								<b-button @click="openDaumPostcode">주소검색</b-button>
-							</div>
-							<div class="d-flex flex-column gap-2">
-								<b-form-input
-									v-model="item.postcode"
-									class="w-25"
-									placeholder="우편번호"
-									disabled
-								/>
-								<b-form-input v-model="item.address" placeholder="주소" disabled />
-								<b-form-input v-model="item.addressDetail" placeholder="상세주소" />
-							</div>
+							<form-address
+								:postcode="item.postcode"
+								:address="item.address"
+								:addressDetail="item.addressDetail"
+								@change="changeAddress"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -42,76 +35,65 @@
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
-							<label> 건물 형태 </label>
-							<b-form-group>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.buildingType"
-										:key="form.value"
-										v-model="item.buildingType"
-										:value="form.value"
-										name="buildingType"
-									>
-										{{ form.text }}
-									</b-form-radio>
-								</div>
-							</b-form-group>
+							<label> 보증금 / 월세 </label>
+							<div class="d-flex gap-3 mt-2">
+								<form-input
+									v-model="item.deposit"
+									type="number"
+									placeholder="보증금"
+									suffix="만원"
+								/>
+								<form-input
+									v-model="item.monthly"
+									type="number"
+									placeholder="월세"
+									suffix="만원"
+								/>
+							</div>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
-						<div class="w-50">
-							<label> 사용승인일 </label>
-							<b-form-input v-model="item.useApprovalDate" type="date" />
+						<div class="w-100">
+							<label> 건물 형태 </label>
+							<form-radio
+								v-model="item.buildingType"
+								:options="options.buildingType"
+								name="buildingType"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 건물 종류 </label>
-							<b-form-group>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.buildingForm"
-										:key="form.value"
-										v-model="item.buildingForm"
-										:value="form.value"
-										name="buildingForm"
-									>
-										{{ form.text }}
-									</b-form-radio>
-								</div>
-							</b-form-group>
+							<form-radio
+								v-model="item.buildingForm"
+								:options="options.buildingForm"
+								name="buildingForm"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 거래유형 </label>
-							<b-form-group>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.contractType"
-										:key="form.value"
-										v-model="item.contractType"
-										:value="form.value"
-										name="contractType"
-									>
-										{{ form.text }}
-									</b-form-radio>
-								</div>
-							</b-form-group>
+							<form-radio
+								v-model="item.contractType"
+								:options="options.contractType"
+								name="contractType"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-50">
+							<label> 사용승인일 </label>
+							<form-input v-model="item.useApprovalDate" type="date" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 동 / 호 </label>
 							<div class="d-flex gap-3 mt-2">
-								<div class="d-flex align-items-center gap-1 w-25">
-									<b-form-input v-model="item.title" placeholder="동" />
-									<span>동</span>
-								</div>
-								<div class="d-flex align-items-center gap-1 w-25">
-									<b-form-input v-model="item.title" placeholder="호" />
-									<span>호</span>
-								</div>
+								<form-input v-model="item.dong" placeholder="동" suffix="동" />
+								<form-input v-model="item.ho" placeholder="호" suffix="호" />
 							</div>
 						</div>
 					</b-form-row>
@@ -119,66 +101,58 @@
 						<div class="w-100">
 							<label> 층 / 구조 </label>
 							<div class="d-flex gap-3 mt-2">
-								<div class="d-flex align-items-center gap-1">
-									<span class="w-25">전체층</span>
-									<b-form-input v-model="item.title" placeholder="전체층" />
-								</div>
-								<div class="d-flex align-items-center gap-1">
-									<span class="w-25">해당층</span>
-									<b-form-input v-model="item.title" placeholder="해당층" />
-								</div>
+								<form-input
+									v-model="item.wholeFloor"
+									placeholder="전체층"
+									prefix="전체층"
+								/>
+								<form-input
+									v-model="item.correspondingFloor"
+									placeholder="해당층"
+									prefix="해당층"
+								/>
 							</div>
 						</div>
 						<div class="d-flex flex-wrap gap-3 mt-2">
-							<span class="me-3">구조</span>
-							<b-form-radio
-								v-for="form of options.roomStructure"
-								:key="form.value"
+							<span class="me-3 pt-2">구조</span>
+							<form-radio
 								v-model="item.roomStructure"
-								:value="form.value"
+								:options="options.roomStructure"
 								name="roomStructure"
-							>
-								{{ form.text }}
-							</b-form-radio>
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 전용면적 </label>
 							<div class="d-flex gap-3 mt-2">
-								<div class="d-flex align-items-center gap-1 w-25">
-									<b-form-input v-model="item.title" placeholder="평" />
-									<span>평</span>
-								</div>
-								<div class="d-flex align-items-center gap-1 w-25">
-									<b-form-input v-model="item.title" placeholder="m2" />
-									<span>m<sup>2</sup></span>
-								</div>
+								<form-input v-model="item.pyung" placeholder="평" suffix="평" />
+								<form-input
+									v-model="item.m2"
+									placeholder="m2"
+									suffix="m<sup>2</sup>"
+								/>
 							</div>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 주실 방향 </label>
-							<b-form-group>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.roomDirection"
-										:key="form.value"
-										v-model="item.roomDirection"
-										:value="form.value"
-										name="roomDirection"
-									>
-										{{ form.text }}
-									</b-form-radio>
-								</div>
-							</b-form-group>
+							<form-radio
+								v-model="item.roomDirection"
+								:options="options.roomDirection"
+								name="roomDirection"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-25">
 							<label> 화장실 수 </label>
-							<b-form-input v-model="item.correspondingFloor" type="number" />
+							<form-input
+								v-model="item.bathroomCount"
+								type="number"
+								placeholder="화장실 수"
+							/>
 						</div>
 					</b-form-row>
 				</b-form>
@@ -188,20 +162,18 @@
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
+							<label> 엘리베이터 </label>
+							<form-radio
+								v-model="item.elevator"
+								:options="options.elevator"
+								name="elevator"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
 							<label> 반려동물 </label>
-							<b-form-group>
-								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.pet"
-										:key="form.value"
-										v-model="item.pet"
-										:value="form.value"
-										name="pet"
-									>
-										{{ form.text }}
-									</b-form-radio>
-								</div>
-							</b-form-group>
+							<form-radio v-model="item.pet" :options="options.pet" name="pet" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -209,17 +181,47 @@
 							<label> 주차 </label>
 							<b-form-group>
 								<div class="d-flex flex-wrap gap-3 mt-2">
-									<b-form-radio
-										v-for="form of options.parking"
-										:key="form.value"
+									<form-radio
 										v-model="item.parking"
-										:value="form.value"
+										:options="options.parking"
 										name="parking"
-									>
-										{{ form.text }}
-									</b-form-radio>
+									/>
 								</div>
 							</b-form-group>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
+							<label> 관리비 </label>
+							<div class="w-25">
+								<form-input
+									v-model="item.cost"
+									type="number"
+									placeholder="관리비"
+									suffix="만원"
+								/>
+							</div>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
+							<label> 관리비 포함 항목 </label>
+							<form-checkbox
+								v-model="item.managementCost"
+								:options="options.managementCost"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
+							<label> 옵션 </label>
+							<form-checkbox v-model="item.option" :options="options.option" />
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-50">
+							<label> 입주가능일 </label>
+							<form-input v-model="item.moveDate" type="date" />
 						</div>
 					</b-form-row>
 				</b-form>
@@ -228,13 +230,7 @@
 				<h4 class="mb-3 fw-bold">상세 설명</h4>
 				<b-form>
 					<b-form-row class="mb-3">
-						<div class="w-100">
-							<b-form-textarea
-								v-model="item.description"
-								rows="5"
-								noResize
-							></b-form-textarea>
-						</div>
+						<form-textarea v-model="item.description" />
 					</b-form-row>
 				</b-form>
 			</div>
@@ -248,13 +244,23 @@
 
 <script>
 import { ESTATE } from '@/utils/constants';
-import daumPostcode from '@/api/daumPostcode';
 import AttachmentFile from '@/components/estate/AttachmentFile.vue';
+import FormAddress from '@/components/form/FormAddress.vue';
+import FormInput from '@/components/form/FormInput.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import FormCheckbox from '@/components/form/FormCheckbox.vue';
+import FormRadio from '@/components/form/FormRadio.vue';
+import { mapActions } from 'vuex';
 
 export default {
 	name: 'EstateAdd',
 	components: {
 		AttachmentFile,
+		FormAddress,
+		FormInput,
+		FormTextarea,
+		FormCheckbox,
+		FormRadio,
 	},
 	props: {
 		title: {
@@ -275,45 +281,35 @@ export default {
 				roomStructure: [],
 				roomDirection: [],
 				pet: [],
+				elevator: [],
 				parking: [],
+				managementCost: [],
+				option: [],
 			},
 			item: {
+				id: '',
+				userId: '',
 				title: '',
 				postcode: '',
 				address: '',
 				addressDetail: '',
 				photos: [],
-				buildingType: [],
-				buildingForm: [],
-				contractType: [],
+				deposit: 0,
+				monthly: 0,
+				buildingType: '',
+				buildingForm: '',
+				contractType: '',
+				useApprovalDate: '',
 				roomStructure: [],
 				roomDirection: [],
-				price: '',
-				managementCost: '',
-				managementCostList: [],
-				hireList: [],
-				moveDate: '',
-				buildingName: '',
-				correspondingFloor: '',
-				wholeFloor: '',
-				roomCount: '',
-				BathroomCount: '',
-				supplyAreaSize: '',
-				exclusiveAreaSize: '',
-				roomForm: '',
-				porchType: '',
-				sunlightDirection: '',
-				totalHouseCount: '',
-				totalParkingCount: '',
-				availableParkingCount: '',
+				bathroomCount: 0,
+				elevator: '',
 				pet: '',
 				parking: '',
-				useApprovalDate: '',
-				heatingMethod: '',
-				coolingMethod: '',
-				livingFacilities: [],
-				securityFacility: [],
-				otherFacility: [],
+				cost: 0,
+				managementCost: [],
+				option: [],
+				moveDate: '',
 				description: '',
 			},
 		};
@@ -325,23 +321,33 @@ export default {
 		this.options.roomStructure = this.setOptions(ESTATE.ROOM_STRUCTURE);
 		this.options.roomDirection = this.setOptions(ESTATE.ROOM_DIRECTION);
 		this.options.pet = this.setOptions(ESTATE.PET);
+		this.options.elevator = this.setOptions(ESTATE.ELEVATOR);
 		this.options.parking = this.setOptions(ESTATE.PARKING);
+		this.options.managementCost = this.setOptions(ESTATE.MANAGEMENT_COST);
+		this.options.option = this.setOptions(ESTATE.OPTION);
 	},
 	methods: {
+		...mapActions('estate/list', ['CREATE_ESTATE']),
 		setOptions(constant) {
 			return constant.map((text) => ({
 				text,
 				value: text,
 			}));
 		},
-		async openDaumPostcode() {
-			const result = await daumPostcode(window);
-			this.item.postcode = result.zonecode;
-			this.item.address = result.roadAddress;
-			this.item.addressDetail = '';
+		changeAddress({ postcode, address, addressDetail }) {
+			this.item.postcode = postcode;
+			this.item.address = address;
+			this.item.addressDetail = addressDetail;
 		},
-		save() {
-			console.log(this.item);
+		async save() {
+			if (!this.item.title) {
+				return this.$notify({
+					type: 'error',
+					text: '제목은 필수값입니다.',
+				});
+			}
+
+			await this.CREATE_ESTATE(this.item);
 		},
 	},
 };

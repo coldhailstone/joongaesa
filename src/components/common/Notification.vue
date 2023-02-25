@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .notifications {
-	margin-bottom: 70px;
+	margin-bottom: 80px;
 	.notification {
 		overflow: hidden;
 		text-overflow: ellipsis;
