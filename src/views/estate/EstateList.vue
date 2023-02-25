@@ -43,11 +43,22 @@ export default {
 	},
 	mounted() {
 		this.modalEstate = new Modal(document.querySelector('#modal-estate'));
-		this.FETCH_ESTATE();
+		this.fetchList();
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
 		...mapActions('estate/list', ['FETCH_ESTATE']),
+		async fetchList() {
+			try {
+				const response = await this.FETCH_ESTATE();
+				console.log(response);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
+		},
 		showDetailModal(id) {
 			this.modalId = id;
 			this.modalEstate.show();

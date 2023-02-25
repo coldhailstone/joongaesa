@@ -347,7 +347,15 @@ export default {
 				});
 			}
 
-			await this.CREATE_ESTATE(this.item);
+			try {
+				const response = await this.CREATE_ESTATE(this.item);
+				console.log(response);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
 		},
 	},
 };

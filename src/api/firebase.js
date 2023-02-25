@@ -73,20 +73,8 @@ export const isLogin = () => {
 // store
 export const db = getFirestore(app);
 export const add = async (path, body) => {
-	let result = null;
-	try {
-		result = await addDoc(collection(db, path), body);
-	} catch (error) {
-		console.log(error);
-	}
-	return result;
+	return await addDoc(collection(db, path), body);
 };
 export const get = async (path) => {
-	let result = null;
-	try {
-		result = await getDocs(collection(db, path));
-	} catch (error) {
-		console.log(error);
-	}
-	return result;
+	return await getDocs(collection(db, path));
 };

@@ -13,11 +13,10 @@ export default {
 	},
 	actions: {
 		async FETCH_ESTATE({ state }) {
-			await get(state.path);
+			return await get(state.path);
 		},
 		async CREATE_ESTATE({ state }, body) {
-			console.log(body);
-			await add(state.path, body);
+			return await add(state.path, body);
 		},
 		CREATE_PHOTO() {},
 	},
