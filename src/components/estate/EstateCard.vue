@@ -46,7 +46,7 @@ export default {
 	font-weight: bold;
 }
 ::v-deep .card-img-top {
-	width: 20rem;
+	width: 300px;
 	height: 150px;
 	object-fit: cover;
 }
