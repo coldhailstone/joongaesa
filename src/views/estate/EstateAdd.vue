@@ -382,7 +382,6 @@ export default {
 		if (this.isUpdate) {
 			await this.fetchDetail();
 			this.item = this.$_.cloneDeep(this.estate);
-			console.log(this.item);
 		}
 	},
 	methods: {
@@ -420,6 +419,7 @@ export default {
 						text: '매물이 수정되었습니다.',
 					});
 				} else {
+					console.log('z');
 					await this.CREATE_ESTATE(this.item);
 					this.$notify({
 						type: 'success',

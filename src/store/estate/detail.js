@@ -1,4 +1,4 @@
-import { getDetail, update, uploadFile } from '@/api/firebase';
+import { getDetail, uploadFile, updateData, deleteData } from '@/api/firebase';
 
 export default {
 	namespaced: true,
@@ -22,7 +22,10 @@ export default {
 				);
 				body.photo = [...photo, ...body.photo.filter((file) => file.url)];
 			}
-			return await update(state.path, id, body);
+			return await updateData(state.path, id, body);
+		},
+		async DELETE_ESTATE({ state }, id) {
+			return await deleteData(state.path, id);
 		},
 	},
 };

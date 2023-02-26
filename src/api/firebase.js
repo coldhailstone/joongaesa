@@ -5,12 +5,13 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import {
 	getFirestore,
 	collection,
-	addDoc,
-	updateDoc,
-	getDocs,
-	getDoc,
 	doc,
 	query,
+	getDocs,
+	getDoc,
+	addDoc,
+	updateDoc,
+	deleteDoc,
 } from '@firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -58,11 +59,14 @@ export const getDetail = async (path, id) => {
 	const ref = await getDoc(doc(db, path, id));
 	return { ...ref.data(), id: ref.id };
 };
-export const add = async (path, body) => {
+export const addData = async (path, body) => {
 	return await addDoc(collection(db, path), body);
 };
-export const update = async (path, id, body) => {
+export const updateData = async (path, id, body) => {
 	return await updateDoc(doc(db, path, id), body);
+};
+export const deleteData = async (path, id) => {
+	return await deleteDoc(doc(db, path, id));
 };
 
 // storage

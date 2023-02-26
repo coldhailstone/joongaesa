@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<modal-estate :id="modalId" @hide="modalEstate.hide()" />
+		<modal-estate :id="modalId" @hide="modalEstate.hide()" @delete="completeDelete" />
 	</div>
 </template>
 
@@ -105,6 +105,10 @@ export default {
 		showDetailModal(id) {
 			this.modalId = id;
 			this.modalEstate.show();
+		},
+		completeDelete() {
+			this.modalEstate.hide();
+			this.fetchList();
 		},
 	},
 };

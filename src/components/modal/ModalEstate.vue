@@ -36,7 +36,7 @@
 				</div>
 				<div class="modal-footer">
 					<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
-					<b-button type="button" variant="danger">삭제</b-button>
+					<b-button type="button" variant="danger" @click="deleteEstate">삭제</b-button>
 					<b-button type="button" variant="primary" @click="routeUpdate"> 수정 </b-button>
 				</div>
 			</div>
@@ -78,11 +78,26 @@ export default {
 		});
 	},
 	methods: {
-		...mapActions('estate/detail', ['FETCH_ESTATE']),
+		...mapActions('estate/detail', ['FETCH_ESTATE', 'DELETE_ESTATE']),
 		async fetchDetail() {
 			try {
 				await this.FETCH_ESTATE(this.id);
 				console.log(this.estate);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
+		},
+		async deleteEstate() {
+			try {
+				await this.DELETE_ESTATE(this.id);
+				this.$notify({
+					type: 'success',
+					text: '매물이 삭제되었습니다.',
+				});
+				this.$emit('delete');
 			} catch (error) {
 				this.$notify({
 					type: 'error',
