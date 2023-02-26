@@ -17,7 +17,7 @@
 				<div class="search-icon-wrapper" @click="fetchList">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</div>
-				<div class="d-flex gap-2 ms-3">
+				<div class="d-flex flex-wrap gap-2 ms-3">
 					<b-button
 						v-for="text of ESTATE.CONTRACT_TYPE"
 						:key="text"
@@ -69,7 +69,7 @@ export default {
 	},
 	mounted() {
 		this.modalEstate = new Modal(document.querySelector('#modal-estate'));
-		this.fetchList();
+		this.$nextTick(() => this.fetchList());
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
