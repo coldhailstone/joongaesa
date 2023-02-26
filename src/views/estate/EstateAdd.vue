@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<b-overlay class="h-100" :show="isLoading" rounded="sm">
 		<div class="container mt-3 mb-3 d-flex flex-column gap-4">
 			<h1 class="mb-4 fw-bold">{{ $route.name }}</h1>
 			<div>
@@ -302,7 +302,7 @@
 				<b-button @click="$router.go(-1)"> 취소 </b-button>
 			</div>
 		</div>
-	</div>
+	</b-overlay>
 </template>
 
 <script>
@@ -338,6 +338,7 @@ export default {
 	data() {
 		return {
 			ESTATE,
+			isLoading: false,
 			item: {
 				title: '',
 				link: '',
@@ -412,6 +413,8 @@ export default {
 			if (!this.validation()) return;
 
 			try {
+				this.isLoading = true;
+
 				if (this.isUpdate) {
 					await this.UPDATE_ESTATE({ id: this.$route.params.id, body: this.item });
 					this.$notify({
@@ -419,7 +422,6 @@ export default {
 						text: '매물이 수정되었습니다.',
 					});
 				} else {
-					console.log('z');
 					await this.CREATE_ESTATE(this.item);
 					this.$notify({
 						type: 'success',
@@ -432,6 +434,8 @@ export default {
 					type: 'error',
 					text: error.message,
 				});
+			} finally {
+				this.isLoading = false;
 			}
 		},
 		validation() {

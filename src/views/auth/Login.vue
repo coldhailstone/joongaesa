@@ -77,8 +77,9 @@ export default {
 			'SIGN_IN_WITH_EMAIL',
 		]),
 		async login(type) {
-			this.SET_LOADING(true);
 			try {
+				this.SET_LOADING(true);
+
 				await this.SET_PERSISTENCT();
 				if (type === 'email') {
 					await this.SIGN_IN_WITH_EMAIL({ email: this.email, password: this.password });

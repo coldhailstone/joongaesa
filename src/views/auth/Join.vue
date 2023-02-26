@@ -65,8 +65,9 @@ export default {
 		async join() {
 			if (!this.validation()) return;
 
-			this.SET_LOADING(true);
 			try {
+				this.SET_LOADING(true);
+
 				await this.CREATE_USER_WITH_EMAIL({ email: this.email, password: this.password });
 				await this.SEND_EMAIL_VERIFICATION();
 

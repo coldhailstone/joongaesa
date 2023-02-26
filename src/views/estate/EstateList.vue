@@ -76,6 +76,8 @@ export default {
 		...mapActions('estate/list', ['FETCH_ESTATE_LIST']),
 		async fetchList() {
 			try {
+				this.SET_LOADING(true);
+
 				const queryList = [];
 				if (this.keyword) {
 					queryList.push({
@@ -95,6 +97,8 @@ export default {
 					type: 'error',
 					text: error.message,
 				});
+			} finally {
+				this.SET_LOADING(false);
 			}
 		},
 		changeContractType(type) {
