@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<modal-estate :id="modalId" />
+		<modal-estate :id="modalId" @hide="modalEstate.hide()" />
 	</div>
 </template>
 

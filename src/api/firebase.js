@@ -50,7 +50,7 @@ export const getList = async (path, queryList) => {
 };
 export const getDetail = async (path, id) => {
 	const ref = await getDoc(doc(db, path, id));
-	return ref.data();
+	return { ...ref.data(), id: ref.id };
 };
 
 // storage

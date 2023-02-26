@@ -325,12 +325,29 @@ export default {
 	},
 	computed: {
 		...mapState('user', ['user']),
+		...mapState('estate/detail', ['estate']),
 	},
-	mounted() {
+	async created() {
 		this.item.userId = this.user.uid;
+		if (this.$route.params.id) {
+			await this.fetchDetail();
+			this.item = this.$_.cloneDeep(this.estate);
+			console.log(this.item);
+		}
 	},
 	methods: {
 		...mapActions('estate/list', ['CREATE_ESTATE']),
+		...mapActions('estate/detail', ['FETCH_ESTATE']),
+		async fetchDetail() {
+			try {
+				await this.FETCH_ESTATE(this.$route.params.id);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			}
+		},
 		setOptions(constant) {
 			return constant.map((text) => ({
 				text,

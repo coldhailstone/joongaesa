@@ -43,10 +43,12 @@ export default {
 			},
 		};
 	},
-	mounted() {
-		this.item.postcode = this.postcode;
-		this.item.address = this.address;
-		this.item.addressDetail = this.addressDetail;
+	watch: {
+		address() {
+			this.item.postcode = this.postcode;
+			this.item.address = this.address;
+			this.item.addressDetail = this.addressDetail;
+		},
 	},
 	methods: {
 		async openDaumPostcode() {
