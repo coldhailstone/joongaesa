@@ -20,10 +20,21 @@
 <script>
 export default {
 	name: 'AttachmentFile',
+	props: {
+		list: {
+			type: Array,
+			default: () => [],
+		},
+	},
 	data() {
 		return {
 			attachments: [],
 		};
+	},
+	watch: {
+		list(newVal) {
+			this.attachments = newVal;
+		},
 	},
 	methods: {
 		dropFile(e) {

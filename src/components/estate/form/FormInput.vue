@@ -16,7 +16,7 @@ export default {
 	name: 'FormInput',
 	props: {
 		value: {
-			type: String,
+			type: [String, Number],
 			default: '',
 		},
 		type: {

@@ -2,7 +2,16 @@ import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query } from '@firebase/firestore';
+import {
+	getFirestore,
+	collection,
+	addDoc,
+	updateDoc,
+	getDocs,
+	getDoc,
+	doc,
+	query,
+} from '@firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const FIREBASE_CONFIG = {
@@ -35,9 +44,6 @@ export const getSessionKey = () => {
 
 // store
 export const db = getFirestore(app);
-export const add = async (path, body) => {
-	return await addDoc(collection(db, path), body);
-};
 export const getList = async (path, queryList) => {
 	const q =
 		queryList && queryList.length
@@ -52,11 +58,17 @@ export const getDetail = async (path, id) => {
 	const ref = await getDoc(doc(db, path, id));
 	return { ...ref.data(), id: ref.id };
 };
+export const add = async (path, body) => {
+	return await addDoc(collection(db, path), body);
+};
+export const update = async (path, id, body) => {
+	return await updateDoc(doc(db, path, id), body);
+};
 
 // storage
 const storage = getStorage(app);
 export const uploadFile = async (file) => {
 	const storageRef = ref(storage, `images/${auth.currentUser.uid}/${Date.now()}_${file.name}`);
 	const response = await uploadBytes(storageRef, file);
-	return getDownloadURL(response.ref);
+	return { name: file.name, url: await getDownloadURL(response.ref) };
 };

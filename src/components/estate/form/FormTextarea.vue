@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<b-form-textarea :value="value" :rows="rows" noResize />
+		<b-form-textarea
+			:value="value"
+			:rows="rows"
+			noResize
+			@input="$emit('update:modelValue', $event)"
+		/>
 	</div>
 </template>
 

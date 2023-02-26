@@ -5,6 +5,7 @@
 				<b-form-radio
 					v-for="form of options"
 					:key="form.value"
+					v-model="selected"
 					:value="form.value"
 					:name="name"
 					@input="$emit('update:modelValue', $event)"
@@ -20,6 +21,10 @@
 export default {
 	name: 'FormRadio',
 	props: {
+		value: {
+			type: String,
+			default: () => '',
+		},
 		options: {
 			type: Array,
 			default: () => [],
@@ -27,6 +32,18 @@ export default {
 		name: {
 			type: String,
 			default: '',
+		},
+	},
+	data() {
+		return {
+			selected: '',
+		};
+	},
+	watch: {
+		value: {
+			handler(newVal) {
+				this.selected = newVal;
+			},
 		},
 	},
 };

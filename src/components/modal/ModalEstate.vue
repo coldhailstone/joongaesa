@@ -18,8 +18,8 @@
 						class="carousel"
 						:wrap-around="true"
 					>
-						<slide v-for="src of estate.photo" :key="src">
-							<img :src="src" />
+						<slide v-for="photo of estate.photo" :key="photo.name">
+							<img :src="photo.url" />
 						</slide>
 
 						<template #addons>

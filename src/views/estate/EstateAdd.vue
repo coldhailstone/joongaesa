@@ -14,6 +14,12 @@
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
+							<label> 원본 링크 </label>
+							<b-form-input v-model="item.link" />
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-100">
 							<label> 주소 </label>
 							<form-address
 								:postcode="item.postcode"
@@ -26,7 +32,7 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 사진 </label>
-							<attachment-file @changeFile="item.photo = $event" />
+							<attachment-file :list="item.photo" @changeFile="item.photo = $event" />
 						</div>
 					</b-form-row>
 				</b-form>
@@ -40,13 +46,15 @@
 							<label> 보증금 / 월세 </label>
 							<div class="d-flex gap-3 mt-2">
 								<form-input
-									v-model="item.deposit"
+									:value="item.deposit"
+									@update:modelValue="item.deposit = $event"
 									type="number"
 									placeholder="보증금"
 									suffix="만원"
 								/>
 								<form-input
-									v-model="item.monthly"
+									:value="item.monthly"
+									@update:modelValue="item.monthly = $event"
 									type="number"
 									placeholder="월세"
 									suffix="만원"
@@ -58,7 +66,8 @@
 						<div class="w-100">
 							<label> 거래유형 </label>
 							<form-radio
-								v-model="item.contractType"
+								:value="item.contractType"
+								@update:modelValue="item.contractType = $event"
 								:options="setOptions(ESTATE.CONTRACT_TYPE)"
 								name="contractType"
 							/>
@@ -68,7 +77,8 @@
 						<div class="w-100">
 							<label> 건물 형태 </label>
 							<form-radio
-								v-model="item.buildingType"
+								:value="item.buildingType"
+								@update:modelValue="item.buildingType = $event"
 								:options="setOptions(ESTATE.BUILDING_TYPE)"
 								name="buildingType"
 							/>
@@ -78,7 +88,8 @@
 						<div class="w-100">
 							<label> 건물 종류 </label>
 							<form-radio
-								v-model="item.buildingForm"
+								:value="item.buildingForm"
+								@update:modelValue="item.buildingForm = $event"
 								:options="setOptions(ESTATE.BUILDING_FORM)"
 								name="buildingForm"
 							/>
@@ -87,15 +98,29 @@
 					<b-form-row class="mb-3">
 						<div class="w-50">
 							<label> 사용승인일 </label>
-							<form-input v-model="item.useApprovalDate" type="date" />
+							<form-input
+								:value="item.useApprovalDate"
+								@update:modelValue="item.useApprovalDate = $event"
+								type="date"
+							/>
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 동 / 호 </label>
 							<div class="d-flex gap-3 mt-2">
-								<form-input v-model="item.dong" placeholder="동" suffix="동" />
-								<form-input v-model="item.ho" placeholder="호" suffix="호" />
+								<form-input
+									:value="item.dong"
+									@update:modelValue="item.dong = $event"
+									placeholder="동"
+									suffix="동"
+								/>
+								<form-input
+									:value="item.ho"
+									@update:modelValue="item.ho = $event"
+									placeholder="호"
+									suffix="호"
+								/>
 							</div>
 						</div>
 					</b-form-row>
@@ -104,12 +129,14 @@
 							<label> 층 / 구조 </label>
 							<div class="d-flex gap-3 mt-2">
 								<form-input
-									v-model="item.wholeFloor"
+									:value="item.wholeFloor"
+									@update:modelValue="item.wholeFloor = $event"
 									placeholder="전체층"
 									prefix="전체층"
 								/>
 								<form-input
-									v-model="item.correspondingFloor"
+									:value="item.correspondingFloor"
+									@update:modelValue="item.correspondingFloor = $event"
 									placeholder="해당층"
 									prefix="해당층"
 								/>
@@ -118,7 +145,8 @@
 						<div class="d-flex flex-wrap gap-3 mt-2">
 							<span class="me-3 pt-2">구조</span>
 							<form-radio
-								v-model="item.roomStructure"
+								:value="item.roomStructure"
+								@update:modelValue="item.roomStructure = $event"
 								:options="setOptions(ESTATE.ROOM_STRUCTURE)"
 								name="roomStructure"
 							/>
@@ -128,9 +156,15 @@
 						<div class="w-100">
 							<label> 전용면적 </label>
 							<div class="d-flex gap-3 mt-2">
-								<form-input v-model="item.pyung" placeholder="평" suffix="평" />
 								<form-input
-									v-model="item.m2"
+									:value="item.pyung"
+									@update:modelValue="item.pyung = $event"
+									placeholder="평"
+									suffix="평"
+								/>
+								<form-input
+									:value="item.m2"
+									@update:modelValue="item.m2 = $event"
 									placeholder="m2"
 									suffix="m<sup>2</sup>"
 								/>
@@ -141,7 +175,8 @@
 						<div class="w-100">
 							<label> 주실 방향 </label>
 							<form-radio
-								v-model="item.roomDirection"
+								:value="item.roomDirection"
+								@update:modelValue="item.roomDirection = $event"
 								:options="setOptions(ESTATE.ROOM_DIRECTION)"
 								name="roomDirection"
 							/>
@@ -152,7 +187,8 @@
 							<label> 화장실 수 </label>
 							<div class="d-flex gap-3 mt-2">
 								<form-input
-									v-model="item.bathroomCount"
+									:value="item.bathroomCount"
+									@update:modelValue="item.bathroomCount = $event"
 									type="number"
 									placeholder="화장실 수"
 								/>
@@ -170,7 +206,8 @@
 						<div class="w-100">
 							<label> 엘리베이터 </label>
 							<form-radio
-								v-model="item.elevator"
+								:value="item.elevator"
+								@update:modelValue="item.elevator = $event"
 								:options="setOptions(ESTATE.ELEVATOR)"
 								name="elevator"
 							/>
@@ -180,7 +217,8 @@
 						<div class="w-100">
 							<label> 반려동물 </label>
 							<form-radio
-								v-model="item.pet"
+								:value="item.pet"
+								@update:modelValue="item.pet = $event"
 								:options="setOptions(ESTATE.PET)"
 								name="pet"
 							/>
@@ -192,7 +230,8 @@
 							<b-form-group>
 								<div class="d-flex flex-wrap gap-3 mt-2">
 									<form-radio
-										v-model="item.parking"
+										:value="item.parking"
+										@update:modelValue="item.parking = $event"
 										:options="setOptions(ESTATE.PARKING)"
 										name="parking"
 									/>
@@ -205,7 +244,8 @@
 							<label> 관리비 </label>
 							<div class="d-flex gap-3 mt-2">
 								<form-input
-									v-model="item.cost"
+									:value="item.cost"
+									@update:modelValue="item.cost = $event"
 									type="number"
 									placeholder="관리비"
 									suffix="만원"
@@ -218,7 +258,8 @@
 						<div class="w-100">
 							<label> 관리비 포함 항목 </label>
 							<form-checkbox
-								v-model="item.managementCost"
+								:value="item.managementCost"
+								@update:modelValue="item.managementCost = $event"
 								:options="setOptions(ESTATE.MANAGEMENT_COST)"
 							/>
 						</div>
@@ -227,7 +268,8 @@
 						<div class="w-100">
 							<label> 옵션 </label>
 							<form-checkbox
-								v-model="item.option"
+								:value="item.option"
+								@update:modelValue="item.option = $event"
 								:options="setOptions(ESTATE.OPTION)"
 							/>
 						</div>
@@ -235,7 +277,11 @@
 					<b-form-row class="mb-3">
 						<div class="w-50">
 							<label> 입주가능일 </label>
-							<form-input v-model="item.moveDate" type="date" />
+							<form-input
+								:value="item.moveDate"
+								@update:modelValue="item.moveDate = $event"
+								type="date"
+							/>
 						</div>
 					</b-form-row>
 				</b-form>
@@ -244,7 +290,10 @@
 				<h4 class="mb-3 fw-bold">상세 설명</h4>
 				<b-form>
 					<b-form-row class="mb-3">
-						<form-textarea v-model="item.description" />
+						<form-textarea
+							:value="item.description"
+							@update:modelValue="item.description = $event"
+						/>
 					</b-form-row>
 				</b-form>
 			</div>
@@ -290,9 +339,8 @@ export default {
 		return {
 			ESTATE,
 			item: {
-				userId: '',
-				createDatetime: new Date(),
 				title: '',
+				link: '',
 				postcode: '',
 				address: '',
 				addressDetail: '',
@@ -307,10 +355,10 @@ export default {
 				ho: '',
 				wholeFloor: '',
 				correspondingFloor: '',
-				roomStructure: [],
+				roomStructure: '',
 				pyung: '',
 				m2: '',
-				roomDirection: [],
+				roomDirection: '',
 				bathroomCount: 0,
 				elevator: '',
 				pet: '',
@@ -326,10 +374,12 @@ export default {
 	computed: {
 		...mapState('user', ['user']),
 		...mapState('estate/detail', ['estate']),
+		isUpdate() {
+			return !!this.$route.params.id;
+		},
 	},
 	async created() {
-		this.item.userId = this.user.uid;
-		if (this.$route.params.id) {
+		if (this.isUpdate) {
 			await this.fetchDetail();
 			this.item = this.$_.cloneDeep(this.estate);
 			console.log(this.item);
@@ -337,7 +387,7 @@ export default {
 	},
 	methods: {
 		...mapActions('estate/list', ['CREATE_ESTATE']),
-		...mapActions('estate/detail', ['FETCH_ESTATE']),
+		...mapActions('estate/detail', ['FETCH_ESTATE', 'UPDATE_ESTATE']),
 		async fetchDetail() {
 			try {
 				await this.FETCH_ESTATE(this.$route.params.id);
@@ -363,13 +413,20 @@ export default {
 			if (!this.validation()) return;
 
 			try {
-				await this.CREATE_ESTATE(this.item);
+				if (this.isUpdate) {
+					await this.UPDATE_ESTATE({ id: this.$route.params.id, body: this.item });
+					this.$notify({
+						type: 'success',
+						text: '매물이 수정되었습니다.',
+					});
+				} else {
+					await this.CREATE_ESTATE(this.item);
+					this.$notify({
+						type: 'success',
+						text: '매물이 등록되었습니다.',
+					});
+				}
 				this.$router.push('/estate');
-
-				this.$notify({
-					type: 'success',
-					text: '매물이 등록되었습니다.',
-				});
 			} catch (error) {
 				this.$notify({
 					type: 'error',

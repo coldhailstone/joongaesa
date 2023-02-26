@@ -1,4 +1,4 @@
-import { getDetail } from '@/api/firebase';
+import { getDetail, update, uploadFile } from '@/api/firebase';
 
 export default {
 	namespaced: true,
@@ -14,6 +14,15 @@ export default {
 	actions: {
 		async FETCH_ESTATE({ state, commit }, id) {
 			commit('SET_ESTATE', await getDetail(state.path, id));
+		},
+		async UPDATE_ESTATE({ state }, { id, body }) {
+			if (body.photo && body.photo.length) {
+				const photo = await Promise.all(
+					body.photo.filter((file) => !file.url).map((file) => uploadFile(file))
+				);
+				body.photo = [...photo, ...body.photo.filter((file) => file.url)];
+			}
+			return await update(state.path, id, body);
 		},
 	},
 };

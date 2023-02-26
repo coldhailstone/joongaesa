@@ -1,7 +1,11 @@
 <template>
 	<b-card
 		:title="title"
-		img-src="https://picsum.photos/600/300/?image=25"
+		:img-src="
+			item.photo && item.photo.length
+				? item.photo[0].url
+				: 'https://via.placeholder.com/300x150'
+		"
 		img-top
 		class="card m-4"
 		@click="$emit('clickCard', item.id)"
@@ -41,14 +45,21 @@ export default {
 ::v-deep .card-title {
 	font-weight: bold;
 }
+::v-deep .card-img-top {
+	width: 20rem;
+	height: 150px;
+	object-fit: cover;
+}
+
 .card {
-	max-width: 20rem;
 	height: 300px;
 	cursor: pointer;
 	&:hover {
 		background: rgba(54, 58, 60, 0.1);
 	}
 	.title {
+		font-size: 1.25rem;
+		font-weight: 500;
 		color: rgb(54, 58, 60);
 	}
 }

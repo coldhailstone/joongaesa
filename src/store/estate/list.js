@@ -1,4 +1,4 @@
-import { where } from '@firebase/firestore';
+import { where, serverTimestamp } from '@firebase/firestore';
 import { getList, add, uploadFile } from '@/api/firebase';
 import store from '@/store';
 
@@ -24,12 +24,13 @@ export default {
 			);
 		},
 		async CREATE_ESTATE({ state }, body) {
+			body.userId = store.state.user.user.uid();
+			body.createDatetime = serverTimestamp();
 			if (body.photo && body.photo.length) {
 				const photo = await Promise.all(body.photo.map((file) => uploadFile(file)));
 				body.photo = photo;
 			}
 			return await add(state.path, body);
 		},
-		CREATE_PHOTO() {},
 	},
 };

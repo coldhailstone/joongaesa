@@ -30,8 +30,12 @@ export default {
 			selected: [],
 		};
 	},
-	mounted() {
-		this.selected = this.value;
+	watch: {
+		value: {
+			handler(newVal) {
+				this.selected = this.$_.cloneDeep(newVal);
+			},
+		},
 	},
 };
 </script>
