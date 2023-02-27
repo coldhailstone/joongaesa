@@ -11,7 +11,7 @@
 					v-model="keyword"
 					class="w-50"
 					type="search"
-					placeholder="제목을 검색하세요"
+					placeholder="제목으로 검색"
 					@keypress.enter="fetchList"
 				/>
 				<div class="search-icon-wrapper" @click="fetchList">
@@ -47,7 +47,7 @@ import { mapActions, mapMutations, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
 import { ESTATE } from '@/utils/constants';
 import EstateCard from '@/components/estate/EstateCard.vue';
-import ModalEstate from '@/components/modal/ModalEstate.vue';
+import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
 export default {
 	name: 'EstateList',

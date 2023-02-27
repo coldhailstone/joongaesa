@@ -59,13 +59,23 @@
 								<li>
 									<div class="key">보증금</div>
 									<div>
-										{{ convertData(estate.deposit, `${estate.deposit}만원`) }}
+										{{
+											convertData(
+												estate.deposit,
+												`${parseInt(estate.deposit).toLocaleString()}만원`
+											)
+										}}
 									</div>
 								</li>
 								<li>
 									<div class="key">월세</div>
 									<div>
-										{{ convertData(estate.monthly, `${estate.monthly}만원`) }}
+										{{
+											convertData(
+												estate.monthly,
+												`${parseInt(estate.monthly).toLocaleString()}만원`
+											)
+										}}
 									</div>
 								</li>
 								<li>

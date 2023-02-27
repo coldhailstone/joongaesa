@@ -4,6 +4,7 @@ import Join from '@/views/auth/Join.vue';
 import EstateList from '@/views/estate/EstateList.vue';
 import EstateAdd from '@/views/estate/EstateAdd.vue';
 import CustomerList from '@/views/customer/CustomerList.vue';
+import CustomerAdd from '@/views/customer/CustomerAdd.vue';
 
 export const menuList = [
 	{
@@ -44,5 +45,15 @@ export default [
 		path: '/estate/:id',
 		name: '매물 수정',
 		component: EstateAdd,
+	},
+	{
+		path: '/customer/new',
+		name: '고객 등록',
+		component: CustomerAdd,
+	},
+	{
+		path: '/customer/:id',
+		name: '고객 수정',
+		component: CustomerAdd,
 	},
 ];

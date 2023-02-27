@@ -7,7 +7,7 @@
 				: 'https://via.placeholder.com/300x150'
 		"
 		img-top
-		class="card m-4"
+		class="card mt-4 mb-4 me-4"
 		@click="$emit('clickCard', item.id)"
 	>
 		<b-card-text>
@@ -33,8 +33,8 @@ export default {
 	},
 	computed: {
 		title() {
-			return `${this.item.contractType} ${this.item.deposit} ${
-				this.item.monthly > 0 ? `/ ${this.item.monthly}` : ''
+			return `${this.item.contractType} ${parseInt(this.item.deposit).toLocaleString()}만원 ${
+				this.item.monthly > 0 ? `/ ${parseInt(this.item.monthly).toLocaleString()}만원` : ''
 			}`;
 		},
 	},
@@ -52,6 +52,7 @@ export default {
 }
 
 .card {
+	width: 300px;
 	height: 300px;
 	cursor: pointer;
 	&:hover {
