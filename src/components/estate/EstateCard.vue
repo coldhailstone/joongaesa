@@ -33,8 +33,8 @@ export default {
 	},
 	computed: {
 		title() {
-			return `${this.item.contractType} ${parseInt(this.item.deposit).toLocaleString()}만원 ${
-				this.item.monthly > 0 ? `/ ${parseInt(this.item.monthly).toLocaleString()}만원` : ''
+			return `${this.item.contractType} ${parseInt(this.item.deposit).toLocaleString()}${
+				this.item.monthly > 0 ? `/${parseInt(this.item.monthly).toLocaleString()}` : ''
 			}`;
 		},
 	},
