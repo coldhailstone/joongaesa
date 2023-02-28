@@ -9,13 +9,13 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 제목 </label>
-							<b-form-input v-model="item.title" />
+							<b-form-input v-model="item.title" placeholder="제목" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 원본 링크 </label>
-							<b-form-input v-model="item.link" />
+							<b-form-input v-model="item.link" placeholder="원본 링크" />
 						</div>
 					</b-form-row>
 					<b-form-row class="mb-3">
@@ -32,7 +32,7 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 사진 </label>
-							<attachment-file :list="item.photo" @changeFile="item.photo = $event" />
+							<form-file :list="item.photo" @changeFile="item.photo = $event" />
 						</div>
 					</b-form-row>
 				</b-form>
@@ -64,6 +64,31 @@
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
+							<label> 관리비 </label>
+							<div class="d-flex gap-3 mt-2">
+								<form-input
+									:value="item.cost"
+									@update:modelValue="item.cost = $event"
+									type="number"
+									placeholder="관리비"
+									suffix="만원"
+								/>
+								<template></template>
+							</div>
+						</div>
+					</b-form-row>
+					<b-form-row>
+						<div class="w-100">
+							<label> 관리비 포함 항목 </label>
+							<form-checkbox
+								:value="item.managementCost"
+								@update:modelValue="item.managementCost = $event"
+								:options="setOptions(ESTATE.MANAGEMENT_COST)"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row>
+						<div class="w-100">
 							<label> 거래유형 </label>
 							<form-radio
 								:value="item.contractType"
@@ -73,7 +98,7 @@
 							/>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 건물 형태 </label>
 							<form-radio
@@ -84,7 +109,7 @@
 							/>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 건물 종류 </label>
 							<form-radio
@@ -171,7 +196,7 @@
 							</div>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 주실 방향 </label>
 							<form-radio
@@ -202,7 +227,7 @@
 				<h4 class="mb-3 fw-bold">기타 정보</h4>
 				<hr />
 				<b-form>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 엘리베이터 </label>
 							<form-radio
@@ -213,7 +238,7 @@
 							/>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 반려동물 </label>
 							<form-radio
@@ -224,7 +249,7 @@
 							/>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 주차 </label>
 							<b-form-group>
@@ -239,32 +264,7 @@
 							</b-form-group>
 						</div>
 					</b-form-row>
-					<b-form-row class="mb-3">
-						<div class="w-100">
-							<label> 관리비 </label>
-							<div class="d-flex gap-3 mt-2">
-								<form-input
-									:value="item.cost"
-									@update:modelValue="item.cost = $event"
-									type="number"
-									placeholder="관리비"
-									suffix="만원"
-								/>
-								<template></template>
-							</div>
-						</div>
-					</b-form-row>
-					<b-form-row class="mb-3">
-						<div class="w-100">
-							<label> 관리비 포함 항목 </label>
-							<form-checkbox
-								:value="item.managementCost"
-								@update:modelValue="item.managementCost = $event"
-								:options="setOptions(ESTATE.MANAGEMENT_COST)"
-							/>
-						</div>
-					</b-form-row>
-					<b-form-row class="mb-3">
+					<b-form-row>
 						<div class="w-100">
 							<label> 옵션 </label>
 							<form-checkbox
@@ -308,17 +308,17 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { ESTATE } from '@/utils/constants';
-import AttachmentFile from '@/components/estate/AttachmentFile.vue';
-import FormAddress from '@/components/estate/form/FormAddress.vue';
-import FormInput from '@/components/estate/form/FormInput.vue';
-import FormTextarea from '@/components/estate/form/FormTextarea.vue';
-import FormCheckbox from '@/components/estate/form/FormCheckbox.vue';
-import FormRadio from '@/components/estate/form/FormRadio.vue';
+import FormFile from '@/components/form/FormFile.vue';
+import FormAddress from '@/components/form/FormAddress.vue';
+import FormInput from '@/components/form/FormInput.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import FormCheckbox from '@/components/form/FormCheckbox.vue';
+import FormRadio from '@/components/form/FormRadio.vue';
 
 export default {
 	name: 'EstateAdd',
 	components: {
-		AttachmentFile,
+		FormFile,
 		FormAddress,
 		FormInput,
 		FormTextarea,
@@ -390,12 +390,16 @@ export default {
 		...mapActions('estate/detail', ['FETCH_ESTATE', 'UPDATE_ESTATE']),
 		async fetchDetail() {
 			try {
+				this.isLoading = true;
+
 				await this.FETCH_ESTATE(this.$route.params.id);
 			} catch (error) {
 				this.$notify({
 					type: 'error',
 					text: error.message,
 				});
+			} finally {
+				this.isLoading = false;
 			}
 		},
 		setOptions(constant) {

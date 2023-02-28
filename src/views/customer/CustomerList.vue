@@ -22,25 +22,30 @@
 				</div>
 			</div>
 			<div class="d-flex flex-wrap gap-5">
-				<customer-card />
+				<customer-card
+					v-for="customer of customerList"
+					:key="customer.id"
+					:item="customer"
+					@clickCard="showDetailModal(customer.id)"
+				/>
 			</div>
 		</div>
 
-		<!-- <modal-customer :id="modalId" @hide="modalCustomer.hide()" @delete="completeDelete" /> -->
+		<modal-customer :id="modalId" @hide="modalCustomer.hide()" @delete="completeDelete" />
 	</div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
-// import { Modal } from 'bootstrap';
+import { Modal } from 'bootstrap';
 import CustomerCard from '@/components/customer/CustomerCard.vue';
-// import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
+import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
 
 export default {
 	name: 'CustomerList',
 	components: {
 		CustomerCard,
-		// ModalCustomer,
+		ModalCustomer,
 	},
 	data() {
 		return {
@@ -54,7 +59,7 @@ export default {
 		...mapState('customer/list', ['customerList']),
 	},
 	mounted() {
-		// this.modalCustomer = new Modal(document.querySelector('#modal-customer'));
+		this.modalCustomer = new Modal(document.querySelector('#modal-customer'));
 		this.$nextTick(() => this.fetchList());
 	},
 	methods: {

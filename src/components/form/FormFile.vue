@@ -19,7 +19,7 @@
 
 <script>
 export default {
-	name: 'AttachmentFile',
+	name: 'FormFile',
 	props: {
 		list: {
 			type: Array,

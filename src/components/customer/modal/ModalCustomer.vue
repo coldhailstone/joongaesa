@@ -27,6 +27,12 @@
 <script>
 export default {
 	name: 'ModalCustomer',
+	props: {
+		id: {
+			type: String,
+			default: '',
+		},
+	},
 	data() {
 		return {
 			isLoading: false,

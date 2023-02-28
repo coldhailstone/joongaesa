@@ -1,16 +1,34 @@
 <template>
-	<b-card title="010-6788-1419" class="card mt-4 mb-4 me-4">
+	<b-card :title="convertTel(item.phone)" class="card mt-4 mb-4 me-4">
 		<b-card-text>
 			<div class="d-flex flex-column mb-2">
-				<span>성별: 남</span>
-				<span>방문날짜: 2023-02-28</span>
-				<span>방문시간: 17:30</span>
-				<span class="mt-3">유형: 전세</span>
-				<span>보증금: 20,000만원</span>
-				<span>월세: 0만원</span>
-				<span>기간: 2년</span>
-				<span>용도: 오피스텔, 투룸</span>
-				<span>위치: 신림동, 봉천동</span>
+				<span v-if="item.visitDate"
+					>방문날짜: <b>{{ item.visitDate }}</b></span
+				>
+				<span v-if="item.visitTime">
+					방문시간: <b>{{ item.visitTime }}</b>
+				</span>
+				<span v-if="item.gender">
+					성별: <b>{{ item.gender }}</b>
+				</span>
+				<span v-if="item.contractType" class="mt-3">
+					거래유형: <b>{{ item.contractType }}</b>
+				</span>
+				<span v-if="item.deposit">
+					보증금: <b>{{ parseInt(item.deposit).toLocaleString() }}만원</b>
+				</span>
+				<span v-if="item.monthly">
+					월세: <b>{{ parseInt(item.monthly).toLocaleString() }}만원</b>
+				</span>
+				<span v-if="item.residence">
+					기간: <b>{{ item.residence }}</b>
+				</span>
+				<span v-if="item.buildingType">
+					건물 형태: <b>{{ item.buildingType }}</b>
+				</span>
+				<span v-if="item.position">
+					위치: <b>{{ item.position }}</b>
+				</span>
 			</div>
 		</b-card-text>
 	</b-card>
@@ -23,6 +41,11 @@ export default {
 		item: {
 			type: Object,
 			default: () => ({}),
+		},
+	},
+	methods: {
+		convertTel(tel) {
+			return tel.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 		},
 	},
 };
@@ -39,6 +62,9 @@ export default {
 	cursor: pointer;
 	&:hover {
 		background: rgba(54, 58, 60, 0.1);
+	}
+	b {
+		font-weight: 600;
 	}
 }
 </style>
