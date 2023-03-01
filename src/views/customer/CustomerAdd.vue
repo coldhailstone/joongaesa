@@ -7,6 +7,16 @@
 				<hr />
 				<b-form>
 					<b-form-row class="mb-3">
+						<div class="w-50">
+							<label> 연락처 </label>
+							<form-input
+								:value="item.phone"
+								@update:modelValue="item.phone = $event"
+								type="number"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 방문일시 </label>
 							<div class="d-flex gap-3 mt-2">
@@ -21,16 +31,6 @@
 									type="time"
 								/>
 							</div>
-						</div>
-					</b-form-row>
-					<b-form-row class="mb-3">
-						<div class="w-50">
-							<label> 연락처 </label>
-							<form-input
-								:value="item.phone"
-								@update:modelValue="item.phone = $event"
-								type="number"
-							/>
 						</div>
 					</b-form-row>
 					<b-form-row>
@@ -57,13 +57,13 @@
 					</b-form-row>
 					<b-form-row class="mb-3">
 						<div class="w-100">
-							<label> 문의주신 광고방 </label>
+							<label> 문의주신 방 </label>
 							<b-form-input v-model="item.link" placeholder="링크" />
 						</div>
 					</b-form-row>
 					<b-form-row>
 						<div class="w-100">
-							<label> 건물 형태 </label>
+							<label> 건물형태 </label>
 							<form-radio
 								:value="item.buildingType"
 								@update:modelValue="item.buildingType = $event"
@@ -148,8 +148,8 @@
 						<div class="w-50">
 							<label> 입주날짜 </label>
 							<form-input
-								:value="item.useApprovalDate"
-								@update:modelValue="item.useApprovalDate = $event"
+								:value="item.moveDate"
+								@update:modelValue="item.moveDate = $event"
 								type="date"
 							/>
 						</div>
@@ -309,9 +309,9 @@ export default {
 			CUSTOMER,
 			isLoading: false,
 			item: {
+				phone: 0,
 				visitDate: '',
 				visitTime: '',
-				phone: 0,
 				gender: '',
 				age: 0,
 				link: '',
@@ -324,7 +324,7 @@ export default {
 				loanProduct: '',
 				geunlin: '',
 				position: '',
-				useApprovalDate: '',
+				moveDate: '',
 				elevator: '',
 				pet: '',
 				parking: '',
@@ -344,11 +344,29 @@ export default {
 		isUpdate() {
 			return !!this.$route.params.id;
 		},
+		today() {
+			return new Date().toISOString().substring(0, 10);
+		},
+		currentTime() {
+			const date = new Date();
+			let hh = date.getHours();
+			hh = hh >= 10 ? hh : `0${hh}`;
+			let mm = date.getMinutes();
+			mm = mm >= 10 ? mm : `0${mm}`;
+			return `${hh}:${mm}`;
+		},
 	},
 	async created() {
 		if (this.isUpdate) {
 			await this.fetchDetail();
 			this.item = this.$_.cloneDeep(this.customer);
+		}
+	},
+	mounted() {
+		if (!this.isUpdate) {
+			this.item.visitTime = this.currentTime;
+			this.item.visitDate = this.today;
+			this.item.moveDate = this.today;
 		}
 	},
 	methods: {

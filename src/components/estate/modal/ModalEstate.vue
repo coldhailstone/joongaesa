@@ -42,9 +42,9 @@
 								<li>
 									<div class="key">원본 링크</div>
 									<div>
-										<a :href="estate.link ?? '#'">{{
-											convertData(estate.link)
-										}}</a>
+										<a :href="estate.link ?? '#'">
+											{{ convertData(estate.link) }}
+										</a>
 									</div>
 								</li>
 								<li>
@@ -83,11 +83,11 @@
 									<div>{{ convertData(estate.contractType) }}</div>
 								</li>
 								<li>
-									<div class="key">건물 형태</div>
+									<div class="key">건물형태</div>
 									<div>{{ convertData(estate.buildingType) }}</div>
 								</li>
 								<li>
-									<div class="key">건물 종류</div>
+									<div class="key">건물종류</div>
 									<div>{{ convertData(estate.buildingForm) }}</div>
 								</li>
 								<li>
@@ -207,9 +207,9 @@
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
-						<b-button type="button" variant="danger" @click="deleteEstate"
-							>삭제</b-button
-						>
+						<b-button type="button" variant="danger" @click="deleteEstate">
+							삭제
+						</b-button>
 						<b-button type="button" variant="primary" @click="routeUpdate">
 							수정
 						</b-button>

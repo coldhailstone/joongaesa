@@ -100,7 +100,7 @@
 					</b-form-row>
 					<b-form-row>
 						<div class="w-100">
-							<label> 건물 형태 </label>
+							<label> 건물형태 </label>
 							<form-radio
 								:value="item.buildingType"
 								@update:modelValue="item.buildingType = $event"
@@ -111,7 +111,7 @@
 					</b-form-row>
 					<b-form-row>
 						<div class="w-100">
-							<label> 건물 종류 </label>
+							<label> 건물종류 </label>
 							<form-radio
 								:value="item.buildingForm"
 								@update:modelValue="item.buildingForm = $event"

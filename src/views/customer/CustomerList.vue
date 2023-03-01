@@ -57,10 +57,16 @@ export default {
 	},
 	computed: {
 		...mapState('customer/list', ['customerList']),
+		today() {
+			return new Date().toISOString().substring(0, 10);
+		},
 	},
 	mounted() {
 		this.modalCustomer = new Modal(document.querySelector('#modal-customer'));
-		this.$nextTick(() => this.fetchList());
+		this.$nextTick(() => {
+			this.visitDate = this.today;
+			this.fetchList();
+		});
 	},
 	methods: {
 		...mapMutations('loading', ['SET_LOADING']),
