@@ -339,7 +339,6 @@ export default {
 		};
 	},
 	computed: {
-		...mapState('user', ['user']),
 		...mapState('customer/detail', ['customer']),
 		isUpdate() {
 			return !!this.$route.params.id;

@@ -157,7 +157,13 @@
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
-						<b-button type="button" variant="outline-primary">방 목록</b-button>
+						<b-button
+							type="button"
+							variant="outline-primary"
+							@click="modalRoomList.show()"
+						>
+							방 목록
+						</b-button>
 						<b-button
 							type="button"
 							variant="outline-primary"
@@ -177,6 +183,7 @@
 		</b-overlay>
 
 		<modal-customer-result :id="id" @hide="modalCustomerResult.hide()" />
+		<modal-room-list :id="id" @hide="modalCustomerResult.hide()" />
 	</div>
 </template>
 
@@ -184,11 +191,13 @@
 import { mapActions, mapState } from 'vuex';
 import { Modal } from 'bootstrap';
 import ModalCustomerResult from './ModalCustomerResult.vue';
+import ModalRoomList from './ModalRoomList.vue';
 
 export default {
 	name: 'ModalCustomer',
 	components: {
 		ModalCustomerResult,
+		ModalRoomList,
 	},
 	props: {
 		id: {
@@ -200,6 +209,7 @@ export default {
 		return {
 			isLoading: false,
 			modalCustomerResult: null,
+			modalRoomList: null,
 		};
 	},
 	computed: {
@@ -212,6 +222,7 @@ export default {
 	},
 	mounted() {
 		this.modalCustomerResult = new Modal(document.querySelector('#modal-customer-result'));
+		this.modalRoomList = new Modal(document.querySelector('#modal-room-list'));
 
 		const modal = document.querySelector('#modal-customer');
 		modal.addEventListener('show.bs.modal', () => {

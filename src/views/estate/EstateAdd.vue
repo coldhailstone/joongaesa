@@ -284,6 +284,26 @@
 							/>
 						</div>
 					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-50">
+							<label> 임대인 연락처 </label>
+							<form-input
+								:value="item.landLordPhone"
+								@update:modelValue="item.landLordPhone = $event"
+								type="number"
+							/>
+						</div>
+					</b-form-row>
+					<b-form-row class="mb-3">
+						<div class="w-50">
+							<label> 현 임차인 연락처 </label>
+							<form-input
+								:value="item.currentLesseePhone"
+								@update:modelValue="item.currentLesseePhone = $event"
+								type="number"
+							/>
+						</div>
+					</b-form-row>
 				</b-form>
 			</div>
 			<div>
@@ -368,6 +388,8 @@ export default {
 				managementCost: [],
 				option: [],
 				moveDate: '',
+				landLordPhone: 0,
+				currentLesseePhone: 0,
 				description: '',
 			},
 		};

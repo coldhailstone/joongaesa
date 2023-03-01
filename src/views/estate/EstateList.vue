@@ -83,12 +83,14 @@ export default {
 					queryList.push({
 						key: 'title',
 						value: this.keyword,
+						operator: '==',
 					});
 				}
 				if (this.contractType) {
 					queryList.push({
 						key: 'contractType',
 						value: this.contractType,
+						operator: '==',
 					});
 				}
 				await this.FETCH_ESTATE_LIST(queryList);

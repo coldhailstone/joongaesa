@@ -192,6 +192,14 @@
 									<div class="key">입주가능일</div>
 									<div>{{ convertData(estate.moveDate) }}</div>
 								</li>
+								<li>
+									<div class="key">임대인 연락처</div>
+									<div>{{ convertData(estate.landLordPhone) }}</div>
+								</li>
+								<li>
+									<div class="key">현 임차인 연락처</div>
+									<div>{{ convertData(estate.currentLesseePhone) }}</div>
+								</li>
 							</ul>
 						</div>
 						<div>
@@ -207,10 +215,10 @@
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
-						<b-button type="button" variant="danger" @click="deleteEstate">
+						<b-button v-if="edit" type="button" variant="danger" @click="deleteEstate">
 							삭제
 						</b-button>
-						<b-button type="button" variant="primary" @click="routeUpdate">
+						<b-button v-if="edit" type="button" variant="primary" @click="routeUpdate">
 							수정
 						</b-button>
 					</div>
@@ -236,6 +244,10 @@ export default {
 		id: {
 			type: String,
 			default: '',
+		},
+		edit: {
+			type: Boolean,
+			default: true,
 		},
 	},
 	data() {

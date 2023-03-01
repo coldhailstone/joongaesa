@@ -19,7 +19,7 @@ export default {
 				'SET_ESTATE_LIST',
 				await getList(state.path, [
 					where('userId', '==', store.state.user.user.uid),
-					...queryList.map((query) => where(query.key, '==', query.value)),
+					...queryList.map((query) => where(query.key, query.operator, query.value)),
 				])
 			);
 		},

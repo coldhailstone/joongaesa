@@ -80,12 +80,14 @@ export default {
 					queryList.push({
 						key: 'phone',
 						value: this.keyword,
+						operator: '==',
 					});
 				}
 				if (this.visitDate) {
 					queryList.push({
 						key: 'visitDate',
 						value: this.visitDate,
+						operator: '==',
 					});
 				}
 				await this.FETCH_CUSTOMER_LIST(queryList);
