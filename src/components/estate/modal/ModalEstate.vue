@@ -33,23 +33,25 @@
 							<ul class="info">
 								<li>
 									<div class="key">제목</div>
-									<div class="fw-bold">{{ convertData(estate.title) }}</div>
+									<div class="fw-bold">
+										{{ $common.convertData(estate.title) }}
+									</div>
 								</li>
 								<li>
 									<div class="key">등록일</div>
-									<div>{{ convertData(dateTime) }}</div>
+									<div>{{ $common.convertData(dateTime) }}</div>
 								</li>
 								<li>
 									<div class="key">원본 링크</div>
 									<div>
-										<a :href="estate.link ?? '#'">
-											{{ convertData(estate.link) }}
+										<a :href="estate.link ? estate.link : '#'" target="_blank">
+											{{ $common.convertData(estate.link) }}
 										</a>
 									</div>
 								</li>
 								<li>
 									<div class="key">주소</div>
-									<div>{{ convertData(address) }}</div>
+									<div>{{ $common.convertData(address) }}</div>
 								</li>
 							</ul>
 						</div>
@@ -60,7 +62,7 @@
 									<div class="key">보증금</div>
 									<div>
 										{{
-											convertData(
+											$common.convertData(
 												estate.deposit,
 												`${parseInt(estate.deposit).toLocaleString()}만원`
 											)
@@ -71,7 +73,7 @@
 									<div class="key">월세</div>
 									<div>
 										{{
-											convertData(
+											$common.convertData(
 												estate.monthly,
 												`${parseInt(estate.monthly).toLocaleString()}만원`
 											)
@@ -80,33 +82,40 @@
 								</li>
 								<li>
 									<div class="key">거래유형</div>
-									<div>{{ convertData(estate.contractType) }}</div>
+									<div>{{ $common.convertData(estate.contractType) }}</div>
 								</li>
 								<li>
 									<div class="key">건물형태</div>
-									<div>{{ convertData(estate.buildingType) }}</div>
+									<div>{{ $common.convertData(estate.buildingType) }}</div>
 								</li>
 								<li>
 									<div class="key">건물종류</div>
-									<div>{{ convertData(estate.buildingForm) }}</div>
+									<div>{{ $common.convertData(estate.buildingForm) }}</div>
 								</li>
 								<li>
 									<div class="key">사용승인일</div>
-									<div>{{ convertData(estate.useApprovalDate) }}</div>
+									<div>{{ $common.convertData(estate.useApprovalDate) }}</div>
 								</li>
 								<li>
 									<div class="key">동</div>
-									<div>{{ convertData(estate.dong, `${estate.dong}동`) }}</div>
+									<div>
+										{{ $common.convertData(estate.dong, `${estate.dong}동`) }}
+									</div>
 								</li>
 								<li>
 									<div class="key">호</div>
-									<div>{{ convertData(estate.ho, `${estate.ho}동`) }}</div>
+									<div>
+										{{ $common.convertData(estate.ho, `${estate.ho}동`) }}
+									</div>
 								</li>
 								<li>
 									<div class="key">전체층</div>
 									<div>
 										{{
-											convertData(estate.wholeFloor, `${estate.wholeFloor}층`)
+											$common.convertData(
+												estate.wholeFloor,
+												`${estate.wholeFloor}층`
+											)
 										}}
 									</div>
 								</li>
@@ -114,7 +123,7 @@
 									<div class="key">해당층</div>
 									<div>
 										{{
-											convertData(
+											$common.convertData(
 												estate.correspondingFloor,
 												`${estate.correspondingFloor}층`
 											)
@@ -123,27 +132,34 @@
 								</li>
 								<li>
 									<div class="key">구조</div>
-									<div>{{ convertData(estate.roomStructure) }}</div>
+									<div>{{ $common.convertData(estate.roomStructure) }}</div>
 								</li>
 								<li>
 									<div class="key">평</div>
-									<div>{{ convertData(estate.pyung, `${estate.pyung}평`) }}</div>
+									<div>
+										{{ $common.convertData(estate.pyung, `${estate.pyung}평`) }}
+									</div>
 								</li>
 								<li>
 									<div class="key">m<sup>2</sup></div>
 									<div
-										v-html="convertData(estate.m2, `${estate.m2}m<sup>2</sup>`)"
+										v-html="
+											$common.convertData(
+												estate.m2,
+												`${estate.m2}m<sup>2</sup>`
+											)
+										"
 									></div>
 								</li>
 								<li>
 									<div class="key">주실 방향</div>
-									<div>{{ convertData(estate.roomDirection) }}</div>
+									<div>{{ $common.convertData(estate.roomDirection) }}</div>
 								</li>
 								<li>
 									<div class="key">화장실 수</div>
 									<div>
 										{{
-											convertData(
+											$common.convertData(
 												estate.bathroomCount,
 												`${estate.bathroomCount}개`
 											)
@@ -157,25 +173,25 @@
 							<ul class="info">
 								<li>
 									<div class="key">엘리베이터</div>
-									<div>{{ convertData(estate.elevator) }}</div>
+									<div>{{ $common.convertData(estate.elevator) }}</div>
 								</li>
 								<li>
 									<div class="key">반려동물</div>
-									<div>{{ convertData(estate.pet) }}</div>
+									<div>{{ $common.convertData(estate.pet) }}</div>
 								</li>
 								<li>
 									<div class="key">주차</div>
-									<div>{{ convertData(estate.parking) }}</div>
+									<div>{{ $common.convertData(estate.parking) }}</div>
 								</li>
 								<li>
 									<div class="key">관리비</div>
-									<div>{{ convertData(estate.cost) }}만원</div>
+									<div>{{ $common.convertData(estate.cost) }}만원</div>
 								</li>
 								<li>
 									<div class="key">관리비 포함 항목</div>
 									<div>
 										{{
-											convertData(
+											$common.convertData(
 												estate.managementCost,
 												estate.managementCost?.join(', ')
 											)
@@ -185,20 +201,25 @@
 								<li>
 									<div class="key">옵션</div>
 									<div>
-										{{ convertData(estate.option, estate.option?.join(', ')) }}
+										{{
+											$common.convertData(
+												estate.option,
+												estate.option?.join(', ')
+											)
+										}}
 									</div>
 								</li>
 								<li>
 									<div class="key">입주가능일</div>
-									<div>{{ convertData(estate.moveDate) }}</div>
+									<div>{{ $common.convertData(estate.moveDate) }}</div>
 								</li>
 								<li>
 									<div class="key">임대인 연락처</div>
-									<div>{{ convertData(estate.landLordPhone) }}</div>
+									<div>{{ $common.convertData(estate.landLordPhone) }}</div>
 								</li>
 								<li>
 									<div class="key">현 임차인 연락처</div>
-									<div>{{ convertData(estate.currentLesseePhone) }}</div>
+									<div>{{ $common.convertData(estate.currentLesseePhone) }}</div>
 								</li>
 							</ul>
 						</div>
@@ -322,10 +343,6 @@ export default {
 		routeUpdate() {
 			this.$router.push(`/estate/${this.estate.id}`);
 			this.$emit('hide');
-		},
-		convertData(value, convertValue) {
-			if (!value || !value.length) return '-';
-			return convertValue ?? value;
 		},
 	},
 };
