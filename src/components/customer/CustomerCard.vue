@@ -1,6 +1,6 @@
 <template>
 	<b-card
-		:title="convertTel(item.phone)"
+		:title="$common.convertTel(item.phone)"
 		class="card mt-4 mb-4 me-4"
 		@click="$emit('clickCard', item.id)"
 	>
@@ -45,11 +45,6 @@ export default {
 		item: {
 			type: Object,
 			default: () => ({}),
-		},
-	},
-	methods: {
-		convertTel(tel) {
-			return tel.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 		},
 	},
 };

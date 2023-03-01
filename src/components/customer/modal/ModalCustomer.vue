@@ -4,7 +4,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">고객 상세</h5>
+						<h3 class="modal-title">고객 상세</h3>
 						<button
 							type="button"
 							class="btn-close"
@@ -20,7 +20,10 @@
 									<div class="key">연락처</div>
 									<div class="fw-bold">
 										{{
-											convertData(customer.phone, convertTel(customer.phone))
+											convertData(
+												customer.phone,
+												$common.convertTel(customer.phone)
+											)
 										}}
 									</div>
 								</li>
@@ -154,6 +157,14 @@
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
+						<b-button type="button" variant="outline-primary">방 목록</b-button>
+						<b-button
+							type="button"
+							variant="outline-primary"
+							@click="modalCustomerResult.show()"
+						>
+							결과
+						</b-button>
 						<b-button type="button" variant="danger" @click="deleteCustomer">
 							삭제
 						</b-button>
@@ -164,14 +175,21 @@
 				</div>
 			</div>
 		</b-overlay>
+
+		<modal-customer-result :id="id" @hide="modalCustomerResult.hide()" />
 	</div>
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import { Modal } from 'bootstrap';
+import ModalCustomerResult from './ModalCustomerResult.vue';
 
 export default {
 	name: 'ModalCustomer',
+	components: {
+		ModalCustomerResult,
+	},
 	props: {
 		id: {
 			type: String,
@@ -181,6 +199,7 @@ export default {
 	data() {
 		return {
 			isLoading: false,
+			modalCustomerResult: null,
 		};
 	},
 	computed: {
@@ -192,18 +211,16 @@ export default {
 		},
 	},
 	mounted() {
+		this.modalCustomerResult = new Modal(document.querySelector('#modal-customer-result'));
+
 		const modal = document.querySelector('#modal-customer');
 		modal.addEventListener('show.bs.modal', () => {
 			this.$nextTick(() => {
 				this.fetchDetail();
 			});
 		});
-		modal.addEventListener('hide.bs.modal', () => {
-			this.SET_CUSTOMER({});
-		});
 	},
 	methods: {
-		...mapMutations('customer/detail', ['SET_CUSTOMER']),
 		...mapActions('customer/detail', ['FETCH_CUSTOMER', 'DELETE_CUSTOMER']),
 		async fetchDetail() {
 			try {
@@ -245,9 +262,6 @@ export default {
 		convertData(value, convertValue) {
 			if (!value || !value.length) return '-';
 			return convertValue ?? value;
-		},
-		convertTel(tel) {
-			return tel?.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 		},
 	},
 };

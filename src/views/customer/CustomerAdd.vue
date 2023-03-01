@@ -39,7 +39,7 @@
 							<form-radio
 								:value="item.gender"
 								@update:modelValue="item.gender = $event"
-								:options="setOptions(CUSTOMER.GENDER)"
+								:options="$common.setOptions(CUSTOMER.GENDER)"
 								name="gender"
 							/>
 						</div>
@@ -67,7 +67,7 @@
 							<form-radio
 								:value="item.buildingType"
 								@update:modelValue="item.buildingType = $event"
-								:options="setOptions(CUSTOMER.BUILDING_TYPE)"
+								:options="$common.setOptions(CUSTOMER.BUILDING_TYPE)"
 								name="buildingType"
 							/>
 						</div>
@@ -78,7 +78,7 @@
 							<form-radio
 								:value="item.contractType"
 								@update:modelValue="item.contractType = $event"
-								:options="setOptions(CUSTOMER.CONTRACT_TYPE)"
+								:options="$common.setOptions(CUSTOMER.CONTRACT_TYPE)"
 								name="contractType"
 							/>
 						</div>
@@ -116,7 +116,7 @@
 							<form-radio
 								:value="item.loan"
 								@update:modelValue="item.loan = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="loan"
 							/>
 						</div>
@@ -133,7 +133,7 @@
 							<form-radio
 								:value="item.geunlin"
 								@update:modelValue="item.geunlin = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="geunlin"
 							/>
 						</div>
@@ -166,7 +166,7 @@
 							<form-radio
 								:value="item.elevator"
 								@update:modelValue="item.elevator = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="elevator"
 							/>
 						</div>
@@ -177,7 +177,7 @@
 							<form-radio
 								:value="item.pet"
 								@update:modelValue="item.pet = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="pet"
 							/>
 						</div>
@@ -188,7 +188,7 @@
 							<form-radio
 								:value="item.parking"
 								@update:modelValue="item.parking = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="parking"
 							/>
 						</div>
@@ -199,7 +199,7 @@
 							<form-radio
 								:value="item.window"
 								@update:modelValue="item.window = $event"
-								:options="setOptions(CUSTOMER.OX)"
+								:options="$common.setOptions(CUSTOMER.OX)"
 								name="window"
 							/>
 						</div>
@@ -210,7 +210,7 @@
 							<form-radio
 								:value="item.condition"
 								@update:modelValue="item.condition = $event"
-								:options="setOptions(CUSTOMER.CONDITION)"
+								:options="$common.setOptions(CUSTOMER.CONDITION)"
 								name="condition"
 							/>
 						</div>
@@ -221,7 +221,7 @@
 							<form-radio
 								:value="item.roomStructure"
 								@update:modelValue="item.roomStructure = $event"
-								:options="setOptions(CUSTOMER.ROOM_STRUCTURE)"
+								:options="$common.setOptions(CUSTOMER.ROOM_STRUCTURE)"
 								name="roomStructure"
 							/>
 						</div>
@@ -232,7 +232,7 @@
 							<form-radio
 								:value="item.roomDirection"
 								@update:modelValue="item.roomDirection = $event"
-								:options="setOptions(CUSTOMER.ROOM_DIRECTION)"
+								:options="$common.setOptions(CUSTOMER.ROOM_DIRECTION)"
 								name="roomDirection"
 							/>
 						</div>
@@ -243,7 +243,7 @@
 							<form-radio
 								:value="item.floor"
 								@update:modelValue="item.floor = $event"
-								:options="setOptions(CUSTOMER.FLOOR)"
+								:options="$common.setOptions(CUSTOMER.FLOOR)"
 								name="floor"
 							/>
 						</div>
@@ -254,7 +254,7 @@
 							<form-radio
 								:value="item.option"
 								@update:modelValue="item.option = $event"
-								:options="setOptions(CUSTOMER.OPTION)"
+								:options="$common.setOptions(CUSTOMER.OPTION)"
 								name="option"
 							/>
 						</div>
@@ -349,11 +349,9 @@ export default {
 		},
 		currentTime() {
 			const date = new Date();
-			let hh = date.getHours();
-			hh = hh >= 10 ? hh : `0${hh}`;
-			let mm = date.getMinutes();
-			mm = mm >= 10 ? mm : `0${mm}`;
-			return `${hh}:${mm}`;
+			const hh = date.getHours();
+			const mm = date.getMinutes();
+			return `${hh >= 10 ? hh : `0${hh}`}:${mm >= 10 ? mm : `0${mm}`}`;
 		},
 	},
 	async created() {
@@ -385,12 +383,6 @@ export default {
 			} finally {
 				this.isLoading = false;
 			}
-		},
-		setOptions(constant) {
-			return constant.map((text) => ({
-				text,
-				value: text,
-			}));
 		},
 		async save() {
 			if (!this.validation()) return;

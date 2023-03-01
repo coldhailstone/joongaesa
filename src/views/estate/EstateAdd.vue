@@ -83,7 +83,7 @@
 							<form-checkbox
 								:value="item.managementCost"
 								@update:modelValue="item.managementCost = $event"
-								:options="setOptions(ESTATE.MANAGEMENT_COST)"
+								:options="$common.setOptions(ESTATE.MANAGEMENT_COST)"
 							/>
 						</div>
 					</b-form-row>
@@ -93,7 +93,7 @@
 							<form-radio
 								:value="item.contractType"
 								@update:modelValue="item.contractType = $event"
-								:options="setOptions(ESTATE.CONTRACT_TYPE)"
+								:options="$common.setOptions(ESTATE.CONTRACT_TYPE)"
 								name="contractType"
 							/>
 						</div>
@@ -104,7 +104,7 @@
 							<form-radio
 								:value="item.buildingType"
 								@update:modelValue="item.buildingType = $event"
-								:options="setOptions(ESTATE.BUILDING_TYPE)"
+								:options="$common.setOptions(ESTATE.BUILDING_TYPE)"
 								name="buildingType"
 							/>
 						</div>
@@ -115,7 +115,7 @@
 							<form-radio
 								:value="item.buildingForm"
 								@update:modelValue="item.buildingForm = $event"
-								:options="setOptions(ESTATE.BUILDING_FORM)"
+								:options="$common.setOptions(ESTATE.BUILDING_FORM)"
 								name="buildingForm"
 							/>
 						</div>
@@ -172,7 +172,7 @@
 							<form-radio
 								:value="item.roomStructure"
 								@update:modelValue="item.roomStructure = $event"
-								:options="setOptions(ESTATE.ROOM_STRUCTURE)"
+								:options="$common.setOptions(ESTATE.ROOM_STRUCTURE)"
 								name="roomStructure"
 							/>
 						</div>
@@ -202,7 +202,7 @@
 							<form-radio
 								:value="item.roomDirection"
 								@update:modelValue="item.roomDirection = $event"
-								:options="setOptions(ESTATE.ROOM_DIRECTION)"
+								:options="$common.setOptions(ESTATE.ROOM_DIRECTION)"
 								name="roomDirection"
 							/>
 						</div>
@@ -233,7 +233,7 @@
 							<form-radio
 								:value="item.elevator"
 								@update:modelValue="item.elevator = $event"
-								:options="setOptions(ESTATE.ELEVATOR)"
+								:options="$common.setOptions(ESTATE.ELEVATOR)"
 								name="elevator"
 							/>
 						</div>
@@ -244,7 +244,7 @@
 							<form-radio
 								:value="item.pet"
 								@update:modelValue="item.pet = $event"
-								:options="setOptions(ESTATE.PET)"
+								:options="$common.setOptions(ESTATE.PET)"
 								name="pet"
 							/>
 						</div>
@@ -257,7 +257,7 @@
 									<form-radio
 										:value="item.parking"
 										@update:modelValue="item.parking = $event"
-										:options="setOptions(ESTATE.PARKING)"
+										:options="$common.setOptions(ESTATE.PARKING)"
 										name="parking"
 									/>
 								</div>
@@ -270,7 +270,7 @@
 							<form-checkbox
 								:value="item.option"
 								@update:modelValue="item.option = $event"
-								:options="setOptions(ESTATE.OPTION)"
+								:options="$common.setOptions(ESTATE.OPTION)"
 							/>
 						</div>
 					</b-form-row>
@@ -401,12 +401,6 @@ export default {
 			} finally {
 				this.isLoading = false;
 			}
-		},
-		setOptions(constant) {
-			return constant.map((text) => ({
-				text,
-				value: text,
-			}));
 		},
 		changeAddress({ postcode, address, addressDetail }) {
 			this.item.postcode = postcode;

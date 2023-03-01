@@ -4,7 +4,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">매물 상세</h5>
+						<h3 class="modal-title">매물 상세</h3>
 						<button
 							type="button"
 							class="btn-close"
