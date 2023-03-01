@@ -4,7 +4,7 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h3 class="modal-title">방 보신 이후 결과</h3>
+						<h3 class="modal-title">방문 결과</h3>
 						<button
 							type="button"
 							class="btn-close"
