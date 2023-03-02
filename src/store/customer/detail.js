@@ -24,15 +24,15 @@ export default {
 		async FETCH_CUSTOMER({ state, commit }, id) {
 			commit('SET_CUSTOMER', await getDetail(state.path, id));
 		},
-		async FETCH_CUSTOMER_ESTATE_LIST({ commit }, roomIds) {
-			if (!roomIds) {
+		async FETCH_CUSTOMER_ESTATE_LIST({ commit }, estateIds) {
+			if (!estateIds || !estateIds.length) {
 				commit('SET_CUSTOMER_ESTATE_LIST', []);
 			} else {
 				commit(
 					'SET_CUSTOMER_ESTATE_LIST',
 					await getList('estate', [
 						where('userId', '==', store.state.user.user.uid),
-						where('id', 'in', roomIds),
+						where('id', 'in', estateIds),
 					])
 				);
 			}

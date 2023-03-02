@@ -21,7 +21,12 @@
 						>
 							추가
 						</b-button>
-						<b-table :items="tableItems" variant="light" bordered>
+						<b-table
+							v-if="tableItems.length"
+							:items="tableItems"
+							variant="light"
+							bordered
+						>
 							<template #cell(제목)="data">
 								<a
 									href="#"
@@ -30,7 +35,19 @@
 									>{{ data.value.title }}
 								</a>
 							</template>
+							<template #cell(삭제)="item">
+								<div class="text-center">
+									<i
+										class="fa-solid fa-xmark"
+										style="cursor: pointer"
+										@click="deleteCustomerEstate(item.item['제목'].id)"
+									/>
+								</div>
+							</template>
 						</b-table>
+						<div v-else class="mt-5 p-3 text-center">
+							<span>등록된 방이 없습니다.</span>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
@@ -39,7 +56,7 @@
 			</div>
 		</b-overlay>
 
-		<modal-room-add @hide="modalCustomerResult.hide()" @add="addRoom" />
+		<modal-room-add @hide="modalCustomerResult.hide()" @add="addCustomerEstate" />
 		<modal-estate :id="modalEstateId" :edit="false" @hide="modalEstate.hide()" />
 	</div>
 </template>
@@ -96,7 +113,7 @@ export default {
 			try {
 				this.isLoading = true;
 
-				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.roomIds);
+				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
 			} catch (error) {
 				this.$notify({
 					type: 'error',
@@ -117,32 +134,33 @@ export default {
 					},
 					보증금: `${parseInt(item.deposit).toLocaleString()}만원`,
 					월세: `${parseInt(item.monthly).toLocaleString()}만원`,
+					삭제: true,
 				};
 			});
 		},
-		async addRoom(id) {
+		async addCustomerEstate(id) {
 			this.modalRoomAdd.hide();
 
 			try {
 				this.isLoading = true;
 
-				const roomIds = this.customer.roomIds;
-				if (roomIds && roomIds.includes(id)) {
+				const estateIds = this.customer.estateIds;
+				if (estateIds && estateIds.includes(id)) {
 					this.$notify({
-						type: 'success',
-						text: '이미 추가된 매물입니다.',
+						type: 'error',
+						text: '이미 추가된 방입니다.',
 					});
 				} else {
 					await this.UPDATE_CUSTOMER({
 						id: this.customer.id,
-						body: { roomIds: roomIds ? [id, ...roomIds] : [id] },
+						body: { estateIds: estateIds ? [id, ...estateIds] : [id] },
 					});
 					this.$notify({
 						type: 'success',
-						text: '매물이 추가되었습니다.',
+						text: '방이 추가되었습니다.',
 					});
 					await this.FETCH_CUSTOMER(this.customer.id);
-					await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.roomIds);
+					await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
 					this.tableItems = this.convertTableItems(this.customer.estateList);
 				}
 			} catch (error) {
@@ -157,6 +175,34 @@ export default {
 		showEstateDetail(id) {
 			this.modalEstateId = id;
 			this.modalEstate.show();
+		},
+		async deleteCustomerEstate(id) {
+			try {
+				this.isLoading = true;
+
+				const estateIds = this.$_.cloneDeep(this.customer.estateIds);
+				const index = estateIds.indexOf(id);
+				if (index > -1) estateIds.splice(index, 1);
+
+				await this.UPDATE_CUSTOMER({
+					id: this.customer.id,
+					body: { estateIds: estateIds },
+				});
+				this.$notify({
+					type: 'success',
+					text: '방이 삭제되었습니다.',
+				});
+				await this.FETCH_CUSTOMER(this.customer.id);
+				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
+				this.tableItems = this.convertTableItems(this.customer.estateList);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			} finally {
+				this.isLoading = false;
+			}
 		},
 	},
 };

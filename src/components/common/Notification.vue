@@ -34,7 +34,7 @@ export default {
 			background-color: #ff5252;
 		}
 		&.warning {
-			background-color: #ff8248;
+			background-color: #ffc107;
 		}
 		&.info {
 			background-color: #0b6cff;
