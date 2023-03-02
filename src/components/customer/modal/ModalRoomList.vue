@@ -80,14 +80,35 @@ export default {
 
 		const modal = document.querySelector('#modal-room-list');
 		modal.addEventListener('show.bs.modal', () => {
-			this.$nextTick(() => {
+			this.$nextTick(async () => {
+				await this.fetchCustomerEstateList();
 				this.tableItems = this.convertTableItems(this.customer.estateList);
 			});
 		});
 	},
 	methods: {
-		...mapActions('customer/detail', ['FETCH_CUSTOMER', 'UPDATE_CUSTOMER']),
+		...mapActions('customer/detail', [
+			'FETCH_CUSTOMER',
+			'FETCH_CUSTOMER_ESTATE_LIST',
+			'UPDATE_CUSTOMER',
+		]),
+		async fetchCustomerEstateList() {
+			try {
+				this.isLoading = true;
+
+				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.roomIds);
+			} catch (error) {
+				this.$notify({
+					type: 'error',
+					text: error.message,
+				});
+			} finally {
+				this.isLoading = false;
+			}
+		},
 		convertTableItems(list) {
+			if (!list) return [];
+
 			return list.map((item) => {
 				return {
 					제목: {
@@ -121,7 +142,7 @@ export default {
 						text: '매물이 추가되었습니다.',
 					});
 					await this.FETCH_CUSTOMER(this.customer.id);
-					console.log(this.customer.estateList);
+					await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.roomIds);
 					this.tableItems = this.convertTableItems(this.customer.estateList);
 				}
 			} catch (error) {

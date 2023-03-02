@@ -21,18 +21,21 @@ export default {
 		},
 	},
 	actions: {
-		async FETCH_CUSTOMER({ state, commit, dispatch }, id) {
+		async FETCH_CUSTOMER({ state, commit }, id) {
 			commit('SET_CUSTOMER', await getDetail(state.path, id));
-			dispatch('FETCH_CUSTOMER_ESTATE_LIST', state.customer.roomIds);
 		},
 		async FETCH_CUSTOMER_ESTATE_LIST({ commit }, roomIds) {
-			commit(
-				'SET_CUSTOMER_ESTATE_LIST',
-				await getList('estate', [
-					where('userId', '==', store.state.user.user.uid),
-					where('id', 'in', roomIds),
-				])
-			);
+			if (!roomIds) {
+				commit('SET_CUSTOMER_ESTATE_LIST', []);
+			} else {
+				commit(
+					'SET_CUSTOMER_ESTATE_LIST',
+					await getList('estate', [
+						where('userId', '==', store.state.user.user.uid),
+						where('id', 'in', roomIds),
+					])
+				);
+			}
 		},
 		async UPDATE_CUSTOMER({ state }, { id, body }) {
 			return await updateData(state.path, id, body);

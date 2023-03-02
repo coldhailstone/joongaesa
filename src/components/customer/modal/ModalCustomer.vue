@@ -45,6 +45,7 @@
 										<a
 											:href="customer.link ? customer.link : '#'"
 											target="_blank"
+											style="text-decoration: none"
 										>
 											{{ $common.convertData(customer.link) }}
 										</a>
