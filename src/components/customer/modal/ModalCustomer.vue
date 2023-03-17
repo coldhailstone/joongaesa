@@ -271,7 +271,7 @@ export default {
 			}
 		},
 		routeUpdate() {
-			this.$router.push(`/customer/${this.customer.id}`);
+			this.$router.push(`/customer/${this.id}`);
 			this.$emit('hide');
 		},
 	},

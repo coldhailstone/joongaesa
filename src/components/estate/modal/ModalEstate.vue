@@ -189,7 +189,9 @@
 								</li>
 								<li>
 									<div class="key">관리비</div>
-									<div>{{ $common.convertData(estate.cost) }}만원</div>
+									<div>
+										{{ $common.convertData(estate.cost, `${estate.cost}만원`) }}
+									</div>
 								</li>
 								<li>
 									<div class="key">관리비 포함 항목</div>
@@ -345,7 +347,7 @@ export default {
 			}
 		},
 		routeUpdate() {
-			this.$router.push(`/estate/${this.estate.id}`);
+			this.$router.push(`/estate/${this.id}`);
 			this.$emit('hide');
 		},
 	},

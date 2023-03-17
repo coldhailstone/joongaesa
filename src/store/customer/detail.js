@@ -1,4 +1,4 @@
-import { where, serverTimestamp } from '@firebase/firestore';
+import { where, serverTimestamp, documentId } from '@firebase/firestore';
 import { getList, getDetail, addData, updateData, deleteData } from '@/api/firebase';
 import store from '@/store';
 
@@ -32,7 +32,7 @@ export default {
 					'SET_CUSTOMER_ESTATE_LIST',
 					await getList('estate', [
 						where('userId', '==', store.state.user.user.uid),
-						where('id', 'in', estateIds),
+						where(documentId(), 'in', estateIds),
 					])
 				);
 			}

@@ -152,18 +152,19 @@ export default {
 					});
 				} else {
 					await this.UPDATE_CUSTOMER({
-						id: this.customer.id,
+						id: this.id,
 						body: { estateIds: estateIds ? [id, ...estateIds] : [id] },
 					});
 					this.$notify({
 						type: 'success',
 						text: '방이 추가되었습니다.',
 					});
-					await this.FETCH_CUSTOMER(this.customer.id);
+					await this.FETCH_CUSTOMER(this.id);
 					await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
 					this.tableItems = this.convertTableItems(this.customer.estateList);
 				}
 			} catch (error) {
+				console.log(error);
 				this.$notify({
 					type: 'error',
 					text: error.message,
@@ -185,14 +186,14 @@ export default {
 				if (index > -1) estateIds.splice(index, 1);
 
 				await this.UPDATE_CUSTOMER({
-					id: this.customer.id,
+					id: this.id,
 					body: { estateIds: estateIds },
 				});
 				this.$notify({
 					type: 'success',
 					text: '방이 삭제되었습니다.',
 				});
-				await this.FETCH_CUSTOMER(this.customer.id);
+				await this.FETCH_CUSTOMER(this.id);
 				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
 				this.tableItems = this.convertTableItems(this.customer.estateList);
 			} catch (error) {
