@@ -13,7 +13,19 @@
 						></button>
 					</div>
 					<div class="modal-body">
-						<div class="d-flex flex-wrap gap-5">
+						<div class="d-flex align-items-center gap-1">
+							<b-form-input
+								v-model="keyword"
+								class="w-50"
+								type="search"
+								placeholder="제목으로 검색"
+								@keypress.enter="fetchList"
+							/>
+							<div class="search-icon-wrapper" @click="fetchList">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</div>
+						</div>
+						<div class="d-flex flex-wrap gap-3">
 							<estate-card
 								v-for="estate of estateList"
 								:key="estate.id"
@@ -43,6 +55,7 @@ export default {
 	data() {
 		return {
 			isLoading: false,
+			keyword: '',
 		};
 	},
 	computed: {
@@ -52,6 +65,7 @@ export default {
 		const modal = document.querySelector('#modal-room-add');
 		modal.addEventListener('show.bs.modal', () => {
 			this.$nextTick(() => {
+				this.keyword = '';
 				this.fetchList();
 			});
 		});
@@ -62,7 +76,15 @@ export default {
 			try {
 				this.isLoading = true;
 
-				await this.FETCH_ESTATE_LIST([]);
+				const queryList = [];
+				if (this.keyword) {
+					queryList.push({
+						key: 'title',
+						value: this.keyword,
+						operator: '==',
+					});
+				}
+				await this.FETCH_ESTATE_LIST(queryList);
 			} catch (error) {
 				this.$notify({
 					type: 'error',
@@ -75,3 +97,16 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.search-icon-wrapper {
+	width: 38px;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	background: rgba(54, 58, 60, 0.1);
+	border: 1px solid #eee;
+	border-radius: 10px;
+	cursor: pointer;
+}
+</style>

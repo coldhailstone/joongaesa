@@ -8,6 +8,7 @@
 		"
 		img-top
 		class="card mt-4 mb-4 me-4"
+		style="box-sizing: content-box"
 		@click="$emit('clickCard', item.id)"
 	>
 		<b-card-text>
