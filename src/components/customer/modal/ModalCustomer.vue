@@ -39,18 +39,24 @@
 									<div class="key">연령대</div>
 									<div>{{ $common.convertData(customer.age) }}</div>
 								</li>
-								<li>
-									<div class="key">문의주신 방</div>
-									<div>
-										<a
-											:href="customer.link ? customer.link : '#'"
-											target="_blank"
-											style="text-decoration: none"
-										>
-											{{ $common.convertData(customer.link) }}
-										</a>
-									</div>
-								</li>
+								<template v-for="(link, index) of customer.links" :key="index">
+									<li>
+										<div class="key">문의주신 방 {{ index + 1 }}</div>
+										<div>
+											<a
+												:href="link.url ? link.url : '#'"
+												target="_blank"
+												style="text-decoration: none"
+											>
+												{{ $common.convertData(link.url) }}
+											</a>
+										</div>
+									</li>
+									<li>
+										<div class="key">메모 {{ index + 1 }}</div>
+										<div>{{ $common.convertData(link.memo) }}</div>
+									</li>
+								</template>
 								<li>
 									<div class="key">건물형태</div>
 									<div>{{ $common.convertData(customer.buildingType) }}</div>
