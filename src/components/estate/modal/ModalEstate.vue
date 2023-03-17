@@ -44,7 +44,11 @@
 								<li>
 									<div class="key">원본 링크</div>
 									<div>
-										<a :href="estate.link ? estate.link : '#'" target="_blank">
+										<a
+											:href="estate.link ? estate.link : '#'"
+											target="_blank"
+											style="text-decoration: none"
+										>
 											{{ $common.convertData(estate.link) }}
 										</a>
 									</div>

@@ -60,7 +60,8 @@ export const getDetail = async (path, id) => {
 	return { ...ref.data(), id: ref.id };
 };
 export const addData = async (path, body) => {
-	return await addDoc(collection(db, path), body);
+	const ref = await addDoc(collection(db, path), body);
+	return await updateData(path, ref.id, { id: ref.id });
 };
 export const updateData = async (path, id, body) => {
 	return await updateDoc(doc(db, path, id), body);
