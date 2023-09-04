@@ -58,7 +58,55 @@
 					<b-form-row class="mb-3">
 						<div class="w-100">
 							<label> 문의주신 방 </label>
-							<b-form-input v-model="item.link" placeholder="링크" />
+							<div v-if="item.links.length === 1" class="d-flex gap-3 mt-2">
+								<b-form-input
+									v-model="item.links[0].url"
+									placeholder="링크"
+									style="flex: 3"
+								/>
+								<b-form-input
+									v-model="item.links[0].memo"
+									placeholder="메모"
+									style="flex: 1"
+								/>
+								<b-button
+									variant="primary"
+									@click="item.links.push({ url: '', memo: '' })"
+								>
+									+
+								</b-button>
+							</div>
+							<div
+								v-else
+								v-for="(link, index) of item.links"
+								:key="index"
+								class="d-flex gap-3 mt-2"
+							>
+								<b-form-input
+									v-model="link.url"
+									placeholder="링크"
+									style="flex: 3"
+								/>
+								<b-form-input
+									v-model="link.memo"
+									placeholder="메모"
+									style="flex: 1"
+								/>
+								<b-button
+									v-if="index > 0"
+									variant="danger"
+									@click="item.links.splice(index, 1)"
+								>
+									-
+								</b-button>
+								<b-button
+									v-else
+									variant="primary"
+									@click="item.links.push({ url: '', memo: '' })"
+								>
+									+
+								</b-button>
+							</div>
 						</div>
 					</b-form-row>
 					<b-form-row>
@@ -314,7 +362,7 @@ export default {
 				visitTime: '',
 				gender: '',
 				age: 0,
-				link: '',
+				links: [{ url: '', memo: '' }],
 				buildingType: '',
 				contractType: '',
 				residence: '',

@@ -54,7 +54,7 @@ export default {
 		async openDaumPostcode() {
 			const result = await daumPostcode(window);
 			this.item.postcode = result.zonecode;
-			this.item.address = result.roadAddress;
+			this.item.address = result.address;
 			this.item.addressDetail = '';
 			this.$emit('changeAddress', this.getAddress());
 		},
