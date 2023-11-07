@@ -21,7 +21,7 @@ import Notification from '@/components/common/Notification.vue';
 const store = useStore();
 const route = useRoute();
 
-const isLoading = store.state.loading.isLoading;
+const isLoading = computed(() => store.state.loading.isLoading);
 
 const pathToHideLayout = ['/login', '/join'];
 const showLayout = computed(() => !pathToHideLayout.includes(route.path));
