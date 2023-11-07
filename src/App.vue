@@ -10,39 +10,24 @@
 	</b-overlay>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex';
+<script setup>
+import { computed, onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import NavBar from '@/components/layout/NavBar.vue';
 import Footers from '@/components/layout/Footer.vue';
 import Notification from '@/components/common/Notification.vue';
 
-export default {
-	components: {
-		NavBar,
-		Footers,
-		Notification,
-	},
-	data() {
-		return {
-			pathToHideLayout: ['/login', '/join'],
-		};
-	},
-	computed: {
-		...mapState('loading', ['isLoading']),
-		currentPath() {
-			return this.$route.path;
-		},
-		showLayout() {
-			return !this.pathToHideLayout.includes(this.currentPath);
-		},
-	},
-	async created() {
-		await this.FETCH_SESSION_USER();
-	},
-	methods: {
-		...mapActions('user', ['FETCH_SESSION_USER']),
-	},
-};
+const store = useStore();
+const route = useRoute();
+
+const isLoading = store.state.loading.isLoading;
+
+const pathToHideLayout = ['/login', '/join'];
+const showLayout = computed(() => !pathToHideLayout.includes(route.path));
+
+const fetchSessionUser = () => store.dispatch('user/FETCH_SESSION_USER');
+onBeforeMount(() => fetchSessionUser());
 </script>
 
 <style lang="scss" scoped>
