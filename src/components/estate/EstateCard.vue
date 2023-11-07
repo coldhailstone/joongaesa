@@ -43,10 +43,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .card-title {
+:deep(.card-title) {
 	font-weight: bold;
 }
-::v-deep .card-img-top {
+:deep(.card-img-top) {
 	width: 300px;
 	height: 150px;
 	object-fit: cover;

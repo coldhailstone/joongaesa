@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .card-title {
+:deep(.card-title) {
 	font-weight: bold;
 }
 

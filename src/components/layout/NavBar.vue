@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .dropdown-menu {
+:deep(.dropdown-menu) {
 	margin-top: 0 !important;
 }
 .navbar {
