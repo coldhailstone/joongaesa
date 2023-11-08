@@ -17,41 +17,32 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FormFile',
-	props: {
-		list: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	data() {
-		return {
-			attachments: [],
-		};
-	},
-	watch: {
-		list(newVal) {
-			this.attachments = newVal;
-		},
-	},
-	methods: {
-		dropFile(e) {
-			this.$refs['file'].files = e.dataTransfer.files;
-			this.changeFile();
-		},
-		changeFile() {
-			const files = [...this.$refs['file'].files];
-			this.attachments = [...this.attachments, ...files];
-			this.$emit('changeFile', this.attachments);
-		},
-		deleteFile(index) {
-			this.attachments.splice(index, 1);
-			this.$emit('changeFile', this.attachments);
-		},
-	},
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps({ list: Array });
+const emit = defineEmits(['changeFile']);
+
+let attachments = ref([]);
+const file = ref(null);
+const dropFile = (e) => {
+	file.value.files = e.dataTransfer.files;
+	changeFile();
 };
+const changeFile = () => {
+	attachments.value = [...attachments.value, ...file.value.files];
+	emit('changeFile', attachments.value);
+};
+const deleteFile = (index) => {
+	attachments.value.splice(index, 1);
+	emit('changeFile', attachments.value);
+};
+watch(
+	() => props.list,
+	(arr) => {
+		attachments.value = arr;
+	}
+);
 </script>
 
 <style lang="scss" scoped>

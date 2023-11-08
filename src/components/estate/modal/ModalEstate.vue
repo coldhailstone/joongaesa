@@ -15,7 +15,7 @@
 					<div class="modal-body d-flex flex-column gap-5">
 						<carousel
 							v-if="estate.photo && estate.photo.length"
-							ref="carousel"
+							ref="carouselComponent"
 							class="carousel"
 							:wrap-around="true"
 						>
@@ -265,18 +265,14 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-
 const props = defineProps({
 	id: String,
-	edit: {
-		type: Boolean,
-		default: true,
-	},
+	edit: { type: Boolean, default: true },
 });
-
 const emit = defineEmits(['delete', 'hide']);
 
 let isLoading = ref(false);
+const carouselComponent = ref(null);
 const estate = computed(() => store.state.estate.detail.estate);
 const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
 const address = computed(() => {
@@ -291,26 +287,24 @@ const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
 const deleteEstate = (id) => store.dispatch('estate/detail/DELETE_ESTATE', id);
 const fetchDetail = async () => {
 	try {
-		isLoading = true;
-
+		isLoading.value = true;
 		await fetchEstate(props.id);
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
 	} finally {
-		isLoading = false;
+		isLoading.value = false;
 	}
 };
 const deleteDetail = async () => {
 	try {
-		isLoading = true;
-
+		isLoading.value = true;
 		await deleteEstate(props.id);
 		notify({ type: 'success', text: '매물이 삭제되었습니다.' });
 		emit('delete');
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
 	} finally {
-		isLoading = false;
+		isLoading.value = false;
 	}
 };
 const routeUpdate = () => {
@@ -319,13 +313,13 @@ const routeUpdate = () => {
 };
 onMounted(() => {
 	const modal = document.querySelector('#modal-estate');
-	modal.addEventListener('show.bs.modal', async () => {
-		await nextTick();
-		if (estate.value.photo && estate.value.photo.length) {
-			const carousel = ref(null);
-			carousel.value.updateSlideWidth();
-		}
-		await fetchDetail();
+	modal.addEventListener('show.bs.modal', () => {
+		nextTick(async () => {
+			if (estate.value.photo && estate.value.photo.length) {
+				carouselComponent.value.updateSlideWidth();
+			}
+			await fetchDetail();
+		});
 	});
 	modal.addEventListener('hide.bs.modal', () => {
 		setEstate({});

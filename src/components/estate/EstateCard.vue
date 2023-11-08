@@ -51,6 +51,7 @@ const title = computed(() => {
 	width: 300px;
 	height: 300px;
 	cursor: pointer;
+	overflow: hidden;
 	&:hover {
 		background: rgba(54, 58, 60, 0.1);
 	}

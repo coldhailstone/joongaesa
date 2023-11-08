@@ -76,7 +76,6 @@ const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_
 const fetchList = async () => {
 	try {
 		setLoading(true);
-
 		const queryList = [];
 		if (keyword) {
 			queryList.push({
