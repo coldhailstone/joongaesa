@@ -22,12 +22,11 @@ const store = useStore();
 const route = useRoute();
 
 const isLoading = computed(() => store.state.loading.isLoading);
+const fetchSessionUser = () => store.dispatch('user/FETCH_SESSION_USER');
+onBeforeMount(async () => await fetchSessionUser());
 
 const pathToHideLayout = ['/login', '/join'];
 const showLayout = computed(() => !pathToHideLayout.includes(route.path));
-
-const fetchSessionUser = () => store.dispatch('user/FETCH_SESSION_USER');
-onBeforeMount(() => fetchSessionUser());
 </script>
 
 <style lang="scss" scoped>

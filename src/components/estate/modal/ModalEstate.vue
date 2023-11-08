@@ -242,7 +242,7 @@
 					</div>
 					<div class="modal-footer">
 						<b-button type="button" data-bs-dismiss="modal">닫기</b-button>
-						<b-button v-if="edit" type="button" variant="danger" @click="deleteEstate">
+						<b-button v-if="edit" type="button" variant="danger" @click="deleteDetail">
 							삭제
 						</b-button>
 						<b-button v-if="edit" type="button" variant="primary" @click="routeUpdate">
@@ -255,103 +255,82 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+<script setup>
+import { ref, computed, nextTick, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useNotification } from '@kyvg/vue3-notification';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
-export default {
-	name: 'ModalEstate',
-	components: {
-		Carousel,
-		Slide,
-		Pagination,
-		Navigation,
-	},
-	props: {
-		id: {
-			type: String,
-			default: '',
-		},
-		edit: {
-			type: Boolean,
-			default: true,
-		},
-	},
-	data() {
-		return {
-			isLoading: false,
-		};
-	},
-	computed: {
-		...mapState('estate/detail', ['estate']),
-		dateTime() {
-			return this.estate.createDatetime?.toDate().toLocaleString('ko-KR');
-		},
-		address() {
-			let result = '';
-			if (this.estate.postcode) result += `(${this.estate.postcode}) `;
-			if (this.estate.address) result += `${this.estate.address} `;
-			if (this.estate.addressDetail) result += `${this.estate.addressDetail}`;
-			return result;
-		},
-	},
-	mounted() {
-		const modal = document.querySelector('#modal-estate');
-		modal.addEventListener('show.bs.modal', () => {
-			this.$nextTick(() => {
-				if (this.estate.photo && this.estate.photo.length) {
-					const carousel = this.$refs.carousel;
-					carousel.updateSlideWidth();
-				}
-				this.fetchDetail();
-			});
-		});
-		modal.addEventListener('hide.bs.modal', () => {
-			this.SET_ESTATE({});
-		});
-	},
-	methods: {
-		...mapMutations('estate/detail', ['SET_ESTATE']),
-		...mapActions('estate/detail', ['FETCH_ESTATE', 'DELETE_ESTATE']),
-		async fetchDetail() {
-			try {
-				this.isLoading = true;
+const store = useStore();
+const router = useRouter();
+const { notify } = useNotification();
 
-				await this.FETCH_ESTATE(this.id);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-		async deleteEstate() {
-			try {
-				this.isLoading = true;
-
-				await this.DELETE_ESTATE(this.id);
-				this.$notify({
-					type: 'success',
-					text: '매물이 삭제되었습니다.',
-				});
-				this.$emit('delete');
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-		routeUpdate() {
-			this.$router.push(`/estate/${this.id}`);
-			this.$emit('hide');
-		},
+const props = defineProps({
+	id: String,
+	edit: {
+		type: Boolean,
+		default: true,
 	},
+});
+
+const emit = defineEmits(['delete', 'hide']);
+
+let isLoading = ref(false);
+const estate = computed(() => store.state.estate.detail.estate);
+const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
+const address = computed(() => {
+	let result = '';
+	if (estate.value.postcode) result += `(${estate.value.postcode}) `;
+	if (estate.value.address) result += `${estate.value.address} `;
+	if (estate.value.addressDetail) result += `${estate.value.addressDetail}`;
+	return result;
+});
+const setEstate = (payload) => store.commit('estate/detail/SET_ESTATE', payload);
+const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
+const deleteEstate = (id) => store.dispatch('estate/detail/DELETE_ESTATE', id);
+const fetchDetail = async () => {
+	try {
+		isLoading = true;
+
+		await fetchEstate(props.id);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading = false;
+	}
 };
+const deleteDetail = async () => {
+	try {
+		isLoading = true;
+
+		await deleteEstate(props.id);
+		notify({ type: 'success', text: '매물이 삭제되었습니다.' });
+		emit('delete');
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading = false;
+	}
+};
+const routeUpdate = () => {
+	router.push(`/estate/${props.id}`);
+	emit('hide');
+};
+onMounted(() => {
+	const modal = document.querySelector('#modal-estate');
+	modal.addEventListener('show.bs.modal', async () => {
+		await nextTick();
+		if (estate.value.photo && estate.value.photo.length) {
+			const carousel = ref(null);
+			carousel.value.updateSlideWidth();
+		}
+		await fetchDetail();
+	});
+	modal.addEventListener('hide.bs.modal', () => {
+		setEstate({});
+	});
+});
 </script>
 
 <style lang="scss" scoped>

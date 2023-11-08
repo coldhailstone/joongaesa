@@ -2,7 +2,7 @@
 	<div>
 		<div class="container mt-3 d-flex flex-column gap-4">
 			<div>
-				<b-button class="float-end" variant="primary" @click="$router.push('estate/new')">
+				<b-button class="float-end" variant="primary" @click="router.push('estate/new')">
 					매물 등록
 				</b-button>
 			</div>
@@ -38,86 +38,72 @@
 			</div>
 		</div>
 
-		<modal-estate :id="modalId" @hide="modalEstate.hide()" @delete="completeDelete" />
+		<modal-estate :id="modalId" @hide="modal.hide()" @delete="completeDelete" />
 	</div>
 </template>
 
-<script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
 import { ESTATE } from '@/utils/constants';
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
-export default {
-	name: 'EstateList',
-	components: {
-		EstateCard,
-		ModalEstate,
-	},
-	data() {
-		return {
-			ESTATE,
-			keyword: '',
-			contractType: '',
-			modalEstate: null,
-			modalId: '',
-		};
-	},
-	computed: {
-		...mapState('estate/list', ['estateList']),
-	},
-	mounted() {
-		this.modalEstate = new Modal(document.querySelector('#modal-estate'));
-		this.$nextTick(() => this.fetchList());
-	},
-	methods: {
-		...mapMutations('loading', ['SET_LOADING']),
-		...mapActions('estate/list', ['FETCH_ESTATE_LIST']),
-		async fetchList() {
-			try {
-				this.SET_LOADING(true);
+const store = useStore();
+const router = useRouter();
+const { notify } = useNotification();
 
-				const queryList = [];
-				if (this.keyword) {
-					queryList.push({
-						key: 'title',
-						value: this.keyword,
-						operator: '==',
-					});
-				}
-				if (this.contractType) {
-					queryList.push({
-						key: 'contractType',
-						value: this.contractType,
-						operator: '==',
-					});
-				}
-				await this.FETCH_ESTATE_LIST(queryList);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.SET_LOADING(false);
-			}
-		},
-		changeContractType(type) {
-			if (type === this.contractType) this.contractType = '';
-			else this.contractType = type;
-			this.fetchList();
-		},
-		showDetailModal(id) {
-			this.modalId = id;
-			this.modalEstate.show();
-		},
-		completeDelete() {
-			this.modalEstate.hide();
-			this.fetchList();
-		},
-	},
+let modal = null;
+let modalId = ref('');
+const showDetailModal = (id) => {
+	modalId.value = id;
+	modal.show();
 };
+const completeDelete = () => {
+	modal.hide();
+	fetchList();
+};
+onMounted(() => (modal = new Modal(document.querySelector('#modal-estate'))));
+
+let keyword = '';
+let contractType = '';
+const estateList = computed(() => store.state.estate.list.estateList);
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
+const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
+const fetchList = async () => {
+	try {
+		setLoading(true);
+
+		const queryList = [];
+		if (keyword) {
+			queryList.push({
+				key: 'title',
+				value: keyword,
+				operator: '==',
+			});
+		}
+		if (contractType) {
+			queryList.push({
+				key: 'contractType',
+				value: contractType,
+				operator: '==',
+			});
+		}
+		await fetchEstateList(queryList);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		setLoading(false);
+	}
+};
+const changeContractType = (type) => {
+	contractType = contractType !== type ? type : '';
+	fetchList();
+};
+onMounted(async () => await fetchList());
 </script>
 
 <style lang="scss" scoped>

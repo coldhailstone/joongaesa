@@ -23,23 +23,18 @@
 	</b-card>
 </template>
 
-<script>
-export default {
-	name: 'EstateCard',
-	props: {
-		item: {
-			type: Object,
-			default: () => ({}),
-		},
-	},
-	computed: {
-		title() {
-			return `${this.item.contractType} ${parseInt(this.item.deposit).toLocaleString()}${
-				this.item.monthly > 0 ? `/${parseInt(this.item.monthly).toLocaleString()}` : ''
-			}`;
-		},
-	},
-};
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+	item: Object,
+});
+
+const title = computed(() => {
+	return `${props.item.contractType} ${parseInt(props.item.deposit).toLocaleString()}${
+		props.item.monthly > 0 ? `/${parseInt(props.item.monthly).toLocaleString()}` : ''
+	}`;
+});
 </script>
 
 <style lang="scss" scoped>
