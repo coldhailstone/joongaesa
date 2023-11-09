@@ -20,4 +20,13 @@ export default {
 	isEmpty(obj) {
 		return _.isEmpty(obj);
 	},
+	addQuery(list, key, value) {
+		if (!value) return;
+
+		list.push({
+			key,
+			value,
+			operator: '==',
+		});
+	},
 };

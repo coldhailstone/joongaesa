@@ -23,7 +23,7 @@
 										<form-radio
 											:value="item.revisit"
 											@update:modelValue="item.revisit = $event"
-											:options="$common.setOptions(CUSTOMER.OX)"
+											:options="common.setOptions(CUSTOMER.OX)"
 											name="revisit"
 										/>
 									</div>
@@ -259,6 +259,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { CUSTOMER } from '@/utils/constants';
+import common from '@/utils/common';
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
 import FormAddress from '@/components/form/FormAddress.vue';
@@ -278,6 +279,7 @@ export default {
 	},
 	data() {
 		return {
+			common,
 			CUSTOMER,
 			isLoading: false,
 			item: {

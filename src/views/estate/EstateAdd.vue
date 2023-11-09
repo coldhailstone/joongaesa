@@ -349,6 +349,21 @@ onBeforeMount(async () => {
 
 const updateEstate = (id, body) => store.dispatch('estate/detail/UPDATE_ESTATE', { id, body });
 const createEstate = (body) => store.dispatch('estate/list/CREATE_ESTATE', body);
+const validation = () => {
+	if (!item.value.title) {
+		notify({ type: 'error', text: '제목은 필수값입니다.' });
+		return false;
+	}
+	if (!item.value.contractType) {
+		notify({ type: 'error', text: '거래유형은 필수값입니다.' });
+		return false;
+	}
+	if (!item.value.deposit || !item.value.monthly) {
+		notify({ type: 'error', text: '보증금/월세는 필수값입니다.' });
+		return false;
+	}
+	return true;
+};
 const save = async () => {
 	if (!validation()) return;
 
@@ -367,21 +382,6 @@ const save = async () => {
 	} finally {
 		isLoading.value = false;
 	}
-};
-const validation = () => {
-	if (!item.value.title) {
-		notify({ type: 'error', text: '제목은 필수값입니다.' });
-		return false;
-	}
-	if (!item.value.contractType) {
-		notify({ type: 'error', text: '거래유형은 필수값입니다.' });
-		return false;
-	}
-	if (!item.value.deposit || !item.value.monthly) {
-		notify({ type: 'error', text: '보증금/월세는 필수값입니다.' });
-		return false;
-	}
-	return true;
 };
 
 const changeAddress = ({ postcode, address, addressDetail }) => {

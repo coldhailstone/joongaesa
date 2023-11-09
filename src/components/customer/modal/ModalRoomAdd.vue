@@ -45,6 +45,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import common from '@/utils/common';
 import EstateCard from '@/components/estate/EstateCard.vue';
 
 export default {
@@ -77,13 +78,7 @@ export default {
 				this.isLoading = true;
 
 				const queryList = [];
-				if (this.keyword) {
-					queryList.push({
-						key: 'title',
-						value: this.keyword,
-						operator: '==',
-					});
-				}
+				common.addQuery(queryList, 'title', this.keyword);
 				await this.FETCH_ESTATE_LIST(queryList);
 			} catch (error) {
 				this.$notify({

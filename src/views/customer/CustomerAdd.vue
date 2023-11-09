@@ -39,7 +39,7 @@
 							<form-radio
 								:value="item.gender"
 								@update:modelValue="item.gender = $event"
-								:options="$common.setOptions(CUSTOMER.GENDER)"
+								:options="common.setOptions(CUSTOMER.GENDER)"
 								name="gender"
 							/>
 						</div>
@@ -115,7 +115,7 @@
 							<form-radio
 								:value="item.buildingType"
 								@update:modelValue="item.buildingType = $event"
-								:options="$common.setOptions(CUSTOMER.BUILDING_TYPE)"
+								:options="common.setOptions(CUSTOMER.BUILDING_TYPE)"
 								name="buildingType"
 							/>
 						</div>
@@ -126,7 +126,7 @@
 							<form-radio
 								:value="item.contractType"
 								@update:modelValue="item.contractType = $event"
-								:options="$common.setOptions(CUSTOMER.CONTRACT_TYPE)"
+								:options="common.setOptions(CUSTOMER.CONTRACT_TYPE)"
 								name="contractType"
 							/>
 						</div>
@@ -164,7 +164,7 @@
 							<form-radio
 								:value="item.loan"
 								@update:modelValue="item.loan = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="loan"
 							/>
 						</div>
@@ -181,7 +181,7 @@
 							<form-radio
 								:value="item.geunlin"
 								@update:modelValue="item.geunlin = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="geunlin"
 							/>
 						</div>
@@ -214,7 +214,7 @@
 							<form-radio
 								:value="item.elevator"
 								@update:modelValue="item.elevator = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="elevator"
 							/>
 						</div>
@@ -225,7 +225,7 @@
 							<form-radio
 								:value="item.pet"
 								@update:modelValue="item.pet = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="pet"
 							/>
 						</div>
@@ -236,7 +236,7 @@
 							<form-radio
 								:value="item.parking"
 								@update:modelValue="item.parking = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="parking"
 							/>
 						</div>
@@ -247,7 +247,7 @@
 							<form-radio
 								:value="item.window"
 								@update:modelValue="item.window = $event"
-								:options="$common.setOptions(CUSTOMER.OX)"
+								:options="common.setOptions(CUSTOMER.OX)"
 								name="window"
 							/>
 						</div>
@@ -258,7 +258,7 @@
 							<form-radio
 								:value="item.condition"
 								@update:modelValue="item.condition = $event"
-								:options="$common.setOptions(CUSTOMER.CONDITION)"
+								:options="common.setOptions(CUSTOMER.CONDITION)"
 								name="condition"
 							/>
 						</div>
@@ -269,7 +269,7 @@
 							<form-radio
 								:value="item.roomStructure"
 								@update:modelValue="item.roomStructure = $event"
-								:options="$common.setOptions(CUSTOMER.ROOM_STRUCTURE)"
+								:options="common.setOptions(CUSTOMER.ROOM_STRUCTURE)"
 								name="roomStructure"
 							/>
 						</div>
@@ -280,7 +280,7 @@
 							<form-radio
 								:value="item.roomDirection"
 								@update:modelValue="item.roomDirection = $event"
-								:options="$common.setOptions(CUSTOMER.ROOM_DIRECTION)"
+								:options="common.setOptions(CUSTOMER.ROOM_DIRECTION)"
 								name="roomDirection"
 							/>
 						</div>
@@ -291,7 +291,7 @@
 							<form-radio
 								:value="item.floor"
 								@update:modelValue="item.floor = $event"
-								:options="$common.setOptions(CUSTOMER.FLOOR)"
+								:options="common.setOptions(CUSTOMER.FLOOR)"
 								name="floor"
 							/>
 						</div>
@@ -302,7 +302,7 @@
 							<form-radio
 								:value="item.option"
 								@update:modelValue="item.option = $event"
-								:options="$common.setOptions(CUSTOMER.OPTION)"
+								:options="common.setOptions(CUSTOMER.OPTION)"
 								name="option"
 							/>
 						</div>
@@ -331,6 +331,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { CUSTOMER } from '@/utils/constants';
+import common from '@/utils/common';
 import FormInput from '@/components/form/FormInput.vue';
 import FormTextarea from '@/components/form/FormTextarea.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
@@ -354,6 +355,7 @@ export default {
 	},
 	data() {
 		return {
+			common,
 			CUSTOMER,
 			isLoading: false,
 			item: {

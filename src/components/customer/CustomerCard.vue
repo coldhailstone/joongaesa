@@ -1,6 +1,6 @@
 <template>
 	<b-card
-		:title="$common.convertTel(item.phone)"
+		:title="common.convertTel(item.phone)"
 		class="card mt-4 mb-4 me-4"
 		@click="$emit('clickCard', item.id)"
 	>
@@ -38,23 +38,17 @@
 	</b-card>
 </template>
 
-<script>
-export default {
-	name: 'CustomerCard',
-	props: {
-		item: {
-			type: Object,
-			default: () => ({}),
-		},
-	},
-};
+<script setup>
+import common from '@/utils/common';
+
+defineProps({ item: Object });
+defineEmits(['clickCard']);
 </script>
 
 <style lang="scss" scoped>
 :deep(.card-title) {
 	font-weight: bold;
 }
-
 .card {
 	width: 300px;
 	height: 300px;

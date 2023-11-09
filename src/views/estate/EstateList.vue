@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<modal-estate :id="modalId" @hide="modal.hide()" @delete="completeDelete" />
+		<modal-estate :id="modalId" @hide="modalEstateComp.hide()" @delete="completeDelete" />
 	</div>
 </template>
 
@@ -49,6 +49,7 @@ import { useRouter } from 'vue-router';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
 import { ESTATE } from '@/utils/constants';
+import common from '@/utils/common';
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
@@ -56,20 +57,8 @@ const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 
-let modal = null;
-let modalId = ref('');
-const showDetailModal = (id) => {
-	modalId.value = id;
-	modal.show();
-};
-const completeDelete = () => {
-	modal.hide();
-	fetchList();
-};
-onMounted(() => (modal = new Modal(document.querySelector('#modal-estate'))));
-
-let keyword = '';
-let contractType = '';
+let keyword = ref('');
+let contractType = ref('');
 const estateList = computed(() => store.state.estate.list.estateList);
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
@@ -77,20 +66,8 @@ const fetchList = async () => {
 	try {
 		setLoading(true);
 		const queryList = [];
-		if (keyword) {
-			queryList.push({
-				key: 'title',
-				value: keyword,
-				operator: '==',
-			});
-		}
-		if (contractType) {
-			queryList.push({
-				key: 'contractType',
-				value: contractType,
-				operator: '==',
-			});
-		}
+		common.addQuery(queryList, 'title', keyword.value);
+		common.addQuery(queryList, 'contractType', contractType.value);
 		await fetchEstateList(queryList);
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
@@ -99,10 +76,22 @@ const fetchList = async () => {
 	}
 };
 const changeContractType = (type) => {
-	contractType = contractType !== type ? type : '';
+	contractType.value = contractType.value !== type ? type : '';
 	fetchList();
 };
 onMounted(async () => await fetchList());
+
+let modalEstateComp = null;
+let modalId = ref('');
+const showDetailModal = (id) => {
+	modalId.value = id;
+	modalEstateComp.show();
+};
+const completeDelete = () => {
+	modalEstateComp.hide();
+	fetchList();
+};
+onMounted(() => (modalEstateComp = new Modal(document.querySelector('#modal-estate'))));
 </script>
 
 <style lang="scss" scoped>
