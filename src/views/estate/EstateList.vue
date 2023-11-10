@@ -56,11 +56,11 @@ import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
 let keyword = ref('');
 let contractType = ref('');
 const estateList = computed(() => store.state.estate.list.estateList);
-const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {
 	try {

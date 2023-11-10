@@ -8,12 +8,6 @@
 	</notifications>
 </template>
 
-<script>
-export default {
-	name: 'Notification',
-};
-</script>
-
 <style lang="scss" scoped>
 .notifications {
 	margin-bottom: 80px;

@@ -29,7 +29,6 @@ import { computed } from 'vue';
 const props = defineProps({
 	item: Object,
 });
-
 const title = computed(() => {
 	return `${props.item.contractType} ${parseInt(props.item.deposit).toLocaleString()}${
 		props.item.monthly > 0 ? `/${parseInt(props.item.monthly).toLocaleString()}` : ''

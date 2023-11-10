@@ -271,9 +271,9 @@ const props = defineProps({
 	edit: { type: Boolean, default: true },
 });
 const emit = defineEmits(['delete', 'hide']);
-
 let isLoading = ref(false);
-const carouselComp = ref(null);
+
+let carouselComp = ref(null);
 const estate = computed(() => store.state.estate.detail.estate);
 const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
 const address = computed(() => {

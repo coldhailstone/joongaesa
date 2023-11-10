@@ -210,11 +210,10 @@ import ModalRoomList from './ModalRoomList.vue';
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-
 const props = defineProps({ id: String });
 const emit = defineEmits(['delete', 'hide']);
-
 let isLoading = ref(false);
+
 const customer = computed(() => store.state.customer.detail.customer);
 const dateTime = computed(() => {
 	return `${customer.value.visitDate ?? ''} ${customer.value.visitTime ?? ''}`;

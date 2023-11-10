@@ -46,11 +46,11 @@ import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
 
 const store = useStore();
 const { notify } = useNotification();
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
 let keyword = ref('');
 let visitDate = ref('');
 const customerList = computed(() => store.state.customer.list.customerList);
-const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchCustomerList = (queryList) =>
 	store.dispatch('customer/list/FETCH_CUSTOMER_LIST', queryList);
 const fetchList = async () => {

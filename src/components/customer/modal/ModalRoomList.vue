@@ -72,16 +72,10 @@ import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
 const store = useStore();
 const { notify } = useNotification();
-
 const props = defineProps({ id: String });
-
 let isLoading = ref(false);
 let tableItemList = ref([]);
 const customer = computed(() => store.state.customer.detail.customer);
-const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
-const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
-const fetchCustomerEstateList = (ids) =>
-	store.dispatch('customer/detail/FETCH_CUSTOMER_ESTATE_LIST', ids);
 const convertTableItemList = (list) => {
 	if (!list) return [];
 
@@ -92,6 +86,11 @@ const convertTableItemList = (list) => {
 		삭제: true,
 	}));
 };
+
+const fetchCustomerEstateList = (ids) =>
+	store.dispatch('customer/detail/FETCH_CUSTOMER_ESTATE_LIST', ids);
+const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
 const addCustomerEstate = async (id) => {
 	modalRoomAddComp.hide();
 

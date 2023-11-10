@@ -292,7 +292,8 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
-
+const isUpdate = computed(() => !!route.params.id);
+let isLoading = ref(false);
 let item = ref({
 	title: '',
 	link: '',
@@ -326,8 +327,7 @@ let item = ref({
 	currentLesseePhone: 0,
 	description: '',
 });
-let isLoading = ref(false);
-const isUpdate = computed(() => !!route.params.id);
+
 const estate = computed(() => store.state.estate.detail.estate);
 const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
 const fetchDetail = async () => {
