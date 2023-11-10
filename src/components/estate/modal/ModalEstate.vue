@@ -300,8 +300,8 @@ const deleteDetail = async () => {
 	try {
 		isLoading.value = true;
 		await deleteEstate(props.id);
-		notify({ type: 'success', text: '매물이 삭제되었습니다.' });
 		emit('delete');
+		notify({ type: 'success', text: '매물이 삭제되었습니다.' });
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
 	} finally {

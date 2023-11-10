@@ -343,8 +343,8 @@ const save = async () => {
 		} else {
 			await createResult({ id: props.id, body: item.value });
 		}
-		notify({ type: 'success', text: '결과가 저장되었습니다.' });
 		emit('hide');
+		notify({ type: 'success', text: '결과가 저장되었습니다.' });
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
 	} finally {

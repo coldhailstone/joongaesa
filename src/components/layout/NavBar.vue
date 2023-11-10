@@ -26,8 +26,8 @@
 						/>
 						<span>{{ user.displayName ?? user.email }}</span>
 					</template>
-					<b-dropdown-item @click="signOut"> 로그아웃 </b-dropdown-item>
-					<b-dropdown-item @click="deleteUser"> 회원탈퇴 </b-dropdown-item>
+					<b-dropdown-item @click="logout"> 로그아웃 </b-dropdown-item>
+					<b-dropdown-item @click="deleteAccount"> 회원탈퇴 </b-dropdown-item>
 				</b-nav-item-dropdown>
 				<b-button-group v-else>
 					<b-button variant="primary" @click="$router.push('login')"> 로그인 </b-button>
@@ -37,53 +37,37 @@
 	</b-navbar>
 </template>
 
-<script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useNotification } from '@kyvg/vue3-notification';
 import { menuList } from '@/router/routes';
 
-export default {
-	data() {
-		return {
-			menuList,
-		};
-	},
-	computed: {
-		...mapState('user', ['user']),
-	},
-	methods: {
-		...mapMutations('user', ['SET_USER']),
-		...mapActions('user', ['SIGN_OUT', 'DELETE_USER']),
-		async signOut() {
-			try {
-				await this.SIGN_OUT();
-				this.$notify({
-					type: 'success',
-					text: '로그아웃에 성공했습니다.',
-				});
-				this.$router.push('/');
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			}
-		},
-		async deleteUser() {
-			try {
-				await this.DELETE_USER();
-				this.$notify({
-					type: 'success',
-					text: '회원탈퇴가 완료되었습니다.',
-				});
-				this.$router.push('/');
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			}
-		},
-	},
+const store = useStore();
+const router = useRouter();
+const { notify } = useNotification();
+
+const user = computed(() => store.state.user.user);
+const signOut = () => store.dispatch('user/SIGN_OUT');
+const logout = async () => {
+	try {
+		await signOut();
+		router.push('/');
+		notify({ type: 'success', text: '로그아웃에 성공했습니다.' });
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	}
+};
+const deleteUser = () => store.dispatch('user/DELETE_USER');
+const deleteAccount = async () => {
+	try {
+		await deleteUser();
+		router.push('/');
+		notify({ type: 'success', text: '회원탈퇴가 완료되었습니다.' });
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	}
 };
 </script>
 

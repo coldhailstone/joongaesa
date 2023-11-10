@@ -234,8 +234,8 @@ const deleteDetail = async () => {
 	try {
 		isLoading.value = true;
 		await deleteCustomer(props.id);
-		notify({ type: 'success', text: '고객 정보가 삭제되었습니다.' });
 		emit('delete');
+		notify({ type: 'success', text: '고객 정보가 삭제되었습니다.' });
 	} catch (error) {
 		notify({ type: 'error', text: error.message });
 	} finally {
