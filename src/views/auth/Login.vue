@@ -53,63 +53,46 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+<script setup>
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useNotification } from '@kyvg/vue3-notification';
 
-export default {
-	name: 'WithEmail',
-	data() {
-		return {
-			email: '',
-			password: '',
-		};
-	},
-	computed: {
-		...mapState('user', ['user']),
-	},
-	methods: {
-		...mapMutations('loading', ['SET_LOADING']),
-		...mapMutations('user', ['SET_USER']),
-		...mapActions('user', [
-			'FETCH_USER',
-			'SET_PERSISTENCT',
-			'SIGN_IN_WITH_POPUP',
-			'SIGN_IN_WITH_EMAIL',
-		]),
-		async login(type) {
-			try {
-				this.SET_LOADING(true);
+const store = useStore();
+const router = useRouter();
+const { notify } = useNotification();
 
-				await this.SET_PERSISTENCT();
-				if (type === 'email') {
-					await this.SIGN_IN_WITH_EMAIL({ email: this.email, password: this.password });
-				} else if (type === 'google') {
-					await this.SIGN_IN_WITH_POPUP();
-				}
+let email = ref('');
+let password = ref('');
+const user = computed(() => store.state.user.user);
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
+const fetchUser = () => store.dispatch('user/FETCH_USER');
+const setPersistence = () => store.dispatch('user/SET_PERSISTENCE');
+const signInWithEmail = (payload) => store.dispatch('user/SIGN_IN_WITH_EMAIL', payload);
+const signInWithPopup = () => store.dispatch('user/SIGN_IN_WITH_POPUP');
+const login = async (type) => {
+	try {
+		setLoading(true);
+		await setPersistence();
+		if (type === 'email') {
+			await signInWithEmail({ email: email.value, password: password.value });
+		} else if (type === 'google') {
+			await signInWithPopup();
+		}
 
-				await this.FETCH_USER();
-				if (this.user.emailVerified) {
-					this.$notify({
-						type: 'success',
-						text: '로그인에 성공했습니다.',
-					});
-					this.$router.push('/');
-				} else {
-					this.$notify({
-						type: 'error',
-						text: '이메일 인증이 필요합니다.',
-					});
-				}
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.SET_LOADING(false);
-			}
-		},
-	},
+		await fetchUser();
+		if (user.value.emailVerified) {
+			router.push('/');
+			notify({ type: 'success', text: '로그인에 성공했습니다.' });
+		} else {
+			notify({ type: 'error', text: '이메일 인증이 필요합니다.' });
+		}
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		setLoading(false);
+	}
 };
 </script>
 

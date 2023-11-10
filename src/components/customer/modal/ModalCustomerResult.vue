@@ -23,7 +23,7 @@
 										<form-radio
 											:value="item.revisit"
 											@update:modelValue="item.revisit = $event"
-											:options="$common.setOptions(CUSTOMER.OX)"
+											:options="common.setOptions(CUSTOMER.OX)"
 											name="revisit"
 										/>
 									</div>
@@ -256,130 +256,106 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex';
+<script setup>
+import { ref, computed, nextTick, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useNotification } from '@kyvg/vue3-notification';
 import { CUSTOMER } from '@/utils/constants';
+import common from '@/utils/common';
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
 import FormAddress from '@/components/form/FormAddress.vue';
 
-export default {
-	name: 'CustomerAdd',
-	components: {
-		FormInput,
-		FormRadio,
-		FormAddress,
+const store = useStore();
+const { notify } = useNotification();
+const props = defineProps({ id: String });
+const emit = defineEmits(['hide']);
+let isLoading = ref(false);
+let item = ref({
+	revisit: '',
+	revisitDate: '',
+	revisitTime: '',
+	contractDate: '',
+	moveDate: '',
+	contractAddress: {
+		postcode: '',
+		address: '',
+		addressDetail: '',
 	},
-	props: {
-		id: {
-			type: String,
-			default: '',
-		},
+	deposit: 0,
+	downPayment: 0,
+	cost: 0,
+	currentLesseePhone: 0,
+	lessee: {
+		name: '',
+		registrationNumber: '',
+		phone: 0,
+		emergencyPhone: 0,
+		postcode: '',
+		address: '',
+		addressDetail: '',
 	},
-	data() {
-		return {
-			CUSTOMER,
-			isLoading: false,
-			item: {
-				revisit: '',
-				revisitDate: '',
-				revisitTime: '',
-				contractDate: '',
-				moveDate: '',
-				contractAddress: {
-					postcode: '',
-					address: '',
-					addressDetail: '',
-				},
-				deposit: 0,
-				downPayment: 0,
-				cost: 0,
-				currentLesseePhone: 0,
-				lessee: {
-					name: '',
-					registrationNumber: '',
-					phone: 0,
-					emergencyPhone: 0,
-					postcode: '',
-					address: '',
-					addressDetail: '',
-				},
-				landlord: {
-					name: '',
-					registrationNumber: '',
-					phone: 0,
-					emergencyPhone: 0,
-					postcode: '',
-					address: '',
-					addressDetail: '',
-				},
-			},
-		};
+	landlord: {
+		name: '',
+		registrationNumber: '',
+		phone: 0,
+		emergencyPhone: 0,
+		postcode: '',
+		address: '',
+		addressDetail: '',
 	},
-	computed: {
-		...mapState('customer/detail', ['result']),
-		isUpdate() {
-			return !!this.item.id;
-		},
-	},
-	mounted() {
-		const modal = document.querySelector('#modal-customer-result');
-		modal.addEventListener('show.bs.modal', () => {
-			this.$nextTick(async () => {
-				await this.fetchResult();
-				if (this.result) this.item = this.$_.cloneDeep(this.result);
-			});
+});
+
+const result = computed(() => store.state.customer.detail.result);
+const fetchResult = (id) => store.dispatch('customer/detail/FETCH_RESULT', id);
+const fetchCustomerResult = async () => {
+	try {
+		isLoading.value = true;
+		await fetchResult(props.id);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
+};
+onMounted(() => {
+	const modal = document.querySelector('#modal-customer-result');
+	modal.addEventListener('show.bs.modal', () => {
+		nextTick(async () => {
+			await fetchCustomerResult();
+			if (result.value) item.value = common.cloneDeep(result.value);
 		});
-	},
-	methods: {
-		...mapActions('customer/detail', ['FETCH_RESULT', 'CREATE_RESULT', 'UPDATE_RESULT']),
-		async fetchResult() {
-			try {
-				this.isLoading = true;
+	});
+});
 
-				await this.FETCH_RESULT(this.id);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-		changeAddress(key, { postcode, address, addressDetail }) {
-			this.item[key].postcode = postcode;
-			this.item[key].address = address;
-			this.item[key].addressDetail = addressDetail;
-		},
-		async save() {
-			try {
-				this.isLoading = true;
+const isUpdate = computed(() => !!item.value.id);
+const createResult = (payload) => store.dispatch('customer/detail/CREATE_RESULT', payload);
+const updateResult = (payload) => store.dispatch('customer/detail/UPDATE_RESULT', payload);
+const save = async () => {
+	try {
+		isLoading.value = true;
+		if (isUpdate.value) {
+			await updateResult({
+				id: props.id,
+				resultId: item.value.id,
+				body: item.value,
+			});
+		} else {
+			await createResult({ id: props.id, body: item.value });
+		}
+		emit('hide');
+		notify({ type: 'success', text: '결과가 저장되었습니다.' });
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
+};
 
-				if (this.isUpdate) {
-					await this.UPDATE_RESULT({
-						id: this.id,
-						resultId: this.item.id,
-						body: this.item,
-					});
-				} else {
-					await this.CREATE_RESULT({ id: this.id, body: this.item });
-				}
-				this.$notify({
-					type: 'success',
-					text: '결과가 저장되었습니다.',
-				});
-				this.$emit('hide');
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-	},
+const changeAddress = (key, { postcode, address, addressDetail }) => {
+	item.value[key].postcode = postcode;
+	item.value[key].address = address;
+	item.value[key].addressDetail = addressDetail;
 };
 </script>
 

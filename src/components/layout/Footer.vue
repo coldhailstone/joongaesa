@@ -13,12 +13,6 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'Footer',
-};
-</script>
-
 <style lang="scss" scoped>
 .footer-wrapper {
 	position: absolute;

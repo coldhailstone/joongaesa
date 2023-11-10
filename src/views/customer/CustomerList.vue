@@ -31,88 +31,55 @@
 			</div>
 		</div>
 
-		<modal-customer :id="modalId" @hide="modalCustomer.hide()" @delete="completeDelete" />
+		<modal-customer :id="modalId" @hide="modalCustomerComp.hide()" @delete="completeDelete" />
 	</div>
 </template>
 
-<script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
+import common from '@/utils/common';
 import CustomerCard from '@/components/customer/CustomerCard.vue';
 import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
 
-export default {
-	name: 'CustomerList',
-	components: {
-		CustomerCard,
-		ModalCustomer,
-	},
-	data() {
-		return {
-			keyword: '',
-			visitDate: '',
-			modalCustomer: null,
-			modalId: '',
-		};
-	},
-	computed: {
-		...mapState('customer/list', ['customerList']),
-		today() {
-			return new Date().toISOString().substring(0, 10);
-		},
-	},
-	mounted() {
-		this.modalCustomer = new Modal(document.querySelector('#modal-customer'));
-		this.$nextTick(() => {
-			this.visitDate = this.today;
-			this.fetchList();
-		});
-	},
-	methods: {
-		...mapMutations('loading', ['SET_LOADING']),
-		...mapActions('customer/list', ['FETCH_CUSTOMER_LIST']),
-		async fetchList() {
-			try {
-				this.SET_LOADING(true);
+const store = useStore();
+const { notify } = useNotification();
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
-				const queryList = [];
-				if (this.keyword) {
-					queryList.push({
-						key: 'phone',
-						value: this.keyword,
-						operator: '==',
-					});
-				}
-				if (this.visitDate) {
-					queryList.push({
-						key: 'visitDate',
-						value: this.visitDate,
-						operator: '==',
-					});
-				}
-				await this.FETCH_CUSTOMER_LIST(queryList);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.SET_LOADING(false);
-			}
-		},
-		changeSearchDate() {
-			this.fetchList();
-		},
-		showDetailModal(id) {
-			this.modalId = id;
-			this.modalCustomer.show();
-		},
-		completeDelete() {
-			this.modalCustomer.hide();
-			this.fetchList();
-		},
-	},
+let keyword = ref('');
+let visitDate = ref('');
+const customerList = computed(() => store.state.customer.list.customerList);
+const fetchCustomerList = (queryList) =>
+	store.dispatch('customer/list/FETCH_CUSTOMER_LIST', queryList);
+const fetchList = async () => {
+	try {
+		setLoading(true);
+		const queryList = [];
+		common.addQuery(queryList, 'phone', keyword.value.replace(/\D/g, ''));
+		common.addQuery(queryList, 'visitDate', visitDate.value);
+		await fetchCustomerList(queryList);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		setLoading(false);
+	}
 };
+const changeSearchDate = async () => await fetchList();
+onMounted(async () => await fetchList());
+
+let modalCustomerComp = null;
+let modalId = ref('');
+const showDetailModal = (id) => {
+	modalId.value = id;
+	modalCustomerComp.show();
+};
+const completeDelete = async () => {
+	modalCustomerComp.hide();
+	await fetchList();
+};
+onMounted(() => (modalCustomerComp = new Modal(document.querySelector('#modal-customer'))));
 </script>
 
 <style lang="scss" scoped>

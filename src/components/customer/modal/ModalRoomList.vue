@@ -17,13 +17,13 @@
 							class="float-end mb-3"
 							type="button"
 							variant="primary"
-							@click="modalRoomAdd.show()"
+							@click="modalRoomAddComp.show()"
 						>
 							추가
 						</b-button>
 						<b-table
-							v-if="tableItems.length"
-							:items="tableItems"
+							v-if="tableItemList.length"
+							:items="tableItemList"
 							variant="light"
 							bordered
 						>
@@ -57,154 +57,115 @@
 		</b-overlay>
 
 		<modal-room-add @hide="modalCustomerResult.hide()" @add="addCustomerEstate" />
-		<modal-estate :id="modalEstateId" :edit="false" @hide="modalEstate.hide()" />
+		<modal-estate :id="modalEstateId" :edit="false" @hide="modalEstateComp.hide()" />
 	</div>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex';
+<script setup>
+import { ref, computed, nextTick, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
+import common from '@/utils/common';
 import ModalRoomAdd from './ModalRoomAdd.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
-export default {
-	name: 'ModalRoomList',
-	components: {
-		ModalRoomAdd,
-		ModalEstate,
-	},
-	props: {
-		id: {
-			type: String,
-			default: '',
-		},
-	},
-	data() {
-		return {
-			isLoading: false,
-			modalRoomAdd: null,
-			modalEstate: null,
-			modalEstateId: '',
-			tableItems: [],
-		};
-	},
-	computed: {
-		...mapState('customer/detail', ['customer']),
-	},
-	mounted() {
-		this.modalRoomAdd = new Modal(document.querySelector('#modal-room-add'));
-		this.modalEstate = new Modal(document.querySelector('#modal-estate'));
+const store = useStore();
+const { notify } = useNotification();
+const props = defineProps({ id: String });
+let isLoading = ref(false);
+let tableItemList = ref([]);
+const customer = computed(() => store.state.customer.detail.customer);
+const convertTableItemList = (list) => {
+	if (!list) return [];
 
-		const modal = document.querySelector('#modal-room-list');
-		modal.addEventListener('show.bs.modal', () => {
-			this.$nextTick(async () => {
-				await this.fetchCustomerEstateList();
-				this.tableItems = this.convertTableItems(this.customer.estateList);
-			});
-		});
-	},
-	methods: {
-		...mapActions('customer/detail', [
-			'FETCH_CUSTOMER',
-			'FETCH_CUSTOMER_ESTATE_LIST',
-			'UPDATE_CUSTOMER',
-		]),
-		async fetchCustomerEstateList() {
-			try {
-				this.isLoading = true;
-
-				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-		convertTableItems(list) {
-			if (!list) return [];
-
-			return list.map((item) => {
-				return {
-					제목: {
-						title: item.title,
-						id: item.id,
-					},
-					보증금: `${parseInt(item.deposit).toLocaleString()}만원`,
-					월세: `${parseInt(item.monthly).toLocaleString()}만원`,
-					삭제: true,
-				};
-			});
-		},
-		async addCustomerEstate(id) {
-			this.modalRoomAdd.hide();
-
-			try {
-				this.isLoading = true;
-
-				const estateIds = this.customer.estateIds;
-				if (estateIds && estateIds.includes(id)) {
-					this.$notify({
-						type: 'error',
-						text: '이미 추가된 방입니다.',
-					});
-				} else {
-					await this.UPDATE_CUSTOMER({
-						id: this.id,
-						body: { estateIds: estateIds ? [id, ...estateIds] : [id] },
-					});
-					this.$notify({
-						type: 'success',
-						text: '방이 추가되었습니다.',
-					});
-					await this.FETCH_CUSTOMER(this.id);
-					await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
-					this.tableItems = this.convertTableItems(this.customer.estateList);
-				}
-			} catch (error) {
-				console.log(error);
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-		showEstateDetail(id) {
-			this.modalEstateId = id;
-			this.modalEstate.show();
-		},
-		async deleteCustomerEstate(id) {
-			try {
-				this.isLoading = true;
-
-				const estateIds = this.$_.cloneDeep(this.customer.estateIds);
-				const index = estateIds.indexOf(id);
-				if (index > -1) estateIds.splice(index, 1);
-
-				await this.UPDATE_CUSTOMER({
-					id: this.id,
-					body: { estateIds: estateIds },
-				});
-				this.$notify({
-					type: 'success',
-					text: '방이 삭제되었습니다.',
-				});
-				await this.FETCH_CUSTOMER(this.id);
-				await this.FETCH_CUSTOMER_ESTATE_LIST(this.customer.estateIds);
-				this.tableItems = this.convertTableItems(this.customer.estateList);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-	},
+	return list.map((item) => ({
+		제목: { title: item.title, id: item.id },
+		보증금: `${parseInt(item.deposit).toLocaleString()}만원`,
+		월세: `${parseInt(item.monthly).toLocaleString()}만원`,
+		삭제: true,
+	}));
 };
+
+const fetchCustomerEstateList = (ids) =>
+	store.dispatch('customer/detail/FETCH_CUSTOMER_ESTATE_LIST', ids);
+const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
+const addCustomerEstate = async (id) => {
+	modalRoomAddComp.hide();
+
+	try {
+		isLoading.value = true;
+		const estateIds = customer.value.estateIds;
+		if (estateIds && estateIds.includes(id)) {
+			notify({ type: 'error', text: '이미 추가된 방입니다.' });
+		} else {
+			await updateCustomer({
+				id: props.id,
+				body: { estateIds: estateIds ? [id, ...estateIds] : [id] },
+			});
+			notify({ type: 'success', text: '방이 추가되었습니다.' });
+
+			await fectCustomer(props.id);
+			await fetchCustomerEstateList(customer.value.estateIds);
+			tableItemList.value = convertTableItemList(customer.value.estateList);
+		}
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
+};
+const deleteCustomerEstate = async (id) => {
+	try {
+		isLoading.value = true;
+		const estateIds = common.cloneDeep(customer.value.estateIds);
+		const index = estateIds.indexOf(id);
+		if (index > -1) estateIds.splice(index, 1);
+
+		await updateCustomer({
+			id: props.id,
+			body: { estateIds },
+		});
+		notify({ type: 'success', text: '방이 삭제되었습니다.' });
+
+		await fectCustomer(props.id);
+		await fetchCustomerEstateList(customer.value.estateIds);
+		tableItemList.value = convertTableItemList(customer.value.estateList);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
+};
+
+let modalRoomAddComp = null;
+let modalEstateComp = null;
+let modalEstateId = ref('');
+const showEstateDetail = (id) => {
+	modalEstateId.value = id;
+	modalEstateComp.show();
+};
+const fetchList = async () => {
+	try {
+		isLoading.value = true;
+		await fetchCustomerEstateList(customer.value.estateIds);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
+};
+onMounted(() => {
+	modalRoomAddComp = new Modal(document.querySelector('#modal-room-add'));
+	modalEstateComp = new Modal(document.querySelector('#modal-estate'));
+
+	const modal = document.querySelector('#modal-room-list');
+	modal.addEventListener('show.bs.modal', () => {
+		nextTick(async () => {
+			await fetchList();
+			tableItemList.value = convertTableItemList(customer.value.estateList);
+		});
+	});
+});
 </script>

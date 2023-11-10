@@ -29,7 +29,7 @@ export default {
 			const user = await sessionStorage.getItem(getSessionKey());
 			if (user) commit('SET_USER', JSON.parse(user));
 		},
-		SET_PERSISTENCT() {
+		SET_PERSISTENCE() {
 			return setPersistence(auth, browserSessionPersistence);
 		},
 		SIGN_IN_WITH_POPUP() {
