@@ -17,34 +17,21 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FormRadio',
-	props: {
-		value: {
-			type: String,
-			default: () => '',
-		},
-		options: {
-			type: Array,
-			default: () => [],
-		},
-		name: {
-			type: String,
-			default: '',
-		},
-	},
-	data() {
-		return {
-			selected: '',
-		};
-	},
-	watch: {
-		value: {
-			handler(newVal) {
-				this.selected = newVal;
-			},
-		},
-	},
-};
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+	modelValue: String,
+	name: String,
+	options: Array,
+});
+defineEmits(['update:modelValue']);
+
+let selected = ref('');
+watch(
+	() => props.modelValue,
+	(v) => {
+		selected.value = v;
+	}
+);
 </script>

@@ -15,6 +15,7 @@ import '@/api/firebase';
 
 const app = createApp(App).use(store).use(router).use(Notifications).use(BootstrapVue3);
 
+// TODO: Composition API 변경 완료 후 제거
 app.config.globalProperties.$_ = _;
 app.config.globalProperties.$common = common;
 

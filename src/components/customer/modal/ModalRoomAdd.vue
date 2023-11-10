@@ -43,59 +43,41 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex';
+<script setup>
+import { ref, computed, nextTick, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useNotification } from '@kyvg/vue3-notification';
+import common from '@/utils/common';
 import EstateCard from '@/components/estate/EstateCard.vue';
 
-export default {
-	name: 'ModalRoomAdd',
-	components: {
-		EstateCard,
-	},
-	data() {
-		return {
-			isLoading: false,
-			keyword: '',
-		};
-	},
-	computed: {
-		...mapState('estate/list', ['estateList']),
-	},
-	mounted() {
-		const modal = document.querySelector('#modal-room-add');
-		modal.addEventListener('show.bs.modal', () => {
-			this.$nextTick(() => {
-				this.keyword = '';
-				this.fetchList();
-			});
-		});
-	},
-	methods: {
-		...mapActions('estate/list', ['FETCH_ESTATE_LIST']),
-		async fetchList() {
-			try {
-				this.isLoading = true;
+const store = useStore();
+const { notify } = useNotification();
+let isLoading = ref(false);
 
-				const queryList = [];
-				if (this.keyword) {
-					queryList.push({
-						key: 'title',
-						value: this.keyword,
-						operator: '==',
-					});
-				}
-				await this.FETCH_ESTATE_LIST(queryList);
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.isLoading = false;
-			}
-		},
-	},
+let keyword = ref('');
+const estateList = computed(() => store.state.estate.list.estateList);
+const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
+const fetchList = async () => {
+	try {
+		isLoading.value = true;
+		const queryList = [];
+		common.addQuery(queryList, 'title', keyword.value);
+		await fetchEstateList(queryList);
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		isLoading.value = false;
+	}
 };
+onMounted(() => {
+	const modal = document.querySelector('#modal-room-add');
+	modal.addEventListener('show.bs.modal', () => {
+		nextTick(async () => {
+			keyword.value = '';
+			await fetchList();
+		});
+	});
+});
 </script>
 
 <style lang="scss" scoped>

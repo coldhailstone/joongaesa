@@ -15,56 +15,34 @@
 	</div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch } from 'vue';
 import daumPostcode from '@/api/daumPostcode';
 
-export default {
-	name: 'FormAddress',
-	props: {
-		postcode: {
-			type: String,
-			default: '',
-		},
-		address: {
-			type: String,
-			default: '',
-		},
-		addressDetail: {
-			type: String,
-			default: '',
-		},
-	},
-	data() {
-		return {
-			item: {
-				postcode: '',
-				address: '',
-				addressDetail: '',
-			},
-		};
-	},
-	watch: {
-		address() {
-			this.item.postcode = this.postcode;
-			this.item.address = this.address;
-			this.item.addressDetail = this.addressDetail;
-		},
-	},
-	methods: {
-		async openDaumPostcode() {
-			const result = await daumPostcode(window);
-			this.item.postcode = result.zonecode;
-			this.item.address = result.address;
-			this.item.addressDetail = '';
-			this.$emit('changeAddress', this.getAddress());
-		},
-		getAddress() {
-			return {
-				postcode: this.item.postcode,
-				address: this.item.address,
-				addressDetail: this.item.addressDetail,
-			};
-		},
-	},
+const props = defineProps({
+	postcode: String,
+	address: String,
+	addressDetail: String,
+});
+const emit = defineEmits(['changeAddress']);
+
+let item = ref({
+	postcode: '',
+	address: '',
+	addressDetail: '',
+});
+const openDaumPostcode = async () => {
+	const result = await daumPostcode(window);
+	item.value.postcode = result.zonecode;
+	item.value.address = result.address;
+	item.value.addressDetail = '';
+	emit('changeAddress', getAddress());
 };
+const getAddress = () => ({ ...item.value });
+watch(
+	() => props.address,
+	() => {
+		item.value = { ...props };
+	}
+);
 </script>

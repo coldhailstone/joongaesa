@@ -12,30 +12,20 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FormCheckbox',
-	props: {
-		value: {
-			type: Array,
-			default: () => [],
-		},
-		options: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	data() {
-		return {
-			selected: [],
-		};
-	},
-	watch: {
-		value: {
-			handler(newVal) {
-				this.selected = this.$_.cloneDeep(newVal);
-			},
-		},
-	},
-};
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+	modelValue: Array,
+	options: Array,
+});
+defineEmits(['update:modelValue']);
+
+let selected = ref([]);
+watch(
+	() => props.modelValue,
+	(arr) => {
+		selected.value = arr;
+	}
+);
 </script>

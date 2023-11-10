@@ -47,55 +47,43 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapMutations } from 'vuex';
+<script setup>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useNotification } from '@kyvg/vue3-notification';
 
-export default {
-	name: 'Join',
-	data() {
-		return {
-			email: '',
-			password: '',
-			confirmPassword: '',
-		};
-	},
-	methods: {
-		...mapMutations('loading', ['SET_LOADING']),
-		...mapActions('user', ['CREATE_USER_WITH_EMAIL', 'SEND_EMAIL_VERIFICATION']),
-		async join() {
-			if (!this.validation()) return;
+const store = useStore();
+const router = useRouter();
+const { notify } = useNotification();
 
-			try {
-				this.SET_LOADING(true);
+let email = ref('');
+let password = ref('');
+let confirmPassword = ref('');
+const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
+const createUserWithEmail = (payload) => store.dispatch('user/CREATE_USER_WITH_EMAIL', payload);
+const sendEmailVerification = () => store.dispatch('user/SEND_EMAIL_VERIFICATION');
+const validation = () => {
+	if (password.value !== confirmPassword.value) {
+		notify({ type: 'error', text: '비밀번호가 일치하지 않습니다.' });
+		return false;
+	}
+	return true;
+};
+const join = async () => {
+	if (!validation()) return;
 
-				await this.CREATE_USER_WITH_EMAIL({ email: this.email, password: this.password });
-				await this.SEND_EMAIL_VERIFICATION();
-
-				this.$notify({
-					type: 'success',
-					text: '이메일을 전송했습니다.',
-				});
-				this.$router.push('/login');
-			} catch (error) {
-				this.$notify({
-					type: 'error',
-					text: error.message,
-				});
-			} finally {
-				this.SET_LOADING(false);
-			}
-		},
-		validation() {
-			if (this.password !== this.confirmPassword) {
-				this.$notify({
-					type: 'error',
-					text: '비밀번호가 일치하지 않습니다.',
-				});
-				return false;
-			}
-			return true;
-		},
-	},
+	try {
+		setLoading(true);
+		await createUserWithEmail({ email: email.value, password: password.value });
+		await sendEmailVerification();
+		router.push('/login');
+		notify({ type: 'success', text: '이메일을 전송했습니다.' });
+	} catch (error) {
+		notify({ type: 'error', text: error.message });
+	} finally {
+		setLoading(false);
+	}
 };
 </script>
 
