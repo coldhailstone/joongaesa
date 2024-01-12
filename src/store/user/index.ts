@@ -1,14 +1,14 @@
+import { auth, getSessionKey, provider } from '@/api/firebase';
 import {
-	signInWithPopup,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	sendEmailVerification,
-	signOut,
-	deleteUser,
-	setPersistence,
 	browserSessionPersistence,
+	createUserWithEmailAndPassword,
+	deleteUser,
+	sendEmailVerification,
+	setPersistence,
+	signInWithEmailAndPassword,
+	signInWithPopup,
+	signOut,
 } from 'firebase/auth';
-import { auth, provider, getSessionKey } from '@/api/firebase';
 
 export default {
 	namespaced: true,

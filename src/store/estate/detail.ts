@@ -1,4 +1,4 @@
-import { getDetail, uploadFile, updateData, deleteData } from '@/api/firebase';
+import { deleteData, getDetail, updateData, uploadFile } from '@/api/firebase';
 
 export default {
 	namespaced: true,

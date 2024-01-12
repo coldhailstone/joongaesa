@@ -1,5 +1,5 @@
-import list from './list';
 import detail from './detail';
+import list from './list';
 
 export default {
 	namespaced: true,

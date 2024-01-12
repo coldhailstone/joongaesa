@@ -1,10 +1,10 @@
 import Home from '@/views/Home.vue';
-import Login from '@/views/auth/Login.vue';
 import Join from '@/views/auth/Join.vue';
-import EstateList from '@/views/estate/EstateList.vue';
-import EstateAdd from '@/views/estate/EstateAdd.vue';
-import CustomerList from '@/views/customer/CustomerList.vue';
+import Login from '@/views/auth/Login.vue';
 import CustomerAdd from '@/views/customer/CustomerAdd.vue';
+import CustomerList from '@/views/customer/CustomerList.vue';
+import EstateAdd from '@/views/estate/EstateAdd.vue';
+import EstateList from '@/views/estate/EstateList.vue';
 
 export const menuList = [
 	{

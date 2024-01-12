@@ -1,19 +1,19 @@
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	getFirestore,
+	query,
+	updateDoc,
+} from '@firebase/firestore';
+import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
-import { getAnalytics } from 'firebase/analytics';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import {
-	getFirestore,
-	collection,
-	doc,
-	query,
-	getDocs,
-	getDoc,
-	addDoc,
-	updateDoc,
-	deleteDoc,
-} from '@firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 const FIREBASE_CONFIG = {
 	apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -45,7 +45,7 @@ export const getSessionKey = () => {
 
 // store
 export const db = getFirestore(app);
-export const getList = async (path, queryList) => {
+export const getList = async (path, queryList = []) => {
 	const q =
 		queryList && queryList.length
 			? query(collection(db, path), ...queryList)

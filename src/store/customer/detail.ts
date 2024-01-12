@@ -1,6 +1,6 @@
-import { where, serverTimestamp, documentId } from '@firebase/firestore';
-import { getList, getDetail, addData, updateData, deleteData } from '@/api/firebase';
+import { addData, deleteData, getDetail, getList, updateData } from '@/api/firebase';
 import store from '@/store';
+import { documentId, serverTimestamp, where } from '@firebase/firestore';
 
 export default {
 	namespaced: true,

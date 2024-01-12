@@ -16,7 +16,7 @@
 			</b-navbar-nav>
 
 			<b-navbar-nav class="ml-auto">
-				<b-nav-item-dropdown v-if="!$_.isEmpty(user)" right>
+				<b-nav-item-dropdown v-if="!common.isEmpty(user)" right>
 					<template #button-content>
 						<img
 							v-if="user.photoURL"
@@ -43,6 +43,7 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { useNotification } from '@kyvg/vue3-notification';
 import { menuList } from '@/router/routes';
+import common from '@/utils/common';
 
 const store = useStore();
 const router = useRouter();
