@@ -311,8 +311,8 @@ let item: Ref<CustomerResult> = ref({
 	},
 });
 
-const result = computed<CustomerResult>(() => store.state.customer.detail.result);
-const fetchResult = (id) => store.dispatch('customer/detail/FETCH_RESULT', id);
+const result = computed<CustomerResult>(() => store.state.customerDetail.result);
+const fetchResult = (id) => store.dispatch('customerDetail/FETCH_RESULT', id);
 const fetchCustomerResult = async () => {
 	try {
 		isLoading.value = true;
@@ -334,8 +334,8 @@ onMounted(() => {
 });
 
 const isUpdate = computed<boolean>(() => !!item.value.id);
-const createResult = (payload) => store.dispatch('customer/detail/CREATE_RESULT', payload);
-const updateResult = (payload) => store.dispatch('customer/detail/UPDATE_RESULT', payload);
+const createResult = (payload) => store.dispatch('customerDetail/CREATE_RESULT', payload);
+const updateResult = (payload) => store.dispatch('customerDetail/UPDATE_RESULT', payload);
 const save = async () => {
 	try {
 		isLoading.value = true;

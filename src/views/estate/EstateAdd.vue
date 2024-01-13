@@ -329,8 +329,8 @@ let item: Ref<Estate> = ref({
 	description: '',
 });
 
-const estate = computed<Estate>(() => store.state.estate.detail.estate);
-const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
+const estate = computed<Estate>(() => store.state.estateDetail.estate);
+const fetchEstate = (id) => store.dispatch('estateDetail/FETCH_ESTATE', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;
@@ -348,8 +348,8 @@ onBeforeMount(async () => {
 	}
 });
 
-const updateEstate = (id, body) => store.dispatch('estate/detail/UPDATE_ESTATE', { id, body });
-const createEstate = (body) => store.dispatch('estate/list/CREATE_ESTATE', body);
+const updateEstate = (id, body) => store.dispatch('estateDetail/UPDATE_ESTATE', { id, body });
+const createEstate = (body) => store.dispatch('estateList/CREATE_ESTATE', body);
 const validation = () => {
 	if (!item.value.title) {
 		notify({ type: 'error', text: '제목은 필수값입니다.' });

@@ -1,5 +1,6 @@
 import { auth, getSessionKey, provider } from '@/api/firebase';
 import {
+	User,
 	browserSessionPersistence,
 	createUserWithEmailAndPassword,
 	deleteUser,
@@ -9,8 +10,14 @@ import {
 	signInWithPopup,
 	signOut,
 } from 'firebase/auth';
+import { Module } from 'vuex';
+import { RootState } from '..';
 
-export default {
+export interface UserState {
+	user: User | Record<string, unknown>;
+}
+
+export const user: Module<UserState, RootState> = {
 	namespaced: true,
 	state: {
 		user: {},

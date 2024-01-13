@@ -217,11 +217,11 @@ const props = defineProps<Props>();
 const emit = defineEmits(['delete', 'hide']);
 let isLoading: Ref<boolean> = ref(false);
 
-const customer = computed<Customer>(() => store.state.customer.detail.customer);
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
 const dateTime = computed<string>(() => {
 	return `${customer.value.visitDate ?? ''} ${customer.value.visitTime ?? ''}`;
 });
-const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
+const fectCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;
@@ -232,7 +232,7 @@ const fetchDetail = async () => {
 		isLoading.value = false;
 	}
 };
-const deleteCustomer = (id) => store.dispatch('customer/detail/DELETE_CUSTOMER', id);
+const deleteCustomer = (id) => store.dispatch('customerDetail/DELETE_CUSTOMER', id);
 const deleteDetail = async () => {
 	try {
 		isLoading.value = true;

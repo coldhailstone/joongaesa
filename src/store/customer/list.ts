@@ -1,8 +1,12 @@
 import { addData, getList } from '@/api/firebase';
-import store from '@/store';
+import store, { RootState } from '@/store';
 import { serverTimestamp, where } from '@firebase/firestore';
+import { Module } from 'vuex';
+import { CustomerState } from '.';
 
-export default {
+export type CustomerListState = Pick<CustomerState, 'path' | 'customerList'>;
+
+export const customerList: Module<CustomerListState, RootState> = {
 	namespaced: true,
 	state: {
 		path: 'customer',

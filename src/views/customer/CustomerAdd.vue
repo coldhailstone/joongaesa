@@ -350,10 +350,10 @@ onMounted(() => {
 	}
 });
 
-const customer = computed<Customer>(() => store.state.customer.detail.customer);
-const fetchCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
-const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
-const createCustomer = (payload) => store.dispatch('customer/list/CREATE_CUSTOMER', payload);
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
+const fetchCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customerDetail/UPDATE_CUSTOMER', payload);
+const createCustomer = (payload) => store.dispatch('customerList/CREATE_CUSTOMER', payload);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;

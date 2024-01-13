@@ -56,8 +56,8 @@ const { notify } = useNotification();
 let isLoading: Ref<boolean> = ref(false);
 
 let keyword: Ref<string> = ref('');
-const estateList = computed<Estate[]>(() => store.state.estate.list.estateList);
-const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
+const estateList = computed<Estate[]>(() => store.state.estateList.estateList);
+const fetchEstateList = (queryList) => store.dispatch('estateList/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {
 	try {
 		isLoading.value = true;

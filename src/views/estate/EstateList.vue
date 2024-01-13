@@ -61,8 +61,8 @@ const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading)
 
 let keyword: Ref<string> = ref('');
 let contractType: Ref<string> = ref('');
-const estateList = computed<Estate[]>(() => store.state.estate.list.estateList);
-const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
+const estateList = computed<Estate[]>(() => store.state.estateList.estateList);
+const fetchEstateList = (queryList) => store.dispatch('estateList/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {
 	try {
 		setLoading(true);

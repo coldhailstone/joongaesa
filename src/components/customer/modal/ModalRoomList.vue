@@ -90,7 +90,7 @@ const { notify } = useNotification();
 const props = defineProps<Props>();
 let isLoading: Ref<boolean> = ref(false);
 let tableItemList: Ref<TableItem[]> = ref([]);
-const customer = computed<Customer>(() => store.state.customer.detail.customer);
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
 const convertTableItemList = (list) => {
 	if (!list) return [];
 
@@ -103,9 +103,9 @@ const convertTableItemList = (list) => {
 };
 
 const fetchCustomerEstateList = (ids) =>
-	store.dispatch('customer/detail/FETCH_CUSTOMER_ESTATE_LIST', ids);
-const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
-const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
+	store.dispatch('customerDetail/FETCH_CUSTOMER_ESTATE_LIST', ids);
+const fectCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customerDetail/UPDATE_CUSTOMER', payload);
 const addCustomerEstate = async (id) => {
 	modalRoomAddComp.hide();
 

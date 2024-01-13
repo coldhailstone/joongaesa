@@ -277,7 +277,7 @@ const emit = defineEmits(['delete', 'hide']);
 let isLoading: Ref<boolean> = ref(false);
 
 let carouselComp: Ref<any> = ref(null);
-const estate = computed<Estate>(() => store.state.estate.detail.estate);
+const estate = computed<Estate>(() => store.state.estateDetail.estate);
 const dateTime = computed<string>(() =>
 	estate.value.createDatetime?.toDate().toLocaleString('ko-KR')
 );
@@ -288,9 +288,9 @@ const address = computed<string>(() => {
 	if (estate.value.addressDetail) result += `${estate.value.addressDetail}`;
 	return result;
 });
-const setEstate = (payload) => store.commit('estate/detail/SET_ESTATE', payload);
-const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
-const deleteEstate = (id) => store.dispatch('estate/detail/DELETE_ESTATE', id);
+const setEstate = (payload) => store.commit('estateDetail/SET_ESTATE', payload);
+const fetchEstate = (id) => store.dispatch('estateDetail/FETCH_ESTATE', id);
+const deleteEstate = (id) => store.dispatch('estateDetail/DELETE_ESTATE', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;

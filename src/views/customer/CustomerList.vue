@@ -50,9 +50,9 @@ const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading)
 
 let keyword: Ref<string> = ref('');
 let visitDate: Ref<string> = ref('');
-const customerList = computed<[]>(() => store.state.customer.list.customerList);
+const customerList = computed<[]>(() => store.state.customerList.customerList);
 const fetchCustomerList = (queryList) =>
-	store.dispatch('customer/list/FETCH_CUSTOMER_LIST', queryList);
+	store.dispatch('customerList/FETCH_CUSTOMER_LIST', queryList);
 const fetchList = async () => {
 	try {
 		setLoading(true);

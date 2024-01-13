@@ -1,10 +1,7 @@
-import detail from './detail';
-import list from './list';
+import { Estate } from '@/types/estate';
 
-export default {
-	namespaced: true,
-	modules: {
-		list,
-		detail,
-	},
-};
+export interface EstateState {
+	path: string;
+	estate: Estate | Record<string, unknown>;
+	estateList: Estate[];
+}
