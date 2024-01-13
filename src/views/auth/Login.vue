@@ -52,6 +52,7 @@
 
 <script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
+import { User } from 'firebase/auth';
 import { Ref, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -62,7 +63,7 @@ const { notify } = useNotification();
 
 let email: Ref<string> = ref('');
 let password: Ref<string> = ref('');
-const user = computed(() => store.state.user.user);
+const user = computed<User>(() => store.state.user.user);
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchUser = () => store.dispatch('user/FETCH_USER');
 const setPersistence = () => store.dispatch('user/SET_PERSISTENCE');

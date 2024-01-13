@@ -5,7 +5,7 @@ export interface Estate {
 	postcode: string;
 	address: string;
 	addressDetail: string;
-	photo: [];
+	photo: [{ name: string; url: string }];
 	deposit: number;
 	monthly: number;
 	contractType: string;
@@ -31,34 +31,5 @@ export interface Estate {
 	landLordPhone: number;
 	currentLesseePhone: number;
 	description: string;
-}
-
-export interface CustomerEstate {
-	id?: string;
-	phone: number;
-	visitDate: string;
-	visitTime: string;
-	gender: string;
-	age: number;
-	links: [{ url: string; memo: string }];
-	buildingType: string;
-	contractType: string;
-	residence: string;
-	deposit: number;
-	monthly: number;
-	loan: string;
-	loanProduct: string;
-	geunlin: string;
-	position: string;
-	moveDate: string;
-	elevator: string;
-	pet: string;
-	parking: string;
-	window: string;
-	condition: string;
-	roomStructure: string;
-	roomDirection: string;
-	floor: string;
-	option: string;
-	description: string;
+	createDatetime?: any;
 }

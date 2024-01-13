@@ -39,11 +39,11 @@
 </template>
 
 <script setup lang="ts">
-import { CustomerEstate } from '@/types/estate';
+import { Customer } from '@/types/customer';
 import common from '@/utils/common';
 
 interface Props {
-	item: CustomerEstate;
+	item: Customer;
 }
 
 defineProps<Props>();

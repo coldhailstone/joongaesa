@@ -41,6 +41,7 @@
 import { menuList } from '@/router/routes';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
+import { User } from 'firebase/auth';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -49,7 +50,7 @@ const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 
-const user = computed(() => store.state.user.user);
+const user = computed<User>(() => store.state.user.user);
 const signOut = () => store.dispatch('user/SIGN_OUT');
 const logout = async () => {
 	try {

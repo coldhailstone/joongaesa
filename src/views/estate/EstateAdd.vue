@@ -293,7 +293,7 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
-const isUpdate = computed(() => !!route.params.id);
+const isUpdate = computed<boolean>(() => !!route.params.id);
 let isLoading: Ref<boolean> = ref(false);
 let item: Ref<Estate> = ref({
 	title: '',
@@ -329,7 +329,7 @@ let item: Ref<Estate> = ref({
 	description: '',
 });
 
-const estate = computed(() => store.state.estate.detail.estate);
+const estate = computed<Estate>(() => store.state.estate.detail.estate);
 const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
 const fetchDetail = async () => {
 	try {

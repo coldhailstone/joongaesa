@@ -69,10 +69,12 @@ import { Modal } from 'bootstrap';
 import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import ModalRoomAdd from './ModalRoomAdd.vue';
+import { Customer } from '@/types/customer';
 
 interface Props {
 	id: string;
 }
+
 interface TableItem {
 	제목: {
 		title: string;
@@ -88,7 +90,7 @@ const { notify } = useNotification();
 const props = defineProps<Props>();
 let isLoading: Ref<boolean> = ref(false);
 let tableItemList: Ref<TableItem[]> = ref([]);
-const customer = computed(() => store.state.customer.detail.customer);
+const customer = computed<Customer>(() => store.state.customer.detail.customer);
 const convertTableItemList = (list) => {
 	if (!list) return [];
 

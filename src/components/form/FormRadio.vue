@@ -23,7 +23,12 @@ import { Ref, ref, watch } from 'vue';
 interface Props {
 	modelValue: string;
 	name: string;
-	options: [];
+	options: [
+		{
+			value: string;
+			text: string;
+		}
+	];
 }
 
 const props = defineProps<Props>();

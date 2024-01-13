@@ -7,7 +7,7 @@ export default {
 			value: text,
 		}));
 	},
-	convertData(value, convertValue) {
+	convertData(value, convertValue?) {
 		if (!value || !value.length) return '-';
 		return convertValue ?? value;
 	},

@@ -292,7 +292,7 @@
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
 import FormTextarea from '@/components/form/FormTextarea.vue';
-import { CustomerEstate } from '@/types/estate';
+import { Customer } from '@/types/customer';
 import common from '@/utils/common';
 import { CUSTOMER } from '@/utils/constants';
 import { useNotification } from '@kyvg/vue3-notification';
@@ -304,9 +304,9 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
-const isUpdate = computed(() => !!route.params.id);
+const isUpdate = computed<boolean>(() => !!route.params.id);
 let isLoading: Ref<boolean> = ref(false);
-let item: Ref<CustomerEstate> = ref({
+let item: Ref<Customer> = ref({
 	phone: 0,
 	visitDate: '',
 	visitTime: '',
@@ -335,8 +335,8 @@ let item: Ref<CustomerEstate> = ref({
 	description: '',
 });
 
-const today = computed(() => new Date().toISOString().substring(0, 10));
-const currentTime = computed(() => {
+const today = computed<string>(() => new Date().toISOString().substring(0, 10));
+const currentTime = computed<string>(() => {
 	const date = new Date();
 	const hh = date.getHours();
 	const mm = date.getMinutes();
@@ -350,7 +350,7 @@ onMounted(() => {
 	}
 });
 
-const customer = computed(() => store.state.customer.detail.customer);
+const customer = computed<Customer>(() => store.state.customer.detail.customer);
 const fetchCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
 const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
 const createCustomer = (payload) => store.dispatch('customer/list/CREATE_CUSTOMER', payload);

@@ -32,7 +32,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const title = computed(() => {
+const title = computed<string>(() => {
 	return `${props.item.contractType} ${props.item.deposit.toLocaleString()}${
 		props.item.monthly > 0 ? `/${props.item.monthly.toLocaleString()}` : ''
 	}`;

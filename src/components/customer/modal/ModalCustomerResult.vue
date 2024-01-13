@@ -311,7 +311,7 @@ let item: Ref<CustomerResult> = ref({
 	},
 });
 
-const result = computed(() => store.state.customer.detail.result);
+const result = computed<CustomerResult>(() => store.state.customer.detail.result);
 const fetchResult = (id) => store.dispatch('customer/detail/FETCH_RESULT', id);
 const fetchCustomerResult = async () => {
 	try {
@@ -333,7 +333,7 @@ onMounted(() => {
 	});
 });
 
-const isUpdate = computed(() => !!item.value.id);
+const isUpdate = computed<boolean>(() => !!item.value.id);
 const createResult = (payload) => store.dispatch('customer/detail/CREATE_RESULT', payload);
 const updateResult = (payload) => store.dispatch('customer/detail/UPDATE_RESULT', payload);
 const save = async () => {

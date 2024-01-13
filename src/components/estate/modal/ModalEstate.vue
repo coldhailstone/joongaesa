@@ -66,10 +66,9 @@
 									<div class="key">보증금</div>
 									<div>
 										{{
-											common.convertData(
-												estate.deposit,
-												`${parseInt(estate.deposit).toLocaleString()}만원`
-											)
+											estate.deposit
+												? `${estate.deposit.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -77,10 +76,9 @@
 									<div class="key">월세</div>
 									<div>
 										{{
-											common.convertData(
-												estate.monthly,
-												`${parseInt(estate.monthly).toLocaleString()}만원`
-											)
+											estate.monthly
+												? `${estate.monthly.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -256,6 +254,7 @@
 </template>
 
 <script setup lang="ts">
+import { Estate } from '@/types/estate';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Ref, computed, nextTick, onMounted, ref } from 'vue';
@@ -278,9 +277,11 @@ const emit = defineEmits(['delete', 'hide']);
 let isLoading: Ref<boolean> = ref(false);
 
 let carouselComp: Ref<any> = ref(null);
-const estate = computed(() => store.state.estate.detail.estate);
-const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
-const address = computed(() => {
+const estate = computed<Estate>(() => store.state.estate.detail.estate);
+const dateTime = computed<string>(() =>
+	estate.value.createDatetime?.toDate().toLocaleString('ko-KR')
+);
+const address = computed<string>(() => {
 	let result = '';
 	if (estate.value.postcode) result += `(${estate.value.postcode}) `;
 	if (estate.value.address) result += `${estate.value.address} `;

@@ -73,10 +73,9 @@
 									<div class="key">보증금</div>
 									<div>
 										{{
-											common.convertData(
-												customer.deposit,
-												`${parseInt(customer.deposit).toLocaleString()}만원`
-											)
+											customer.deposit
+												? `${customer.deposit.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -84,10 +83,9 @@
 									<div class="key">월세</div>
 									<div>
 										{{
-											common.convertData(
-												customer.monthly,
-												`${parseInt(customer.monthly).toLocaleString()}만원`
-											)
+											customer.monthly
+												? `${customer.monthly.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -130,7 +128,7 @@
 								</li>
 								<li>
 									<div class="key">화장실 창문</div>
-									<div>{{ common.convertData(customer.windoe) }}</div>
+									<div>{{ common.convertData(customer.window) }}</div>
 								</li>
 								<li>
 									<div class="key">컨디션</div>
@@ -198,6 +196,7 @@
 </template>
 
 <script setup lang="ts">
+import { Customer } from '@/types/customer';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
@@ -218,8 +217,8 @@ const props = defineProps<Props>();
 const emit = defineEmits(['delete', 'hide']);
 let isLoading: Ref<boolean> = ref(false);
 
-const customer = computed(() => store.state.customer.detail.customer);
-const dateTime = computed(() => {
+const customer = computed<Customer>(() => store.state.customer.detail.customer);
+const dateTime = computed<string>(() => {
 	return `${customer.value.visitDate ?? ''} ${customer.value.visitTime ?? ''}`;
 });
 const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
