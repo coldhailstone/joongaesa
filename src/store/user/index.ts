@@ -1,16 +1,23 @@
+import { auth, getSessionKey, provider } from '@/api/firebase';
 import {
-	signInWithPopup,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	sendEmailVerification,
-	signOut,
-	deleteUser,
-	setPersistence,
+	User,
 	browserSessionPersistence,
+	createUserWithEmailAndPassword,
+	deleteUser,
+	sendEmailVerification,
+	setPersistence,
+	signInWithEmailAndPassword,
+	signInWithPopup,
+	signOut,
 } from 'firebase/auth';
-import { auth, provider, getSessionKey } from '@/api/firebase';
+import { Module } from 'vuex';
+import { RootState } from '..';
 
-export default {
+export interface UserState {
+	user: User | Record<string, unknown>;
+}
+
+export const user: Module<UserState, RootState> = {
 	namespaced: true,
 	state: {
 		user: {},

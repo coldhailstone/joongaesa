@@ -256,22 +256,27 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useNotification } from '@kyvg/vue3-notification';
-import { CUSTOMER } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
+import FormAddress from '@/components/form/FormAddress.vue';
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
-import FormAddress from '@/components/form/FormAddress.vue';
+import { CustomerResult } from '@/types/customer';
+import common from '@/utils/common';
+import { CUSTOMER } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
+
+interface Props {
+	id: string;
+}
 
 const store = useStore();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
+const props = defineProps<Props>();
 const emit = defineEmits(['hide']);
-let isLoading = ref(false);
-let item = ref({
+let isLoading: Ref<boolean> = ref(false);
+let item: Ref<CustomerResult> = ref({
 	revisit: '',
 	revisitDate: '',
 	revisitTime: '',
@@ -306,8 +311,8 @@ let item = ref({
 	},
 });
 
-const result = computed(() => store.state.customer.detail.result);
-const fetchResult = (id) => store.dispatch('customer/detail/FETCH_RESULT', id);
+const result = computed<CustomerResult>(() => store.state.customerDetail.result);
+const fetchResult = (id) => store.dispatch('customerDetail/FETCH_RESULT', id);
 const fetchCustomerResult = async () => {
 	try {
 		isLoading.value = true;
@@ -328,9 +333,9 @@ onMounted(() => {
 	});
 });
 
-const isUpdate = computed(() => !!item.value.id);
-const createResult = (payload) => store.dispatch('customer/detail/CREATE_RESULT', payload);
-const updateResult = (payload) => store.dispatch('customer/detail/UPDATE_RESULT', payload);
+const isUpdate = computed<boolean>(() => !!item.value.id);
+const createResult = (payload) => store.dispatch('customerDetail/CREATE_RESULT', payload);
+const updateResult = (payload) => store.dispatch('customerDetail/UPDATE_RESULT', payload);
 const save = async () => {
 	try {
 		isLoading.value = true;

@@ -73,10 +73,9 @@
 									<div class="key">보증금</div>
 									<div>
 										{{
-											common.convertData(
-												customer.deposit,
-												`${parseInt(customer.deposit).toLocaleString()}만원`
-											)
+											customer.deposit
+												? `${customer.deposit.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -84,10 +83,9 @@
 									<div class="key">월세</div>
 									<div>
 										{{
-											common.convertData(
-												customer.monthly,
-												`${parseInt(customer.monthly).toLocaleString()}만원`
-											)
+											customer.monthly
+												? `${customer.monthly.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -130,7 +128,7 @@
 								</li>
 								<li>
 									<div class="key">화장실 창문</div>
-									<div>{{ common.convertData(customer.windoe) }}</div>
+									<div>{{ common.convertData(customer.window) }}</div>
 								</li>
 								<li>
 									<div class="key">컨디션</div>
@@ -197,28 +195,33 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import { Customer } from '@/types/customer';
+import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import ModalCustomerResult from './ModalCustomerResult.vue';
 import ModalRoomList from './ModalRoomList.vue';
+
+interface Props {
+	id: string;
+}
 
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
+const props = defineProps<Props>();
 const emit = defineEmits(['delete', 'hide']);
-let isLoading = ref(false);
+let isLoading: Ref<boolean> = ref(false);
 
-const customer = computed(() => store.state.customer.detail.customer);
-const dateTime = computed(() => {
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
+const dateTime = computed<string>(() => {
 	return `${customer.value.visitDate ?? ''} ${customer.value.visitTime ?? ''}`;
 });
-const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
+const fectCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;
@@ -229,7 +232,7 @@ const fetchDetail = async () => {
 		isLoading.value = false;
 	}
 };
-const deleteCustomer = (id) => store.dispatch('customer/detail/DELETE_CUSTOMER', id);
+const deleteCustomer = (id) => store.dispatch('customerDetail/DELETE_CUSTOMER', id);
 const deleteDetail = async () => {
 	try {
 		isLoading.value = true;

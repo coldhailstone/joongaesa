@@ -17,16 +17,20 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { Ref, ref, watch } from 'vue';
 
-const props = defineProps({ list: Array });
+interface Props {
+	list: [];
+}
+
+const props = defineProps<Props>();
 const emit = defineEmits(['changeFile']);
 
-let attachments = ref([]);
-const file = ref(null);
+let attachments: Ref<File[]> = ref([]);
+const file: Ref<DataTransfer> = ref(null);
 const dropFile = (e) => {
-	file.value.files = e.dataTransfer.files;
+	file.value = e.dataTransfer;
 	changeFile();
 };
 const changeFile = () => {

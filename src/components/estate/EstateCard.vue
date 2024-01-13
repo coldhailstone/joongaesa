@@ -23,15 +23,18 @@
 	</b-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { Estate } from '@/types/estate';
 import { computed } from 'vue';
 
-const props = defineProps({
-	item: Object,
-});
-const title = computed(() => {
-	return `${props.item.contractType} ${parseInt(props.item.deposit).toLocaleString()}${
-		props.item.monthly > 0 ? `/${parseInt(props.item.monthly).toLocaleString()}` : ''
+interface Props {
+	item: Estate;
+}
+
+const props = defineProps<Props>();
+const title = computed<string>(() => {
+	return `${props.item.contractType} ${props.item.deposit.toLocaleString()}${
+		props.item.monthly > 0 ? `/${props.item.monthly.toLocaleString()}` : ''
 	}`;
 });
 </script>

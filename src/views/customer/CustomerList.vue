@@ -35,24 +35,24 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useNotification } from '@kyvg/vue3-notification';
-import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+<script setup lang="ts">
 import CustomerCard from '@/components/customer/CustomerCard.vue';
 import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
+import common from '@/utils/common';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Modal } from 'bootstrap';
+import { Ref, computed, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
-let keyword = ref('');
-let visitDate = ref('');
-const customerList = computed(() => store.state.customer.list.customerList);
+let keyword: Ref<string> = ref('');
+let visitDate: Ref<string> = ref('');
+const customerList = computed<[]>(() => store.state.customerList.customerList);
 const fetchCustomerList = (queryList) =>
-	store.dispatch('customer/list/FETCH_CUSTOMER_LIST', queryList);
+	store.dispatch('customerList/FETCH_CUSTOMER_LIST', queryList);
 const fetchList = async () => {
 	try {
 		setLoading(true);
@@ -70,7 +70,7 @@ const changeSearchDate = async () => await fetchList();
 onMounted(async () => await fetchList());
 
 let modalCustomerComp = null;
-let modalId = ref('');
+let modalId: Ref<string> = ref('');
 const showDetailModal = (id) => {
 	modalId.value = id;
 	modalCustomerComp.show();

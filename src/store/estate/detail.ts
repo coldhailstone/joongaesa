@@ -1,6 +1,11 @@
-import { getDetail, uploadFile, updateData, deleteData } from '@/api/firebase';
+import { deleteData, getDetail, updateData, uploadFile } from '@/api/firebase';
+import { Module } from 'vuex';
+import { EstateState } from '.';
+import { RootState } from '..';
 
-export default {
+export type EstateDetailState = Pick<EstateState, 'path' | 'estate'>;
+
+export const estateDetail: Module<EstateDetailState, RootState> = {
 	namespaced: true,
 	state: {
 		path: 'estate',

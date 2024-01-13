@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import { isEmpty } from 'lodash';
-import routes from './routes';
 import store from '@/store';
+import common from '@/utils/common';
+import { createRouter, createWebHistory } from 'vue-router';
+import routes from './routes';
 
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL),
@@ -10,8 +10,8 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
 	const needLoginMenuList = ['매물 관리', '고객 관리'];
-	if (needLoginMenuList.includes(to.name)) {
-		!isEmpty(store.state.user.user) ? next() : next('login');
+	if (needLoginMenuList.includes(to.name.toString())) {
+		!common.isEmpty(store.state.user.user) ? next() : next('login');
 	} else {
 		next();
 	}

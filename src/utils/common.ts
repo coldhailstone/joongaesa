@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 
 export default {
 	setOptions(constant) {
@@ -7,7 +7,7 @@ export default {
 			value: text,
 		}));
 	},
-	convertData(value, convertValue) {
+	convertData(value, convertValue?) {
 		if (!value || !value.length) return '-';
 		return convertValue ?? value;
 	},
@@ -15,10 +15,10 @@ export default {
 		return tel?.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 	},
 	cloneDeep(obj) {
-		return _.cloneDeep(obj);
+		return cloneDeep(obj);
 	},
 	isEmpty(obj) {
-		return _.isEmpty(obj);
+		return isEmpty(obj);
 	},
 	addQuery(list, key, value) {
 		if (!value) return;

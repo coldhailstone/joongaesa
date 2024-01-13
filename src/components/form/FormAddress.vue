@@ -15,24 +15,27 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
 import daumPostcode from '@/api/daumPostcode';
+import { Ref, ref, watch } from 'vue';
 
-const props = defineProps({
-	postcode: String,
-	address: String,
-	addressDetail: String,
-});
+interface AddressProps {
+	postcode: string;
+	address: string;
+	addressDetail: string;
+	zonecode?: string;
+}
+
+const props = defineProps<AddressProps>();
 const emit = defineEmits(['changeAddress']);
 
-let item = ref({
+let item: Ref<AddressProps> = ref({
 	postcode: '',
 	address: '',
 	addressDetail: '',
 });
 const openDaumPostcode = async () => {
-	const result = await daumPostcode(window);
+	const result: Partial<AddressProps> = await daumPostcode(window);
 	item.value.postcode = result.zonecode;
 	item.value.address = result.address;
 	item.value.addressDetail = '';
