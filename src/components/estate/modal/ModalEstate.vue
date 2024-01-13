@@ -66,10 +66,9 @@
 									<div class="key">보증금</div>
 									<div>
 										{{
-											common.convertData(
-												estate.deposit,
-												`${parseInt(estate.deposit).toLocaleString()}만원`
-											)
+											estate.deposit
+												? `${estate.deposit.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -77,10 +76,9 @@
 									<div class="key">월세</div>
 									<div>
 										{{
-											common.convertData(
-												estate.monthly,
-												`${parseInt(estate.monthly).toLocaleString()}만원`
-											)
+											estate.monthly
+												? `${estate.monthly.toLocaleString()}만원`
+												: '-'
 										}}
 									</div>
 								</li>
@@ -255,37 +253,44 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
+<script setup lang="ts">
+import { Estate } from '@/types/estate';
 import common from '@/utils/common';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
+import { useStore } from 'vuex';
+
+interface Props {
+	id: string;
+	edit: boolean;
+}
 
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-const props = defineProps({
-	id: String,
-	edit: { type: Boolean, default: true },
+const props = withDefaults(defineProps<Props>(), {
+	edit: true,
 });
 const emit = defineEmits(['delete', 'hide']);
-let isLoading = ref(false);
+let isLoading: Ref<boolean> = ref(false);
 
-let carouselComp = ref(null);
-const estate = computed(() => store.state.estate.detail.estate);
-const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
-const address = computed(() => {
+let carouselComp: Ref<any> = ref(null);
+const estate = computed<Estate>(() => store.state.estateDetail.estate);
+const dateTime = computed<string>(() =>
+	estate.value.createDatetime?.toDate().toLocaleString('ko-KR')
+);
+const address = computed<string>(() => {
 	let result = '';
 	if (estate.value.postcode) result += `(${estate.value.postcode}) `;
 	if (estate.value.address) result += `${estate.value.address} `;
 	if (estate.value.addressDetail) result += `${estate.value.addressDetail}`;
 	return result;
 });
-const setEstate = (payload) => store.commit('estate/detail/SET_ESTATE', payload);
-const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
-const deleteEstate = (id) => store.dispatch('estate/detail/DELETE_ESTATE', id);
+const setEstate = (payload) => store.commit('estateDetail/SET_ESTATE', payload);
+const fetchEstate = (id) => store.dispatch('estateDetail/FETCH_ESTATE', id);
+const deleteEstate = (id) => store.dispatch('estateDetail/DELETE_ESTATE', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;

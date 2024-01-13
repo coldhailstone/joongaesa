@@ -1,8 +1,12 @@
-import { where, serverTimestamp } from '@firebase/firestore';
-import { getList, addData, uploadFile } from '@/api/firebase';
-import store from '@/store';
+import { addData, getList, uploadFile } from '@/api/firebase';
+import store, { RootState } from '@/store';
+import { serverTimestamp, where } from '@firebase/firestore';
+import { Module } from 'vuex';
+import { EstateState } from '.';
 
-export default {
+export type EstateListState = Pick<EstateState, 'path' | 'estateList'>;
+
+export const estateList: Module<EstateListState, RootState> = {
 	namespaced: true,
 	state: {
 		path: 'estate',

@@ -17,17 +17,24 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { Ref, ref, watch } from 'vue';
 
-const props = defineProps({
-	modelValue: String,
-	name: String,
-	options: Array,
-});
+interface Props {
+	modelValue: string;
+	name: string;
+	options: [
+		{
+			value: string;
+			text: string;
+		}
+	];
+}
+
+const props = defineProps<Props>();
 defineEmits(['update:modelValue']);
 
-let selected = ref('');
+let selected: Ref<string> = ref('');
 watch(
 	() => props.modelValue,
 	(v) => {

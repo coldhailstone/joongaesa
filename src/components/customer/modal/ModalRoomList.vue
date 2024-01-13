@@ -56,26 +56,41 @@
 			</div>
 		</b-overlay>
 
-		<modal-room-add @hide="modalCustomerResult.hide()" @add="addCustomerEstate" />
+		<modal-room-add @hide="modalRoomAddComp.hide()" @add="addCustomerEstate" />
 		<modal-estate :id="modalEstateId" :edit="false" @hide="modalEstateComp.hide()" />
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
+import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 import ModalRoomAdd from './ModalRoomAdd.vue';
-import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
+import { Customer } from '@/types/customer';
+
+interface Props {
+	id: string;
+}
+
+interface TableItem {
+	제목: {
+		title: string;
+		id: string;
+	};
+	보증금: string;
+	월세: string;
+	삭제: boolean;
+}
 
 const store = useStore();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
-let isLoading = ref(false);
-let tableItemList = ref([]);
-const customer = computed(() => store.state.customer.detail.customer);
+const props = defineProps<Props>();
+let isLoading: Ref<boolean> = ref(false);
+let tableItemList: Ref<TableItem[]> = ref([]);
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
 const convertTableItemList = (list) => {
 	if (!list) return [];
 
@@ -88,9 +103,9 @@ const convertTableItemList = (list) => {
 };
 
 const fetchCustomerEstateList = (ids) =>
-	store.dispatch('customer/detail/FETCH_CUSTOMER_ESTATE_LIST', ids);
-const fectCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
-const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
+	store.dispatch('customerDetail/FETCH_CUSTOMER_ESTATE_LIST', ids);
+const fectCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customerDetail/UPDATE_CUSTOMER', payload);
 const addCustomerEstate = async (id) => {
 	modalRoomAddComp.hide();
 
@@ -141,7 +156,7 @@ const deleteCustomerEstate = async (id) => {
 
 let modalRoomAddComp = null;
 let modalEstateComp = null;
-let modalEstateId = ref('');
+let modalEstateId: Ref<string> = ref('');
 const showEstateDetail = (id) => {
 	modalEstateId.value = id;
 	modalEstateComp.show();

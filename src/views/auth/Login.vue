@@ -40,10 +40,7 @@
 				<div class="d-flex justify-content-center">
 					<div class="google-btn d-flex justify-content-between" @click="login('google')">
 						<div class="google-icon-wrapper">
-							<img
-								class="google-icon"
-								src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-							/>
+							<img class="google-icon" src="@/assets/google-icon.png" />
 						</div>
 						<p class="btn-text fw-bold w-100">구글 로그인</p>
 					</div>
@@ -53,19 +50,20 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
+import { User } from 'firebase/auth';
+import { Ref, computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 
-let email = ref('');
-let password = ref('');
-const user = computed(() => store.state.user.user);
+let email: Ref<string> = ref('');
+let password: Ref<string> = ref('');
+const user = computed<User>(() => store.state.user.user);
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchUser = () => store.dispatch('user/FETCH_USER');
 const setPersistence = () => store.dispatch('user/SET_PERSISTENCE');
@@ -124,9 +122,9 @@ $button-active-blue: #1669f2;
 		background-color: #fff;
 	}
 	.google-icon {
-		margin-top: 12px;
-		width: 18px;
-		height: 18px;
+		margin-top: 8px;
+		width: 26px;
+		height: 26px;
 	}
 	.btn-text {
 		float: right;

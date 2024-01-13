@@ -11,13 +11,19 @@
 	</div>
 </template>
 
-<script setup>
-defineProps({
-	modelValue: [String, Number],
-	placeholder: String,
-	prefix: String,
-	suffix: String,
-	type: { type: String, default: 'text' },
+<script setup lang="ts">
+import { InputType } from 'bootstrap-vue-3';
+
+interface Props {
+	modelValue: string | number;
+	placeholder: string;
+	prefix: string;
+	suffix: string;
+	type?: InputType;
+}
+
+withDefaults(defineProps<Props>(), {
+	type: 'text',
 });
 defineEmits(['update:modelValue']);
 </script>

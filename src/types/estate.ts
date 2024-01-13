@@ -1,0 +1,35 @@
+export interface Estate {
+	id?: string;
+	title: string;
+	link: string;
+	postcode: string;
+	address: string;
+	addressDetail: string;
+	photo: [{ name: string; url: string }];
+	deposit: number;
+	monthly: number;
+	contractType: string;
+	buildingType: string;
+	buildingForm: string;
+	useApprovalDate: string;
+	dong: string;
+	ho: string;
+	wholeFloor: string;
+	correspondingFloor: string;
+	roomStructure: string;
+	pyung: string;
+	m2: string;
+	roomDirection: string;
+	bathroomCount: number;
+	elevator: string;
+	pet: string;
+	parking: string;
+	cost: number;
+	managementCost: [];
+	option: [];
+	moveDate: string;
+	landLordPhone: number;
+	currentLesseePhone: number;
+	description: string;
+	createDatetime?: any;
+}

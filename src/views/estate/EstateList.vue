@@ -42,26 +42,27 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { Modal } from 'bootstrap';
-import { ESTATE } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
+import { Estate } from '@/types/estate';
+import common from '@/utils/common';
+import { ESTATE } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Modal } from 'bootstrap';
+import { Ref, computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
-let keyword = ref('');
-let contractType = ref('');
-const estateList = computed(() => store.state.estate.list.estateList);
-const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
+let keyword: Ref<string> = ref('');
+let contractType: Ref<string> = ref('');
+const estateList = computed<Estate[]>(() => store.state.estateList.estateList);
+const fetchEstateList = (queryList) => store.dispatch('estateList/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {
 	try {
 		setLoading(true);
@@ -82,7 +83,7 @@ const changeContractType = (type) => {
 onMounted(async () => await fetchList());
 
 let modalEstateComp = null;
-let modalId = ref('');
+let modalId: Ref<string> = ref('');
 const showDetailModal = (id) => {
 	modalId.value = id;
 	modalEstateComp.show();

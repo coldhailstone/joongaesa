@@ -274,27 +274,28 @@
 	</b-overlay>
 </template>
 
-<script setup>
-import { ref, computed, onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { ESTATE } from '@/utils/constants';
-import common from '@/utils/common';
-import FormFile from '@/components/form/FormFile.vue';
+<script setup lang="ts">
 import FormAddress from '@/components/form/FormAddress.vue';
-import FormInput from '@/components/form/FormInput.vue';
-import FormTextarea from '@/components/form/FormTextarea.vue';
 import FormCheckbox from '@/components/form/FormCheckbox.vue';
+import FormFile from '@/components/form/FormFile.vue';
+import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import { Estate } from '@/types/estate';
+import common from '@/utils/common';
+import { ESTATE } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Ref, computed, onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
-const isUpdate = computed(() => !!route.params.id);
-let isLoading = ref(false);
-let item = ref({
+const isUpdate = computed<boolean>(() => !!route.params.id);
+let isLoading: Ref<boolean> = ref(false);
+let item: Ref<Estate> = ref({
 	title: '',
 	link: '',
 	postcode: '',
@@ -328,8 +329,8 @@ let item = ref({
 	description: '',
 });
 
-const estate = computed(() => store.state.estate.detail.estate);
-const fetchEstate = (id) => store.dispatch('estate/detail/FETCH_ESTATE', id);
+const estate = computed<Estate>(() => store.state.estateDetail.estate);
+const fetchEstate = (id) => store.dispatch('estateDetail/FETCH_ESTATE', id);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;
@@ -347,8 +348,8 @@ onBeforeMount(async () => {
 	}
 });
 
-const updateEstate = (id, body) => store.dispatch('estate/detail/UPDATE_ESTATE', { id, body });
-const createEstate = (body) => store.dispatch('estate/list/CREATE_ESTATE', body);
+const updateEstate = (id, body) => store.dispatch('estateDetail/UPDATE_ESTATE', { id, body });
+const createEstate = (body) => store.dispatch('estateList/CREATE_ESTATE', body);
 const validation = () => {
 	if (!item.value.title) {
 		notify({ type: 'error', text: '제목은 필수값입니다.' });

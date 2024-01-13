@@ -47,19 +47,19 @@
 	</div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
+import { Ref, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 
-let email = ref('');
-let password = ref('');
-let confirmPassword = ref('');
+let email: Ref<string> = ref('');
+let password: Ref<string> = ref('');
+let confirmPassword: Ref<string> = ref('');
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const createUserWithEmail = (payload) => store.dispatch('user/CREATE_USER_WITH_EMAIL', payload);
 const sendEmailVerification = () => store.dispatch('user/SEND_EMAIL_VERIFICATION');

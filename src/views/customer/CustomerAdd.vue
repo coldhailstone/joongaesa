@@ -288,24 +288,25 @@
 	</b-overlay>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { CUSTOMER } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
 import FormInput from '@/components/form/FormInput.vue';
-import FormTextarea from '@/components/form/FormTextarea.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import { Customer } from '@/types/customer';
+import common from '@/utils/common';
+import { CUSTOMER } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Ref, computed, onBeforeMount, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
-const isUpdate = computed(() => !!route.params.id);
-let isLoading = ref(false);
-let item = ref({
+const isUpdate = computed<boolean>(() => !!route.params.id);
+let isLoading: Ref<boolean> = ref(false);
+let item: Ref<Customer> = ref({
 	phone: 0,
 	visitDate: '',
 	visitTime: '',
@@ -334,8 +335,8 @@ let item = ref({
 	description: '',
 });
 
-const today = computed(() => new Date().toISOString().substring(0, 10));
-const currentTime = computed(() => {
+const today = computed<string>(() => new Date().toISOString().substring(0, 10));
+const currentTime = computed<string>(() => {
 	const date = new Date();
 	const hh = date.getHours();
 	const mm = date.getMinutes();
@@ -349,10 +350,10 @@ onMounted(() => {
 	}
 });
 
-const customer = computed(() => store.state.customer.detail.customer);
-const fetchCustomer = (id) => store.dispatch('customer/detail/FETCH_CUSTOMER', id);
-const updateCustomer = (payload) => store.dispatch('customer/detail/UPDATE_CUSTOMER', payload);
-const createCustomer = (payload) => store.dispatch('customer/list/CREATE_CUSTOMER', payload);
+const customer = computed<Customer>(() => store.state.customerDetail.customer);
+const fetchCustomer = (id) => store.dispatch('customerDetail/FETCH_CUSTOMER', id);
+const updateCustomer = (payload) => store.dispatch('customerDetail/UPDATE_CUSTOMER', payload);
+const createCustomer = (payload) => store.dispatch('customerList/CREATE_CUSTOMER', payload);
 const fetchDetail = async () => {
 	try {
 		isLoading.value = true;
