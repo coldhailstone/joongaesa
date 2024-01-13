@@ -38,7 +38,7 @@
 	</b-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import common from '@/utils/common';
 
 defineProps({ item: Object });

@@ -35,14 +35,14 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useNotification } from '@kyvg/vue3-notification';
-import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+<script setup lang="ts">
 import CustomerCard from '@/components/customer/CustomerCard.vue';
 import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
+import common from '@/utils/common';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Modal } from 'bootstrap';
+import { computed, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();

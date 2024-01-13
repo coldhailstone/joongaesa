@@ -15,9 +15,9 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
 import daumPostcode from '@/api/daumPostcode';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
 	postcode: String,

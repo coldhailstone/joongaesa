@@ -37,13 +37,13 @@
 	</b-navbar>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
+<script setup lang="ts">
 import { menuList } from '@/router/routes';
 import common from '@/utils/common';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();

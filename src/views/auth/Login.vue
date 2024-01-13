@@ -40,10 +40,7 @@
 				<div class="d-flex justify-content-center">
 					<div class="google-btn d-flex justify-content-between" @click="login('google')">
 						<div class="google-icon-wrapper">
-							<img
-								class="google-icon"
-								src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-							/>
+							<img class="google-icon" src="@/assets/google-icon.png" />
 						</div>
 						<p class="btn-text fw-bold w-100">구글 로그인</p>
 					</div>
@@ -53,11 +50,11 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
+import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
@@ -124,9 +121,9 @@ $button-active-blue: #1669f2;
 		background-color: #fff;
 	}
 	.google-icon {
-		margin-top: 12px;
-		width: 18px;
-		height: 18px;
+		margin-top: 8px;
+		width: 26px;
+		height: 26px;
 	}
 	.btn-text {
 		float: right;

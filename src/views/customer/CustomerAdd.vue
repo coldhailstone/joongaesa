@@ -288,16 +288,16 @@
 	</b-overlay>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { CUSTOMER } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
 import FormInput from '@/components/form/FormInput.vue';
-import FormTextarea from '@/components/form/FormTextarea.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import common from '@/utils/common';
+import { CUSTOMER } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();

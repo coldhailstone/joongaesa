@@ -42,16 +42,16 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { Modal } from 'bootstrap';
-import { ESTATE } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
 import EstateCard from '@/components/estate/EstateCard.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
+import common from '@/utils/common';
+import { ESTATE } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { Modal } from 'bootstrap';
+import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();

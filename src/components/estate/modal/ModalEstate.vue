@@ -255,13 +255,13 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
+<script setup lang="ts">
 import common from '@/utils/common';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed, nextTick, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();

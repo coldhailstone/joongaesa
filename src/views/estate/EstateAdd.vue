@@ -274,19 +274,19 @@
 	</b-overlay>
 </template>
 
-<script setup>
-import { ref, computed, onBeforeMount } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter, useRoute } from 'vue-router';
-import { useNotification } from '@kyvg/vue3-notification';
-import { ESTATE } from '@/utils/constants';
-import common from '@/utils/common';
-import FormFile from '@/components/form/FormFile.vue';
+<script setup lang="ts">
 import FormAddress from '@/components/form/FormAddress.vue';
-import FormInput from '@/components/form/FormInput.vue';
-import FormTextarea from '@/components/form/FormTextarea.vue';
 import FormCheckbox from '@/components/form/FormCheckbox.vue';
+import FormFile from '@/components/form/FormFile.vue';
+import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
+import FormTextarea from '@/components/form/FormTextarea.vue';
+import common from '@/utils/common';
+import { ESTATE } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed, onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();

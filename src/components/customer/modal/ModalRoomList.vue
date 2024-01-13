@@ -56,12 +56,12 @@
 			</div>
 		</b-overlay>
 
-		<modal-room-add @hide="modalCustomerResult.hide()" @add="addCustomerEstate" />
+		<modal-room-add @hide="modalRoomAddComp.hide()" @add="addCustomerEstate" />
 		<modal-estate :id="modalEstateId" :edit="false" @hide="modalEstateComp.hide()" />
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, nextTick, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useNotification } from '@kyvg/vue3-notification';

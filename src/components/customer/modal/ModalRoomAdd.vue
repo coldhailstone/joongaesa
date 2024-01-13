@@ -43,12 +43,12 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useNotification } from '@kyvg/vue3-notification';
-import common from '@/utils/common';
+<script setup lang="ts">
 import EstateCard from '@/components/estate/EstateCard.vue';
+import common from '@/utils/common';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed, nextTick, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();

@@ -256,15 +256,15 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useNotification } from '@kyvg/vue3-notification';
-import { CUSTOMER } from '@/utils/constants';
-import common from '@/utils/common';
+<script setup lang="ts">
+import FormAddress from '@/components/form/FormAddress.vue';
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
-import FormAddress from '@/components/form/FormAddress.vue';
+import common from '@/utils/common';
+import { CUSTOMER } from '@/utils/constants';
+import { useNotification } from '@kyvg/vue3-notification';
+import { computed, nextTick, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();

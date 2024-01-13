@@ -197,13 +197,13 @@
 	</div>
 </template>
 
-<script setup>
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
+import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+import { computed, nextTick, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import ModalCustomerResult from './ModalCustomerResult.vue';
 import ModalRoomList from './ModalRoomList.vue';
 
