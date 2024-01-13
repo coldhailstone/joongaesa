@@ -260,10 +260,11 @@
 import FormAddress from '@/components/form/FormAddress.vue';
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
+import { CustomerResult } from '@/types/customer';
 import common from '@/utils/common';
 import { CUSTOMER } from '@/utils/constants';
 import { useNotification } from '@kyvg/vue3-notification';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 interface Props {
@@ -274,8 +275,8 @@ const store = useStore();
 const { notify } = useNotification();
 const props = defineProps<Props>();
 const emit = defineEmits(['hide']);
-let isLoading = ref(false);
-let item = ref({
+let isLoading: Ref<boolean> = ref(false);
+let item: Ref<CustomerResult> = ref({
 	revisit: '',
 	revisitDate: '',
 	revisitTime: '',

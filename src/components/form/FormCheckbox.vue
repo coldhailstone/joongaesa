@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { Ref, ref, watch } from 'vue';
 
 interface Props {
 	modelValue: [];
@@ -23,7 +23,7 @@ interface Props {
 const props = defineProps<Props>();
 defineEmits(['update:modelValue']);
 
-let selected = ref([]);
+let selected: Ref<[]> = ref([]);
 watch(
 	() => props.modelValue,
 	(arr) => {

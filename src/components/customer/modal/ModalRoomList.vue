@@ -62,23 +62,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
+import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import common from '@/utils/common';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 import ModalRoomAdd from './ModalRoomAdd.vue';
-import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
 interface Props {
 	id: string;
+}
+interface TableItem {
+	제목: {
+		title: string;
+		id: string;
+	};
+	보증금: string;
+	월세: string;
+	삭제: boolean;
 }
 
 const store = useStore();
 const { notify } = useNotification();
 const props = defineProps<Props>();
-let isLoading = ref(false);
-let tableItemList = ref([]);
+let isLoading: Ref<boolean> = ref(false);
+let tableItemList: Ref<TableItem[]> = ref([]);
 const customer = computed(() => store.state.customer.detail.customer);
 const convertTableItemList = (list) => {
 	if (!list) return [];
@@ -145,7 +154,7 @@ const deleteCustomerEstate = async (id) => {
 
 let modalRoomAddComp = null;
 let modalEstateComp = null;
-let modalEstateId = ref('');
+let modalEstateId: Ref<string> = ref('');
 const showEstateDetail = (id) => {
 	modalEstateId.value = id;
 	modalEstateComp.show();

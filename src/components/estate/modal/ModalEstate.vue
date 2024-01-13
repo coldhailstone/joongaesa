@@ -258,7 +258,7 @@
 <script setup lang="ts">
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import { useStore } from 'vuex';
@@ -275,9 +275,9 @@ const props = withDefaults(defineProps<Props>(), {
 	edit: true,
 });
 const emit = defineEmits(['delete', 'hide']);
-let isLoading = ref(false);
+let isLoading: Ref<boolean> = ref(false);
 
-let carouselComp = ref(null);
+let carouselComp: Ref<any> = ref(null);
 const estate = computed(() => store.state.estate.detail.estate);
 const dateTime = computed(() => estate.value.createDatetime?.toDate().toLocaleString('ko-KR'));
 const address = computed(() => {

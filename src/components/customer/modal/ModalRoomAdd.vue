@@ -47,14 +47,14 @@
 import EstateCard from '@/components/estate/EstateCard.vue';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();
-let isLoading = ref(false);
+let isLoading: Ref<boolean> = ref(false);
 
-let keyword = ref('');
+let keyword: Ref<string> = ref('');
 const estateList = computed(() => store.state.estate.list.estateList);
 const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {

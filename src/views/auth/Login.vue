@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { useNotification } from '@kyvg/vue3-notification';
-import { computed, ref } from 'vue';
+import { Ref, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -60,8 +60,8 @@ const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
 
-let email = ref('');
-let password = ref('');
+let email: Ref<string> = ref('');
+let password: Ref<string> = ref('');
 const user = computed(() => store.state.user.user);
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 const fetchUser = () => store.dispatch('user/FETCH_USER');

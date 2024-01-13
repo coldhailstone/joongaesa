@@ -1,5 +1,5 @@
 export interface Estate {
-	id: string;
+	id?: string;
 	title: string;
 	link: string;
 	postcode: string;
@@ -34,7 +34,7 @@ export interface Estate {
 }
 
 export interface CustomerEstate {
-	id: string;
+	id?: string;
 	phone: number;
 	visitDate: string;
 	visitTime: string;

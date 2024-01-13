@@ -49,7 +49,7 @@ import common from '@/utils/common';
 import { ESTATE } from '@/utils/constants';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import { computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -58,8 +58,8 @@ const router = useRouter();
 const { notify } = useNotification();
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
-let keyword = ref('');
-let contractType = ref('');
+let keyword: Ref<string> = ref('');
+let contractType: Ref<string> = ref('');
 const estateList = computed(() => store.state.estate.list.estateList);
 const fetchEstateList = (queryList) => store.dispatch('estate/list/FETCH_ESTATE_LIST', queryList);
 const fetchList = async () => {
@@ -82,7 +82,7 @@ const changeContractType = (type) => {
 onMounted(async () => await fetchList());
 
 let modalEstateComp = null;
-let modalId = ref('');
+let modalId: Ref<string> = ref('');
 const showDetailModal = (id) => {
 	modalId.value = id;
 	modalEstateComp.show();

@@ -41,15 +41,15 @@ import ModalCustomer from '@/components/customer/modal/ModalCustomer.vue';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import { computed, onMounted, ref } from 'vue';
+import { Ref, computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const { notify } = useNotification();
 const setLoading = (isLoading) => store.commit('loading/SET_LOADING', isLoading);
 
-let keyword = ref('');
-let visitDate = ref('');
+let keyword: Ref<string> = ref('');
+let visitDate: Ref<string> = ref('');
 const customerList = computed(() => store.state.customer.list.customerList);
 const fetchCustomerList = (queryList) =>
 	store.dispatch('customer/list/FETCH_CUSTOMER_LIST', queryList);
@@ -70,7 +70,7 @@ const changeSearchDate = async () => await fetchList();
 onMounted(async () => await fetchList());
 
 let modalCustomerComp = null;
-let modalId = ref('');
+let modalId: Ref<string> = ref('');
 const showDetailModal = (id) => {
 	modalId.value = id;
 	modalCustomerComp.show();

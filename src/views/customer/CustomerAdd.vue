@@ -292,10 +292,11 @@
 import FormInput from '@/components/form/FormInput.vue';
 import FormRadio from '@/components/form/FormRadio.vue';
 import FormTextarea from '@/components/form/FormTextarea.vue';
+import { CustomerEstate } from '@/types/estate';
 import common from '@/utils/common';
 import { CUSTOMER } from '@/utils/constants';
 import { useNotification } from '@kyvg/vue3-notification';
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { Ref, computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -304,8 +305,8 @@ const router = useRouter();
 const route = useRoute();
 const { notify } = useNotification();
 const isUpdate = computed(() => !!route.params.id);
-let isLoading = ref(false);
-let item = ref({
+let isLoading: Ref<boolean> = ref(false);
+let item: Ref<CustomerEstate> = ref({
 	phone: 0,
 	visitDate: '',
 	visitTime: '',

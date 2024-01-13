@@ -201,7 +201,7 @@
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Modal } from 'bootstrap';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import ModalCustomerResult from './ModalCustomerResult.vue';
@@ -216,7 +216,7 @@ const router = useRouter();
 const { notify } = useNotification();
 const props = defineProps<Props>();
 const emit = defineEmits(['delete', 'hide']);
-let isLoading = ref(false);
+let isLoading: Ref<boolean> = ref(false);
 
 const customer = computed(() => store.state.customer.detail.customer);
 const dateTime = computed(() => {
