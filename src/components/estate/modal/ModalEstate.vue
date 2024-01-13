@@ -264,7 +264,7 @@ import { useStore } from 'vuex';
 
 interface Props {
 	id: string;
-	edit: boolean;
+	edit?: boolean;
 }
 
 const store = useStore();
