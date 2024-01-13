@@ -21,8 +21,7 @@
 									<div class="w-50">
 										<label> 재방문여부 </label>
 										<form-radio
-											:value="item.revisit"
-											@update:modelValue="item.revisit = $event"
+											v-model="item.revisit"
 											:options="common.setOptions(CUSTOMER.OX)"
 											name="revisit"
 										/>
@@ -32,16 +31,8 @@
 									<div class="w-100">
 										<label> 재방문일시 </label>
 										<div class="d-flex gap-3 mt-2">
-											<form-input
-												:value="item.revisitDate"
-												@update:modelValue="item.revisitDate = $event"
-												type="date"
-											/>
-											<form-input
-												:value="item.revisitTime"
-												@update:modelValue="item.revisitTime = $event"
-												type="time"
-											/>
+											<form-input v-model="item.revisitDate" type="date" />
+											<form-input v-model="item.revisitTime" type="time" />
 										</div>
 									</div>
 								</b-form-row>
@@ -55,16 +46,8 @@
 									<div class="w-100">
 										<label> 계약일자 / 입주일자 </label>
 										<div class="d-flex gap-3 mt-2">
-											<form-input
-												:value="item.contractDate"
-												@update:modelValue="item.contractDate = $event"
-												type="date"
-											/>
-											<form-input
-												:value="item.moveDate"
-												@update:modelValue="item.moveDate = $event"
-												type="date"
-											/>
+											<form-input v-model="item.contractDate" type="date" />
+											<form-input v-model="item.moveDate" type="date" />
 										</div>
 									</div>
 								</b-form-row>
@@ -86,15 +69,13 @@
 										<label> 보증금 / 계약금 </label>
 										<div class="d-flex gap-3 mt-2">
 											<form-input
-												:value="item.deposit"
-												@update:modelValue="item.deposit = $event"
+												v-model="item.deposit"
 												type="number"
 												placeholder="보증금"
 												suffix="만원"
 											/>
 											<form-input
-												:value="item.downPayment"
-												@update:modelValue="item.downPayment = $event"
+												v-model="item.downPayment"
 												type="number"
 												placeholder="계약금"
 												suffix="만원"
@@ -107,8 +88,7 @@
 										<label> 관리비 </label>
 										<div class="d-flex gap-3 mt-2">
 											<form-input
-												:value="item.cost"
-												@update:modelValue="item.cost = $event"
+												v-model="item.cost"
 												type="number"
 												placeholder="관리비"
 												suffix="만원"
@@ -121,8 +101,7 @@
 									<div class="w-50">
 										<label> 현 임차인 연락처 </label>
 										<form-input
-											:value="item.currentLesseePhone"
-											@update:modelValue="item.currentLesseePhone = $event"
+											v-model="item.currentLesseePhone"
 											type="number"
 										/>
 									</div>
@@ -136,39 +115,26 @@
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 성함 </label>
-										<form-input
-											:value="item.lessee.name"
-											@update:modelValue="item.lessee.name = $event"
-										/>
+										<form-input v-model="item.lessee.name" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 주민등록번호 </label>
-										<form-input
-											:value="item.lessee.registrationNumber"
-											@update:modelValue="
-												item.lessee.registrationNumber = $event
-											"
-										/>
+										<form-input v-model="item.lessee.registrationNumber" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 연락처 </label>
-										<form-input
-											:value="item.lessee.phone"
-											@update:modelValue="item.lessee.phone = $event"
-											type="number"
-										/>
+										<form-input v-model="item.lessee.phone" type="number" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 비상연락처 </label>
 										<form-input
-											:value="item.lessee.emergencyPhone"
-											@update:modelValue="item.lessee.emergencyPhone = $event"
+											v-model="item.lessee.emergencyPhone"
 											type="number"
 										/>
 									</div>
@@ -193,41 +159,26 @@
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 성함 </label>
-										<form-input
-											:value="item.landlord.name"
-											@update:modelValue="item.landlord.name = $event"
-										/>
+										<form-input v-model="item.landlord.name" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 주민등록번호 </label>
-										<form-input
-											:value="item.landlord.registrationNumber"
-											@update:modelValue="
-												item.landlord.registrationNumber = $event
-											"
-										/>
+										<form-input v-model="item.landlord.registrationNumber" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 연락처 </label>
-										<form-input
-											:value="item.landlord.phone"
-											@update:modelValue="item.landlord.phone = $event"
-											type="number"
-										/>
+										<form-input v-model="item.landlord.phone" type="number" />
 									</div>
 								</b-form-row>
 								<b-form-row class="mb-3">
 									<div class="w-50">
 										<label> 비상연락처 </label>
 										<form-input
-											:value="item.landlord.emergencyPhone"
-											@update:modelValue="
-												item.landlord.emergencyPhone = $event
-											"
+											v-model="item.landlord.emergencyPhone"
 											type="number"
 										/>
 									</div>

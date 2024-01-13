@@ -21,7 +21,7 @@
 import { Ref, ref, watch } from 'vue';
 
 interface Props {
-	modelValue: string;
+	modelValue?: string;
 	name: string;
 	options: [
 		{

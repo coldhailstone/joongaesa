@@ -15,10 +15,10 @@
 import { InputType } from 'bootstrap-vue-3';
 
 interface Props {
-	modelValue: string | number;
-	placeholder: string;
-	prefix: string;
-	suffix: string;
+	modelValue?: string | number;
+	placeholder?: string;
+	prefix?: string;
+	suffix?: string;
 	type?: InputType;
 }
 
