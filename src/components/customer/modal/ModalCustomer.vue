@@ -207,10 +207,14 @@ import { useStore } from 'vuex';
 import ModalCustomerResult from './ModalCustomerResult.vue';
 import ModalRoomList from './ModalRoomList.vue';
 
+interface Props {
+	id: string;
+}
+
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
+const props = defineProps<Props>();
 const emit = defineEmits(['delete', 'hide']);
 let isLoading = ref(false);
 

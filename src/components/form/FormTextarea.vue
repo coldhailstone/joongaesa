@@ -10,12 +10,13 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-	modelValue: String,
-	rows: {
-		type: Number,
-		default: 5,
-	},
+interface Props {
+	modelValue: string;
+	rows?: number;
+}
+
+withDefaults(defineProps<Props>(), {
+	rows: 5,
 });
 defineEmits(['update:modelValue']);
 </script>

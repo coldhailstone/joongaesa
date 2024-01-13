@@ -263,12 +263,16 @@ import { useRouter } from 'vue-router';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import { useStore } from 'vuex';
 
+interface Props {
+	id: string;
+	edit: boolean;
+}
+
 const store = useStore();
 const router = useRouter();
 const { notify } = useNotification();
-const props = defineProps({
-	id: String,
-	edit: { type: Boolean, default: true },
+const props = withDefaults(defineProps<Props>(), {
+	edit: true,
 });
 const emit = defineEmits(['delete', 'hide']);
 let isLoading = ref(false);

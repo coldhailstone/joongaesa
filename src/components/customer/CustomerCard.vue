@@ -25,10 +25,10 @@
 					기간: <b>{{ item.residence }}</b>
 				</span>
 				<span v-if="item.deposit">
-					보증금: <b>{{ parseInt(item.deposit).toLocaleString() }}만원</b>
+					보증금: <b>{{ item.deposit.toLocaleString() }}만원</b>
 				</span>
 				<span v-if="item.monthly">
-					월세: <b>{{ parseInt(item.monthly).toLocaleString() }}만원</b>
+					월세: <b>{{ item.monthly.toLocaleString() }}만원</b>
 				</span>
 				<span v-if="item.position">
 					위치: <b>{{ item.position }}</b>
@@ -39,9 +39,14 @@
 </template>
 
 <script setup lang="ts">
+import { CustomerEstate } from '@/types/estate';
 import common from '@/utils/common';
 
-defineProps({ item: Object });
+interface Props {
+	item: CustomerEstate;
+}
+
+defineProps<Props>();
 defineEmits(['clickCard']);
 </script>
 

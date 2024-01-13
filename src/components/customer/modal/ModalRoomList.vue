@@ -70,9 +70,13 @@ import common from '@/utils/common';
 import ModalRoomAdd from './ModalRoomAdd.vue';
 import ModalEstate from '@/components/estate/modal/ModalEstate.vue';
 
+interface Props {
+	id: string;
+}
+
 const store = useStore();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
+const props = defineProps<Props>();
 let isLoading = ref(false);
 let tableItemList = ref([]);
 const customer = computed(() => store.state.customer.detail.customer);

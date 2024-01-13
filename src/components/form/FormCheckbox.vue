@@ -15,10 +15,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-const props = defineProps({
-	modelValue: Array,
-	options: Array,
-});
+interface Props {
+	modelValue: [];
+	options: [];
+}
+
+const props = defineProps<Props>();
 defineEmits(['update:modelValue']);
 
 let selected = ref([]);

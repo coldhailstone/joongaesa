@@ -266,9 +266,13 @@ import { useNotification } from '@kyvg/vue3-notification';
 import { computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
+interface Props {
+	id: string;
+}
+
 const store = useStore();
 const { notify } = useNotification();
-const props = defineProps({ id: String });
+const props = defineProps<Props>();
 const emit = defineEmits(['hide']);
 let isLoading = ref(false);
 let item = ref({

@@ -20,7 +20,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-const props = defineProps({ list: Array });
+interface Props {
+	list: [];
+}
+
+const props = defineProps<Props>();
 const emit = defineEmits(['changeFile']);
 
 let attachments = ref([]);

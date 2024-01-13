@@ -12,12 +12,16 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-	modelValue: [String, Number],
-	placeholder: String,
-	prefix: String,
-	suffix: String,
-	type: { type: String, default: 'text' },
+interface Props {
+	modelValue: string | number;
+	placeholder: string;
+	prefix: string;
+	suffix: string;
+	type?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+	type: 'text',
 });
 defineEmits(['update:modelValue']);
 </script>

@@ -11,7 +11,10 @@ module.exports = {
 		'plugin:prettier/recommended',
 	],
 	parserOptions: {
-		parser: '@babel/eslint-parser',
+		parser: {
+			ts: '@typescript-eslint/parser',
+			'<template>': 'espree',
+		},
 	},
 	rules: {
 		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

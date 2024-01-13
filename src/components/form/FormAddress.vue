@@ -19,11 +19,13 @@
 import daumPostcode from '@/api/daumPostcode';
 import { ref, watch } from 'vue';
 
-const props = defineProps({
-	postcode: String,
-	address: String,
-	addressDetail: String,
-});
+interface Props {
+	postcode: string;
+	address: string;
+	addressDetail: string;
+}
+
+const props = defineProps<Props>();
 const emit = defineEmits(['changeAddress']);
 
 let item = ref({
