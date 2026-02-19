@@ -221,11 +221,25 @@
 								</li>
 								<li>
 									<div class="key">임대인 연락처</div>
-									<div>{{ common.convertData(estate.landLordPhone) }}</div>
+									<div>
+										{{
+											common.convertData(
+												estate.landLordPhone,
+												common.convertTel(estate.landLordPhone)
+											)
+										}}
+									</div>
 								</li>
 								<li>
 									<div class="key">현 임차인 연락처</div>
-									<div>{{ common.convertData(estate.currentLesseePhone) }}</div>
+									<div>
+										{{
+											common.convertData(
+												estate.currentLesseePhone,
+												common.convertTel(estate.currentLesseePhone)
+											)
+										}}
+									</div>
 								</li>
 							</ul>
 						</div>

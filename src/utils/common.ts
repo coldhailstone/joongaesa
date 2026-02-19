@@ -12,7 +12,8 @@ export default {
 		return convertValue ?? value;
 	},
 	convertTel(tel) {
-		return tel?.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+		if (!tel) return;
+		return tel.replace(/\D+/g, '').replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
 	},
 	cloneDeep(obj) {
 		return cloneDeep(obj);
