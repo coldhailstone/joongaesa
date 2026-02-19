@@ -1,7 +1,7 @@
 <template>
 	<div id="modal-room-list" class="modal" tabindex="-1">
 		<b-overlay class="h-100" :show="isLoading" rounded="sm">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title">방 목록</h3>

@@ -1,50 +1,38 @@
 <template>
-	<b-card
-		:title="common.convertTel(item.phone)"
-		class="card"
-		@click="$emit('clickCard', item.id)"
-	>
-		<b-card-text>
-			<div class="d-flex flex-column mb-2">
-				<span v-if="item.visitDate" class="info-row">
-					<span class="label">방문날짜</span>
-					<b>{{ item.visitDate }}</b>
+	<div class="customer-card" @click="$emit('clickCard', item.id)">
+		<div class="card-header-row">
+			<span class="phone">{{ common.convertTel(item.phone) }}</span>
+			<span v-if="item.visitDate" class="visit-badge">{{ item.visitDate }}</span>
+		</div>
+		<div class="card-body-area">
+			<div v-if="item.contractType || item.buildingType || item.gender" class="badges">
+				<span v-if="item.contractType" class="badge-tag primary">{{
+					item.contractType
+				}}</span>
+				<span v-if="item.buildingType" class="badge-tag gray">{{ item.buildingType }}</span>
+				<span v-if="item.gender" class="badge-tag gray">{{ item.gender }}</span>
+			</div>
+			<div v-if="item.deposit || item.monthly" class="price-row">
+				<span v-if="item.deposit" class="price-item">
+					보증금 <b>{{ item.deposit.toLocaleString() }}만</b>
 				</span>
-				<span v-if="item.visitTime" class="info-row">
-					<span class="label">방문시간</span>
-					<b>{{ item.visitTime }}</b>
-				</span>
-				<span v-if="item.gender" class="info-row">
-					<span class="label">성별</span>
-					<b>{{ item.gender }}</b>
-				</span>
-				<span v-if="item.buildingType" class="info-row">
-					<span class="label">건물형태</span>
-					<b>{{ item.buildingType }}</b>
-				</span>
-				<span v-if="item.contractType" class="info-row mt-2">
-					<span class="label">거래유형</span>
-					<b>{{ item.contractType }}</b>
-				</span>
-				<span v-if="item.residence" class="info-row">
-					<span class="label">기간</span>
-					<b>{{ item.residence }}</b>
-				</span>
-				<span v-if="item.deposit" class="info-row">
-					<span class="label">보증금</span>
-					<b>{{ item.deposit.toLocaleString() }}만원</b>
-				</span>
-				<span v-if="item.monthly" class="info-row">
-					<span class="label">월세</span>
-					<b>{{ item.monthly.toLocaleString() }}만원</b>
-				</span>
-				<span v-if="item.position" class="info-row">
-					<span class="label">위치</span>
-					<b>{{ item.position }}</b>
+				<span v-if="item.monthly" class="price-item">
+					월세 <b>{{ item.monthly.toLocaleString() }}만</b>
 				</span>
 			</div>
-		</b-card-text>
-	</b-card>
+			<div class="info-rows">
+				<span v-if="item.position" class="info-row">
+					<i class="fa-solid fa-location-dot"></i>{{ item.position }}
+				</span>
+				<span v-if="item.residence" class="info-row">
+					<i class="fa-regular fa-clock"></i>{{ item.residence }}
+				</span>
+				<span v-if="item.visitTime" class="info-row">
+					<i class="fa-solid fa-clock"></i>방문 {{ item.visitTime }}
+				</span>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -60,41 +48,103 @@ defineEmits(['clickCard']);
 </script>
 
 <style lang="scss" scoped>
-:deep(.card-title) {
-	font-weight: 700;
-	font-size: 1rem;
-	color: #2563eb;
-}
-
-.card {
-	width: 300px;
-	height: 300px;
-	cursor: pointer;
-	overflow: hidden;
+.customer-card {
+	background: #ffffff;
 	border: 1px solid #e5e7eb;
 	border-radius: 12px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+	cursor: pointer;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	padding: 16px;
 
 	&:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+		box-shadow: 0 8px 24px rgba(37, 99, 235, 0.14);
 	}
 
-	.info-row {
+	.card-header-row {
 		display: flex;
-		gap: 6px;
-		font-size: 0.85rem;
-		color: #374151;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 12px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #f3f4f6;
 
-		.label {
-			color: #6b7280;
-			min-width: 52px;
+		.phone {
+			font-size: 0.95rem;
+			font-weight: 700;
+			color: #2563eb;
 		}
 
-		b {
+		.visit-badge {
+			font-size: 0.72rem;
+			color: #6b7280;
+			background: #f3f4f6;
+			padding: 2px 8px;
+			border-radius: 20px;
+		}
+	}
+
+	.card-body-area {
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 5px;
+			margin-bottom: 10px;
+		}
+
+		.badge-tag {
+			font-size: 0.72rem;
 			font-weight: 600;
-			color: #111827;
+			padding: 3px 10px;
+			border-radius: 20px;
+
+			&.primary {
+				background: rgba(37, 99, 235, 0.1);
+				color: #2563eb;
+			}
+
+			&.gray {
+				background: #f3f4f6;
+				color: #6b7280;
+			}
+		}
+
+		.price-row {
+			display: flex;
+			gap: 14px;
+			margin-bottom: 10px;
+
+			.price-item {
+				font-size: 0.82rem;
+				color: #374151;
+
+				b {
+					font-weight: 700;
+					color: #111827;
+				}
+			}
+		}
+
+		.info-rows {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+		}
+
+		.info-row {
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			font-size: 0.82rem;
+			color: #6b7280;
+
+			i {
+				width: 14px;
+				font-size: 0.78rem;
+				color: #9ca3af;
+			}
 		}
 	}
 }

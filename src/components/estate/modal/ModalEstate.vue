@@ -1,7 +1,7 @@
 <template>
 	<div id="modal-estate" class="modal" tabindex="-1">
 		<b-overlay class="h-100" :show="isLoading" rounded="sm">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-lg modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title">매물 상세</h3>

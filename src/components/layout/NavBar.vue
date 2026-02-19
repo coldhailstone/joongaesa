@@ -8,7 +8,7 @@
 
 		<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-		<b-collapse id="nav-collapse" class="justify-content-between" is-nav>
+		<b-collapse id="nav-collapse" v-model="navOpen" class="justify-content-between" is-nav>
 			<b-navbar-nav class="gap-2">
 				<b-nav-item v-for="menu of menuList" :key="menu.name" :to="menu.path">
 					<span v-if="menu.path !== '/'">{{ menu.name }}</span>
@@ -42,13 +42,22 @@ import { menuList } from '@/router/routes';
 import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { User } from 'firebase/auth';
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 const { notify } = useNotification();
+
+const navOpen = ref(false);
+watch(
+	() => route.path,
+	() => {
+		navOpen.value = false;
+	}
+);
 
 const user = computed<User>(() => store.state.user.user);
 const signOut = () => store.dispatch('user/SIGN_OUT');

@@ -27,13 +27,20 @@
 					/>
 				</div>
 			</div>
-			<div class="d-flex flex-wrap gap-4">
+			<div v-if="customerList.length" class="card-grid">
 				<customer-card
 					v-for="customer of customerList"
 					:key="customer.id"
 					:item="customer"
 					@clickCard="showDetailModal(customer.id)"
 				/>
+			</div>
+			<div v-else class="empty-state">
+				<i class="fa-regular fa-user"></i>
+				<p>등록된 고객이 없습니다.</p>
+				<b-button variant="primary" size="sm" @click="$router.push('customer/new')">
+					첫 고객 등록하기
+				</b-button>
 			</div>
 		</div>
 
@@ -89,6 +96,32 @@ onMounted(() => (modalCustomerComp = new Modal(document.querySelector('#modal-cu
 </script>
 
 <style lang="scss" scoped>
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 1.25rem;
+}
+
+.empty-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	padding: 60px 20px;
+	color: #9ca3af;
+
+	i {
+		font-size: 3rem;
+		color: #d1d5db;
+	}
+
+	p {
+		margin: 0;
+		font-size: 0.95rem;
+	}
+}
+
 .search-area {
 	background: #ffffff;
 	border: 1px solid #e5e7eb;
