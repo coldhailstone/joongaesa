@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-form-group>
-			<div class="d-flex flex-wrap gap-3 mt-2">
+			<div class="radio-options d-flex flex-wrap gap-3 mt-2">
 				<b-form-radio
 					v-for="form of options"
 					:key="form.value"
@@ -42,3 +42,17 @@ watch(
 	}
 );
 </script>
+
+<style lang="scss" scoped>
+.radio-options {
+	background: #f9fafb;
+	border: 1px solid #f3f4f6;
+	border-radius: 8px;
+	padding: 10px 14px;
+}
+
+:deep(.form-check-input:checked) {
+	background-color: #2563eb;
+	border-color: #2563eb;
+}
+</style>

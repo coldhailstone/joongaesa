@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-form-group>
-			<div class="d-flex flex-wrap gap-3 mt-2">
+			<div class="checkbox-options d-flex flex-wrap gap-3 mt-2">
 				<b-form-checkbox-group
 					v-model="selected"
 					:options="options"
@@ -31,3 +31,17 @@ watch(
 	}
 );
 </script>
+
+<style lang="scss" scoped>
+.checkbox-options {
+	background: #f9fafb;
+	border: 1px solid #f3f4f6;
+	border-radius: 8px;
+	padding: 10px 14px;
+}
+
+:deep(.form-check-input:checked) {
+	background-color: #2563eb;
+	border-color: #2563eb;
+}
+</style>

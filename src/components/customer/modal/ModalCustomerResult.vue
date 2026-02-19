@@ -12,185 +12,201 @@
 							aria-label="Close"
 						></button>
 					</div>
-					<div class="container mt-3 mb-3 d-flex flex-column gap-3">
-						<div class="section-card">
-							<h5 class="section-title">재방문</h5>
-							<b-form>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 재방문여부 </label>
-										<form-radio
-											v-model="item.revisit"
-											:options="common.setOptions(CUSTOMER.OX)"
-											name="revisit"
-										/>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 재방문일시 </label>
-										<div class="d-flex gap-3 mt-2">
-											<form-input v-model="item.revisitDate" type="date" />
-											<form-input v-model="item.revisitTime" type="time" />
-										</div>
-									</div>
-								</b-form-row>
-							</b-form>
-						</div>
-						<div class="section-card">
-							<h5 class="section-title">계약 정보</h5>
-							<b-form>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 계약일자 / 입주일자 </label>
-										<div class="d-flex gap-3 mt-2">
-											<form-input v-model="item.contractDate" type="date" />
-											<form-input v-model="item.moveDate" type="date" />
-										</div>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 계약주소 </label>
-										<form-address
-											:postcode="item.contractAddress.postcode"
-											:address="item.contractAddress.address"
-											:addressDetail="item.contractAddress.addressDetail"
-											@changeAddress="
-												changeAddress('contractAddress', $event)
-											"
-										/>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 보증금 / 계약금 </label>
-										<div class="d-flex gap-3 mt-2">
-											<form-input
-												v-model="item.deposit"
-												type="number"
-												placeholder="보증금"
-												suffix="만원"
-											/>
-											<form-input
-												v-model="item.downPayment"
-												type="number"
-												placeholder="계약금"
-												suffix="만원"
+					<div class="modal-body">
+						<div class="d-flex flex-column gap-3">
+							<div class="section-card">
+								<h5 class="section-title">재방문</h5>
+								<b-form>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 재방문여부 </label>
+											<form-radio
+												v-model="item.revisit"
+												:options="common.setOptions(CUSTOMER.OX)"
+												name="revisit"
 											/>
 										</div>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 관리비 </label>
-										<div class="d-flex gap-3 mt-2">
-											<form-input
-												v-model="item.cost"
-												type="number"
-												placeholder="관리비"
-												suffix="만원"
-											/>
-											<template></template>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 재방문일시 </label>
+											<div class="d-flex gap-3 mt-2">
+												<form-input
+													v-model="item.revisitDate"
+													type="date"
+												/>
+												<form-input
+													v-model="item.revisitTime"
+													type="time"
+												/>
+											</div>
 										</div>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 현 임차인 연락처 </label>
-										<form-input
-											v-model="item.currentLesseePhone"
-											type="number"
-										/>
-									</div>
-								</b-form-row>
-							</b-form>
-						</div>
-						<div class="section-card">
-							<h5 class="section-title">임차인</h5>
-							<b-form>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 성함 </label>
-										<form-input v-model="item.lessee.name" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 주민등록번호 </label>
-										<form-input v-model="item.lessee.registrationNumber" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 연락처 </label>
-										<form-input v-model="item.lessee.phone" type="number" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 비상연락처 </label>
-										<form-input
-											v-model="item.lessee.emergencyPhone"
-											type="number"
-										/>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 주소 </label>
-										<form-address
-											:postcode="item.lessee.postcode"
-											:address="item.lessee.address"
-											:addressDetail="item.lessee.addressDetail"
-											@changeAddress="changeAddress('lessee', $event)"
-										/>
-									</div>
-								</b-form-row>
-							</b-form>
-						</div>
-						<div class="section-card">
-							<h5 class="section-title">임대인</h5>
-							<b-form>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 성함 </label>
-										<form-input v-model="item.landlord.name" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 주민등록번호 </label>
-										<form-input v-model="item.landlord.registrationNumber" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 연락처 </label>
-										<form-input v-model="item.landlord.phone" type="number" />
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-50">
-										<label> 비상연락처 </label>
-										<form-input
-											v-model="item.landlord.emergencyPhone"
-											type="number"
-										/>
-									</div>
-								</b-form-row>
-								<b-form-row class="mb-3">
-									<div class="w-100">
-										<label> 주소 </label>
-										<form-address
-											:postcode="item.landlord.postcode"
-											:address="item.landlord.address"
-											:addressDetail="item.landlord.addressDetail"
-											@changeAddress="changeAddress('landlord', $event)"
-										/>
-									</div>
-								</b-form-row>
-							</b-form>
+									</b-form-row>
+								</b-form>
+							</div>
+							<div class="section-card">
+								<h5 class="section-title">계약 정보</h5>
+								<b-form>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 계약일자 / 입주일자 </label>
+											<div class="d-flex gap-3 mt-2">
+												<form-input
+													v-model="item.contractDate"
+													type="date"
+												/>
+												<form-input v-model="item.moveDate" type="date" />
+											</div>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 계약주소 </label>
+											<form-address
+												:postcode="item.contractAddress.postcode"
+												:address="item.contractAddress.address"
+												:addressDetail="item.contractAddress.addressDetail"
+												@changeAddress="
+													changeAddress('contractAddress', $event)
+												"
+											/>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 보증금 / 계약금 </label>
+											<div class="d-flex gap-3 mt-2">
+												<form-input
+													v-model="item.deposit"
+													type="number"
+													placeholder="보증금"
+													suffix="만원"
+												/>
+												<form-input
+													v-model="item.downPayment"
+													type="number"
+													placeholder="계약금"
+													suffix="만원"
+												/>
+											</div>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 관리비 </label>
+											<div class="d-flex gap-3 mt-2">
+												<form-input
+													v-model="item.cost"
+													type="number"
+													placeholder="관리비"
+													suffix="만원"
+												/>
+												<template></template>
+											</div>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 현 임차인 연락처 </label>
+											<form-input
+												v-model="item.currentLesseePhone"
+												type="number"
+											/>
+										</div>
+									</b-form-row>
+								</b-form>
+							</div>
+							<div class="section-card">
+								<h5 class="section-title">임차인</h5>
+								<b-form>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 성함 </label>
+											<form-input v-model="item.lessee.name" />
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 주민등록번호 </label>
+											<form-input v-model="item.lessee.registrationNumber" />
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 연락처 </label>
+											<form-input v-model="item.lessee.phone" type="number" />
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 비상연락처 </label>
+											<form-input
+												v-model="item.lessee.emergencyPhone"
+												type="number"
+											/>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 주소 </label>
+											<form-address
+												:postcode="item.lessee.postcode"
+												:address="item.lessee.address"
+												:addressDetail="item.lessee.addressDetail"
+												@changeAddress="changeAddress('lessee', $event)"
+											/>
+										</div>
+									</b-form-row>
+								</b-form>
+							</div>
+							<div class="section-card">
+								<h5 class="section-title">임대인</h5>
+								<b-form>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 성함 </label>
+											<form-input v-model="item.landlord.name" />
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 주민등록번호 </label>
+											<form-input
+												v-model="item.landlord.registrationNumber"
+											/>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 연락처 </label>
+											<form-input
+												v-model="item.landlord.phone"
+												type="number"
+											/>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-50">
+											<label> 비상연락처 </label>
+											<form-input
+												v-model="item.landlord.emergencyPhone"
+												type="number"
+											/>
+										</div>
+									</b-form-row>
+									<b-form-row class="mb-3">
+										<div class="w-100">
+											<label> 주소 </label>
+											<form-address
+												:postcode="item.landlord.postcode"
+												:address="item.landlord.address"
+												:addressDetail="item.landlord.addressDetail"
+												@changeAddress="changeAddress('landlord', $event)"
+											/>
+										</div>
+									</b-form-row>
+								</b-form>
+							</div>
 						</div>
 					</div>
 					<div class="modal-footer">

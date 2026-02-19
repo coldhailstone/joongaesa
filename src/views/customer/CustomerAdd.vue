@@ -3,7 +3,7 @@
 		<div class="container mt-4 mb-5 d-flex flex-column gap-4">
 			<h4 class="page-title">{{ $route.name }}</h4>
 			<div class="section-card">
-				<h5 class="section-title">기본 정보</h5>
+				<h5 class="section-title"><i class="fa-solid fa-user"></i>기본 정보</h5>
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-50">
@@ -176,7 +176,7 @@
 				</b-form>
 			</div>
 			<div class="section-card">
-				<h5 class="section-title">상세 정보</h5>
+				<h5 class="section-title"><i class="fa-solid fa-list-check"></i>상세 정보</h5>
 				<b-form>
 					<b-form-row>
 						<div class="w-100">
@@ -271,7 +271,7 @@
 				</b-form>
 			</div>
 			<div class="section-card">
-				<h5 class="section-title">상세 설명</h5>
+				<h5 class="section-title"><i class="fa-solid fa-pen-to-square"></i>상세 설명</h5>
 				<b-form>
 					<b-form-row class="mb-3">
 						<form-textarea v-model="item.description" />
@@ -421,9 +421,15 @@ const save = async () => {
 	font-size: 0.95rem;
 	color: #111827;
 	margin-bottom: 20px;
-	padding-bottom: 12px;
+	padding: 2px 0 12px 12px;
 	border-bottom: 1px solid #e5e7eb;
+	border-left: 3px solid #2563eb;
 	display: block;
+
+	i {
+		color: #2563eb;
+		margin-right: 8px;
+	}
 }
 
 label {
@@ -432,5 +438,19 @@ label {
 	font-weight: 600;
 	font-size: 0.875rem;
 	margin-bottom: 6px;
+}
+
+:deep(.form-check-input:checked) {
+	background-color: #2563eb;
+	border-color: #2563eb;
+}
+
+:deep(.form-control) {
+	border-color: #e5e7eb;
+
+	&:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+	}
 }
 </style>

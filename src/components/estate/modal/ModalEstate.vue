@@ -321,10 +321,11 @@ onMounted(() => {
 	const modal = document.querySelector('#modal-estate');
 	modal.addEventListener('show.bs.modal', () => {
 		nextTick(async () => {
-			if (estate.value.photo && estate.value.photo.length) {
-				carouselComp.value.updateSlideWidth();
-			}
 			await fetchDetail();
+			if (estate.value.photo?.length) {
+				await nextTick();
+				carouselComp.value?.updateSlideWidth();
+			}
 		});
 	});
 	modal.addEventListener('hide.bs.modal', () => {
@@ -337,8 +338,16 @@ onMounted(() => {
 .carousel {
 	border-radius: 8px;
 	overflow: hidden;
+
+	:deep(.carousel__slide) {
+		height: 300px;
+		background: #f3f4f6;
+	}
+
 	img {
 		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 }
 
