@@ -28,8 +28,7 @@
 					<i class="fa-regular fa-clock"></i>{{ item.residence }}
 				</span>
 				<span v-if="item.visitTime" class="info-row">
-					<i class="fa-solid fa-clock"></i>방문 {{ item.visitDate
-					}}{{ item.visitTime ? ` ${item.visitTime}` : '' }}
+					<i class="fa-solid fa-clock"></i>방문 {{ item.visitTime }}
 				</span>
 			</div>
 		</div>
