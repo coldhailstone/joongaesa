@@ -13,19 +13,21 @@
 						></button>
 					</div>
 					<div class="modal-body d-flex flex-column gap-5">
-						<b-carousel
+						<carousel
 							v-if="estate.photo && estate.photo.length"
-							class="photo-carousel"
-							controls
-							indicators
-							:interval="0"
+							ref="carouselComp"
+							class="carousel"
+							:wrap-around="true"
 						>
-							<b-carousel-slide
-								v-for="photo of estate.photo"
-								:key="photo.name"
-								:img-src="photo.url"
-							/>
-						</b-carousel>
+							<slide v-for="photo of estate.photo" :key="photo.name">
+								<img :src="photo.url" />
+							</slide>
+
+							<template #addons>
+								<navigation />
+								<pagination />
+							</template>
+						</carousel>
 						<div>
 							<h5 class="section-title">기본 정보</h5>
 							<ul class="info">
