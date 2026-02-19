@@ -13,21 +13,19 @@
 						></button>
 					</div>
 					<div class="modal-body d-flex flex-column gap-5">
-						<carousel
+						<b-carousel
 							v-if="estate.photo && estate.photo.length"
-							ref="carouselComp"
-							class="carousel"
-							:wrap-around="true"
+							class="photo-carousel"
+							controls
+							indicators
+							:interval="0"
 						>
-							<slide v-for="photo of estate.photo" :key="photo.name">
-								<img :src="photo.url" />
-							</slide>
-
-							<template #addons>
-								<navigation />
-								<pagination />
-							</template>
-						</carousel>
+							<b-carousel-slide
+								v-for="photo of estate.photo"
+								:key="photo.name"
+								:img-src="photo.url"
+							/>
+						</b-carousel>
 						<div>
 							<h5 class="section-title">기본 정보</h5>
 							<ul class="info">
@@ -259,7 +257,6 @@ import common from '@/utils/common';
 import { useNotification } from '@kyvg/vue3-notification';
 import { Ref, computed, nextTick, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import { useStore } from 'vuex';
 
 interface Props {
@@ -276,7 +273,6 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['delete', 'hide']);
 let isLoading: Ref<boolean> = ref(false);
 
-let carouselComp: Ref<any> = ref(null);
 const estate = computed<Estate>(() => store.state.estateDetail.estate);
 const dateTime = computed<string>(() =>
 	estate.value.createDatetime?.toDate().toLocaleString('ko-KR')
@@ -324,12 +320,6 @@ onMounted(() => {
 			await fetchDetail();
 		});
 	});
-	modal.addEventListener('shown.bs.modal', async () => {
-		if (estate.value.photo?.length) {
-			await nextTick();
-			carouselComp.value?.updateSlideWidth();
-		}
-	});
 	modal.addEventListener('hide.bs.modal', () => {
 		setEstate({});
 	});
@@ -337,27 +327,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.carousel {
+.photo-carousel {
 	border-radius: 8px;
 	overflow: hidden;
-	width: 100%;
 
-	:deep(.carousel__viewport) {
-		width: 100%;
-	}
-
-	:deep(.carousel__slide) {
+	:deep(.carousel-item img) {
 		height: 300px;
 		width: 100%;
-		background: #f3f4f6;
-		align-items: stretch;
-	}
-
-	:deep(img) {
-		width: 100%;
-		height: 100%;
 		object-fit: cover;
-		display: block;
 	}
 }
 
