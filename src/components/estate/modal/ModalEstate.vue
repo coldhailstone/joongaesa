@@ -322,11 +322,13 @@ onMounted(() => {
 	modal.addEventListener('show.bs.modal', () => {
 		nextTick(async () => {
 			await fetchDetail();
-			if (estate.value.photo?.length) {
-				await nextTick();
-				carouselComp.value?.updateSlideWidth();
-			}
 		});
+	});
+	modal.addEventListener('shown.bs.modal', async () => {
+		if (estate.value.photo?.length) {
+			await nextTick();
+			carouselComp.value?.updateSlideWidth();
+		}
 	});
 	modal.addEventListener('hide.bs.modal', () => {
 		setEstate({});
@@ -338,16 +340,24 @@ onMounted(() => {
 .carousel {
 	border-radius: 8px;
 	overflow: hidden;
+	width: 100%;
+
+	:deep(.carousel__viewport) {
+		width: 100%;
+	}
 
 	:deep(.carousel__slide) {
 		height: 300px;
+		width: 100%;
 		background: #f3f4f6;
+		align-items: stretch;
 	}
 
-	img {
+	:deep(img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		display: block;
 	}
 }
 

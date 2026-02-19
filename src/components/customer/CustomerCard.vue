@@ -2,7 +2,9 @@
 	<div class="customer-card" @click="$emit('clickCard', item.id)">
 		<div class="card-header-row">
 			<span class="phone">{{ common.convertTel(item.phone) }}</span>
-			<span v-if="item.visitDate" class="visit-badge">{{ item.visitDate }}</span>
+			<span v-if="item.visitDate" class="visit-badge">
+				{{ item.visitDate }}{{ item.visitTime ? ` ${item.visitTime}` : '' }}
+			</span>
 		</div>
 		<div class="card-body-area">
 			<div v-if="item.contractType || item.buildingType || item.gender" class="badges">
