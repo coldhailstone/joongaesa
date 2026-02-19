@@ -24,7 +24,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const imgSrc = computed(() =>
-	props.item.photo?.length ? props.item.photo[0].url : 'https://via.placeholder.com/400x200'
+	props.item.photo?.length ? props.item.photo[0].url : 'https://placehold.co/400x200'
 );
 
 const title = computed(() => {
