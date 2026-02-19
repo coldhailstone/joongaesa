@@ -87,9 +87,15 @@ onMounted(() => {
 	height: 38px;
 	line-height: 38px;
 	text-align: center;
-	background: rgba(54, 58, 60, 0.1);
-	border: 1px solid #eee;
-	border-radius: 10px;
+	background: rgba(37, 99, 235, 0.08);
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
 	cursor: pointer;
+	color: #2563eb;
+	transition: background 0.15s ease;
+
+	&:hover {
+		background: rgba(37, 99, 235, 0.16);
+	}
 }
 </style>

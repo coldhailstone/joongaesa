@@ -53,13 +53,20 @@ watch(
 .file-box {
 	width: 100%;
 	height: 120px;
-	border: 1px dashed gray;
-	border-radius: 4px;
+	border: 2px dashed #d1d5db;
+	border-radius: 8px;
 	position: relative;
-	background-color: #f9f9f9;
+	background-color: #fafafa;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transition: border-color 0.15s ease, background-color 0.15s ease;
+
+	&:hover {
+		border-color: #2563eb;
+		background-color: rgba(37, 99, 235, 0.03);
+	}
+
 	input[type='file'] {
 		width: 100%;
 		height: inherit;
@@ -69,41 +76,65 @@ watch(
 		opacity: 0;
 		cursor: pointer;
 	}
+
 	> div {
 		font-size: 0.875rem;
 		font-weight: 500;
 		text-align: center;
+		pointer-events: none;
+
 		p {
-			font-size: 0.875rem;
-			color: #999;
-			margin-bottom: 1rem;
+			font-size: 0.85rem;
+			color: #9ca3af;
+			margin-bottom: 0.5rem;
 		}
-		button {
-			height: 40px;
-			width: 90px;
+
+		h6 {
+			font-size: 0.8rem;
+			color: #2563eb;
+			font-weight: 600;
 		}
 	}
 }
+
 .file-list {
 	width: 100%;
 	padding-left: 0;
+	margin-top: 8px;
+
 	li {
 		display: flex;
 		align-items: center;
-		height: 48px;
-		border-radius: 4px;
-		border: 1px solid #ddd;
-		padding: 0 8px;
-		margin-top: 8px;
+		height: 44px;
+		border-radius: 8px;
+		border: 1px solid #e5e7eb;
+		padding: 0 12px;
+		margin-top: 6px;
+		background: #f9fafb;
+
+		i.fa-regular {
+			color: #6b7280;
+			font-size: 0.9rem;
+		}
+
 		p {
 			margin-bottom: 0;
 			margin-left: 8px;
-			font-size: 0.875rem;
+			font-size: 0.85rem;
 			font-weight: 500;
+			color: #374151;
 		}
+
 		.close {
 			margin-left: auto;
 			cursor: pointer;
+			color: #9ca3af;
+			font-size: 0.85rem;
+			transition: color 0.15s ease;
+
+			&:hover {
+				color: #ef4444;
+			}
 		}
 	}
 }

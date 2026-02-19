@@ -14,7 +14,7 @@
 					</div>
 					<div class="modal-body d-flex flex-column gap-5">
 						<div>
-							<h4 class="mb-3 fw-bold">기본 정보</h4>
+							<h5 class="section-title">기본 정보</h5>
 							<ul class="info">
 								<li>
 									<div class="key">연락처</div>
@@ -112,7 +112,7 @@
 							</ul>
 						</div>
 						<div>
-							<h4 class="mb-3 fw-bold">상세 정보</h4>
+							<h5 class="section-title">상세 정보</h5>
 							<ul class="info">
 								<li>
 									<div class="key">엘리베이터</div>
@@ -153,7 +153,7 @@
 							</ul>
 						</div>
 						<div>
-							<h4 class="mb-3 fw-bold">상세 설명</h4>
+							<h5 class="section-title">상세 설명</h5>
 							<b-form-textarea
 								:value="customer.description"
 								rows="10"
@@ -264,34 +264,52 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.carousel {
-	img {
-		width: 100%;
-	}
+.section-title {
+	font-weight: 700;
+	font-size: 0.95rem;
+	color: #111827;
+	margin-bottom: 16px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e5e7eb;
+	display: block;
 }
+
 .info {
 	list-style-type: none;
 	padding-left: 0;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	overflow: hidden;
 	li {
 		display: flex;
-		align-items: center;
-		height: 50px;
-		border: 1px solid #ddd;
-		&:not(:last-child) {
+		align-items: stretch;
+		border-bottom: 1px solid #e5e7eb;
+		&:last-child {
 			border-bottom: 0;
 		}
 		> div {
 			width: 75%;
-			height: 100%;
-			line-height: 50px;
+			min-height: 46px;
+			display: flex;
+			align-items: center;
+			padding: 8px 14px;
 			overflow: hidden;
+			font-size: 0.875rem;
+			color: #111827;
 		}
 		.key {
 			width: 25%;
+			min-height: 46px;
+			background: #f9fafb;
+			border-right: 1px solid #e5e7eb;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: #6b7280;
 			text-align: center;
-			background: #eee;
-			border-right: 1px solid #ddd;
-			margin-right: 10px;
+			padding: 4px 8px;
 		}
 	}
 }

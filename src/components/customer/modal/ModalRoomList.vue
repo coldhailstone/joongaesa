@@ -184,3 +184,22 @@ onMounted(() => {
 	});
 });
 </script>
+
+<style lang="scss" scoped>
+:deep(.table) {
+	font-size: 0.875rem;
+	border-color: #e5e7eb;
+}
+
+:deep(.table th) {
+	background: #f9fafb;
+	color: #6b7280;
+	font-weight: 600;
+	font-size: 0.8rem;
+}
+
+.mt-5.p-3.text-center {
+	color: #9ca3af;
+	font-size: 0.9rem;
+}
+</style>

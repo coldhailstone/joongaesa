@@ -1,10 +1,9 @@
 <template>
 	<b-overlay class="h-100" :show="isLoading" rounded="sm">
-		<div class="container mt-3 mb-3 d-flex flex-column gap-4">
-			<h1 class="mb-4 fw-bold">{{ $route.name }}</h1>
-			<div>
-				<h4 class="mb-3 fw-bold">기본 정보</h4>
-				<hr />
+		<div class="container mt-4 mb-5 d-flex flex-column gap-4">
+			<h4 class="page-title">{{ $route.name }}</h4>
+			<div class="section-card">
+				<h5 class="section-title">기본 정보</h5>
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
@@ -37,9 +36,8 @@
 					</b-form-row>
 				</b-form>
 			</div>
-			<div>
-				<h4 class="mb-3 fw-bold">거래 정보</h4>
-				<hr />
+			<div class="section-card">
+				<h5 class="section-title">거래 정보</h5>
 				<b-form>
 					<b-form-row class="mb-3">
 						<div class="w-100">
@@ -191,9 +189,8 @@
 					</b-form-row>
 				</b-form>
 			</div>
-			<div>
-				<h4 class="mb-3 fw-bold">기타 정보</h4>
-				<hr />
+			<div class="section-card">
+				<h5 class="section-title">기타 정보</h5>
 				<b-form>
 					<b-form-row>
 						<div class="w-100">
@@ -258,8 +255,8 @@
 					</b-form-row>
 				</b-form>
 			</div>
-			<div>
-				<h4 class="mb-3 fw-bold">상세 설명</h4>
+			<div class="section-card">
+				<h5 class="section-title">상세 설명</h5>
 				<b-form>
 					<b-form-row class="mb-3">
 						<form-textarea v-model="item.description" />
@@ -267,8 +264,10 @@
 				</b-form>
 			</div>
 			<div class="d-flex flex-row-reverse gap-3">
-				<b-button variant="primary" @click="save"> 저장 </b-button>
-				<b-button @click="$router.go(-1)"> 취소 </b-button>
+				<b-button variant="primary" @click="save">
+					<i class="fa-solid fa-floppy-disk me-1"></i>저장
+				</b-button>
+				<b-button variant="outline-secondary" @click="$router.go(-1)"> 취소 </b-button>
 			</div>
 		</div>
 	</b-overlay>
@@ -393,9 +392,37 @@ const changeAddress = ({ postcode, address, addressDetail }) => {
 </script>
 
 <style lang="scss" scoped>
-label {
-	color: rgb(54, 58, 60);
+.page-title {
 	font-weight: 700;
-	margin-top: 8px;
+	color: #111827;
+	padding-bottom: 12px;
+	border-bottom: 2px solid #2563eb;
+	display: inline-block;
+}
+
+.section-card {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+	font-weight: 700;
+	font-size: 0.95rem;
+	color: #111827;
+	margin-bottom: 20px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #e5e7eb;
+	display: block;
+}
+
+label {
+	display: block;
+	color: #374151;
+	font-weight: 600;
+	font-size: 0.875rem;
+	margin-bottom: 6px;
 }
 </style>

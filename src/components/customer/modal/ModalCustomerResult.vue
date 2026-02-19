@@ -12,10 +12,9 @@
 							aria-label="Close"
 						></button>
 					</div>
-					<div class="container mt-3 mb-3 d-flex flex-column gap-4">
-						<div>
-							<h4 class="mb-3 fw-bold">재방문</h4>
-							<hr />
+					<div class="container mt-3 mb-3 d-flex flex-column gap-3">
+						<div class="section-card">
+							<h5 class="section-title">재방문</h5>
 							<b-form>
 								<b-form-row class="mb-3">
 									<div class="w-50">
@@ -38,9 +37,8 @@
 								</b-form-row>
 							</b-form>
 						</div>
-						<div>
-							<h4 class="mb-3 fw-bold">계약 정보</h4>
-							<hr />
+						<div class="section-card">
+							<h5 class="section-title">계약 정보</h5>
 							<b-form>
 								<b-form-row class="mb-3">
 									<div class="w-100">
@@ -108,9 +106,8 @@
 								</b-form-row>
 							</b-form>
 						</div>
-						<div>
-							<h4 class="mb-3 fw-bold">임차인</h4>
-							<hr />
+						<div class="section-card">
+							<h5 class="section-title">임차인</h5>
 							<b-form>
 								<b-form-row class="mb-3">
 									<div class="w-50">
@@ -152,9 +149,8 @@
 								</b-form-row>
 							</b-form>
 						</div>
-						<div>
-							<h4 class="mb-3 fw-bold">임대인</h4>
-							<hr />
+						<div class="section-card">
+							<h5 class="section-title">임대인</h5>
 							<b-form>
 								<b-form-row class="mb-3">
 									<div class="w-50">
@@ -316,9 +312,29 @@ const changeAddress = (key, { postcode, address, addressDetail }) => {
 </script>
 
 <style lang="scss" scoped>
-label {
-	color: rgb(54, 58, 60);
+.section-card {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	padding: 20px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
 	font-weight: 700;
-	margin-top: 8px;
+	font-size: 0.95rem;
+	color: #111827;
+	margin-bottom: 16px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e5e7eb;
+	display: block;
+}
+
+label {
+	display: block;
+	color: #374151;
+	font-weight: 600;
+	font-size: 0.875rem;
+	margin-bottom: 6px;
 }
 </style>

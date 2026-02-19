@@ -90,6 +90,24 @@ const join = async () => {
 <style lang="scss" scoped>
 .join-wrapper {
 	height: 100dvh !important;
+	background: #f9fafb;
+
+	:deep(.card) {
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+	}
+
+	:deep(.card-header) {
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: #2563eb;
+		background: #ffffff;
+		border-bottom: 1px solid #e5e7eb;
+		border-radius: 12px 12px 0 0;
+		padding: 20px;
+	}
+
 	.form {
 		min-width: 290px;
 		max-width: 460px;
