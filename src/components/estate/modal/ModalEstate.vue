@@ -67,7 +67,9 @@
 									<div>
 										{{
 											estate.deposit
-												? `${estate.deposit.toLocaleString()}만원`
+												? `${Number(estate.deposit).toLocaleString(
+														'ko-KR'
+												  )}만원`
 												: '-'
 										}}
 									</div>
@@ -77,7 +79,7 @@
 									<div>
 										{{
 											estate.monthly
-												? `${estate.monthly.toLocaleString()}만원`
+												? `${Number(estate.monthly).toLocaleString()}만원`
 												: '-'
 										}}
 									</div>

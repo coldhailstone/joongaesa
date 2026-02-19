@@ -28,8 +28,8 @@ const imgSrc = computed(() =>
 );
 
 const title = computed(() => {
-	const deposit = props.item.deposit?.toLocaleString() ?? '0';
-	const monthly = props.item.monthly > 0 ? `/${props.item.monthly.toLocaleString()}` : '';
+	const deposit = Number(props.item.deposit)?.toLocaleString() ?? '0';
+	const monthly = props.item.monthly > 0 ? `/${Number(props.item.monthly).toLocaleString()}` : '';
 	return `${props.item.contractType} ${deposit}${monthly}`;
 });
 
