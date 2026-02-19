@@ -1,7 +1,7 @@
 <template>
-	<b-navbar class="navbar p-4" toggleable="lg" type="dark" variant="light">
+	<b-navbar class="navbar py-3 px-4" toggleable="lg" type="light" variant="white">
 		<b-navbar-brand href="#">
-			<router-link to="/" class="text-decoration-none fw-bold fs-3 text-dark">
+			<router-link to="/" class="text-decoration-none fw-bold fs-4 brand-logo">
 				중개사닷컴
 			</router-link>
 		</b-navbar-brand>
@@ -9,7 +9,7 @@
 		<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
 		<b-collapse id="nav-collapse" class="justify-content-between" is-nav>
-			<b-navbar-nav class="gap-3">
+			<b-navbar-nav class="gap-2">
 				<b-nav-item v-for="menu of menuList" :key="menu.name" :to="menu.path">
 					<span v-if="menu.path !== '/'">{{ menu.name }}</span>
 				</b-nav-item>
@@ -77,13 +77,33 @@ const deleteAccount = async () => {
 :deep(.dropdown-menu) {
 	margin-top: 0 !important;
 }
+
+:deep(.nav-link) {
+	color: #6b7280 !important;
+	font-weight: 500;
+	transition: color 0.15s ease;
+
+	&:hover,
+	&.router-link-active {
+		color: #2563eb !important;
+	}
+}
+
 .navbar {
 	position: sticky;
 	top: 0;
 	width: 100%;
 	z-index: 9;
-	border-bottom: 1px solid #eee;
+	background-color: #ffffff !important;
+	border-bottom: 1px solid #e5e7eb;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
+
+.brand-logo {
+	color: #2563eb !important;
+	letter-spacing: -0.5px;
+}
+
 .icon {
 	width: 32px;
 	height: 32px;

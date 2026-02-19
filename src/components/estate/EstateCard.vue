@@ -7,12 +7,11 @@
 				: 'https://via.placeholder.com/300x150'
 		"
 		img-top
-		class="card mt-4 mb-4 me-4"
-		style="box-sizing: content-box"
+		class="card"
 		@click="$emit('clickCard', item.id)"
 	>
 		<b-card-text>
-			<div class="d-flex flex-column mb-2">
+			<div class="d-flex flex-column mb-2 meta">
 				<span v-if="item.pyung && item.correspondingFloor">
 					{{ `${item.pyung}평 ${item.correspondingFloor}층` }}
 				</span>
@@ -41,8 +40,11 @@ const title = computed<string>(() => {
 
 <style lang="scss" scoped>
 :deep(.card-title) {
-	font-weight: bold;
+	font-weight: 700;
+	font-size: 1rem;
+	color: #111827;
 }
+
 :deep(.card-img-top) {
 	width: 300px;
 	height: 150px;
@@ -54,13 +56,25 @@ const title = computed<string>(() => {
 	height: 300px;
 	cursor: pointer;
 	overflow: hidden;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
 	&:hover {
-		background: rgba(54, 58, 60, 0.1);
+		transform: translateY(-4px);
+		box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
 	}
+
+	.meta {
+		font-size: 0.85rem;
+		color: #6b7280;
+	}
+
 	.title {
-		font-size: 1.25rem;
+		font-size: 1rem;
 		font-weight: 500;
-		color: rgb(54, 58, 60);
+		color: #111827;
 	}
 }
 </style>

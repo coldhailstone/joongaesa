@@ -7,7 +7,7 @@
 				<a href="/" class="me-2 mb-md-0 text-muted text-decoration-none lh-1">
 					<img class="logo" src="@/assets/logo.svg" />
 				</a>
-				<span class="text-muted">© 2023 Company, Inc</span>
+				<span class="text-muted">© 2026 중개사닷컴</span>
 			</div>
 		</footer>
 	</div>
